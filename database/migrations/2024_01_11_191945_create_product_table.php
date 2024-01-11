@@ -23,7 +23,7 @@ return new class extends Migration
             $table->float('weight');
             $table->integer('stock');
             $table->float('iva');
-            $table->timestamps();
+            $table->timestamps(); 
         });
     }
 
