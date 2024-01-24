@@ -1,0 +1,40 @@
+/* Aumentando la especificidad para asegurar la aplicación de los estilos */
+body .navbar, body footer {
+    background-color: rgba(0, 0, 0, 0.9) !important; /* Negro con opacidad del 90%, forzando su aplicación */
+    color: white !important; /* Color del texto */
+}
+
+body .navbar .navbar-nav .nav-link, body footer {
+    color: white !important; /* Color del texto */
+    position: relative; /* Agregamos posición relativa para permitir el uso del pseudo-elemento */
+}
+
+/* Estilo para los enlaces en el menú al pasar el mouse por encima */
+body .navbar .navbar-nav .nav-link::before {
+    content: ""; /* Agregamos un contenido vacío para el pseudo-elemento */
+    position: absolute; /* Lo posicionamos de forma absoluta sobre el enlace */
+    bottom: -2px; /* Ajustamos la posición para que se muestre debajo del texto */
+    left: 0; /* Alineamos el subrayado a la izquierda */
+    width: 100%; /* Establecemos la longitud del subrayado al 100% del ancho del enlace */
+    height: 2px; /* Grosor del subrayado */
+    background-color: #f3cb09; /* Color del subrayado */
+    transform: scaleX(0); /* Inicialmente, el subrayado está invisible */
+    transform-origin: center; /* El punto de transformación en el centro */
+    transition: transform 0.3s ease; /* Agregamos una transición suave */
+}
+
+body .navbar .navbar-nav .nav-link:hover::before {
+    transform: scaleX(1); /* Al pasar el mouse, el subrayado se hace visible */
+}
+
+body .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+}
+
+/* styles.css */
+.footer {
+    background-color: rgba(0, 0, 0, 0.9) !important;
+    color: white !important;
+}
