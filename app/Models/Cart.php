@@ -13,4 +13,8 @@ class Cart extends Model
     {
         return $this->belongsTo(User::class, 'foreign_key', 'owner_key');
     }
+
+    public function product () {
+        return $this->belongsToMany(Product::class, 'rol_user', 'user_id', 'rol_id');
+    }
 }

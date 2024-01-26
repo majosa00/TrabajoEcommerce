@@ -56,4 +56,5 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(Discount::class, 'foreign_key', 'local_key');
     }
+
 }
