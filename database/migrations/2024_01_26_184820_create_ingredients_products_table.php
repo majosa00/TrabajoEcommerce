@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('ingredients_products', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+
+            $table->foreignId('ingredient_id')->references('id')->on('ingredients');
+            $table->foreignId('product_id')->references('id')->on('products');
         });
     }
 
