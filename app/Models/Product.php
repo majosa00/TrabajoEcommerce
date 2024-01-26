@@ -21,4 +21,24 @@ class Product extends Model
         'stock',
         'iva',
     ];
+
+    public function image()
+    {
+        return $this->hasMany(Image::class, 'foreign_key', 'local_key');
+    }
+
+    public function ingredient()
+    {
+        return $this->belongsToMany(Ingredient::class);
+    }
+
+    public function cart()
+    {
+        return $this->belongsToMany(Cart::class);
+    }
+
+    public function order()
+    {
+        return $this->belongsToMany(Order::class);
+    }
 }

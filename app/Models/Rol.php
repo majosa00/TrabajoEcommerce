@@ -8,8 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Rol extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
-    'name',
+        'name',
     ];
+    
+    public function user ()
+    {
+        return $this->hasOne(User::class);
+    }
 }
