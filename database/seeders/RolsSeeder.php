@@ -12,14 +12,12 @@ class RolsSeeder extends Seeder
     {
         Rol::create( [
             'id' => 1,
-            'name' => 'user'
-
+            'name' => 'user',
         ]);
 
         Rol::create( [
             'id' => 2,
-            'name' => 'admin'
-
+            'name' => 'admin',
         ]);
     }
 }

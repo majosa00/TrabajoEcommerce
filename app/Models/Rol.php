@@ -12,4 +12,9 @@ class Rol extends Model
     protected $fillable = [
     'name',
     ];
+
+    public function user ()
+    {
+        return $this->belongsTo(User::class, 'foreign_key', 'owner_key');
+    }
 }

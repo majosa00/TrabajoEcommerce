@@ -21,4 +21,8 @@ class Product extends Model
         'stock',
         'iva',
     ];
+
+    public function image () {
+        return $this->hasMany(Image::class, 'foreign_key', 'local_key');
+    }
 }

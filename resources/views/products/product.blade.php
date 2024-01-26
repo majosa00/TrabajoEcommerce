@@ -9,7 +9,7 @@
 <body>
     <h1>PRODUCTOS</h1>
     <a href="new_product">Nuevo producto</a>
-    <table border='1' class="table table-responsive">
+    <table class="table table-responsive">
         <thead>
             <tr>
                 <th>Nombre</th>
