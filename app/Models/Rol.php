@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Rol extends Model
 {
     use HasFactory;
-    
-    protected $fillable = [
-    'name',
-    ];
 
+    protected $fillable = [
+        'name',
+    ];
+    
     public function user ()
     {
-        return $this->belongsTo(User::class, 'foreign_key', 'owner_key');
+        return $this->hasOne(User::class);
     }
 }

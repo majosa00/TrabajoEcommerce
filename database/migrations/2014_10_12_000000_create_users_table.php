@@ -4,11 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
-    /**
-     * Run the migrations.
-     */
+return new class extends Migration {
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
@@ -19,8 +15,10 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->enum('rol', ['admin', 'user'])->default('user');
-             //Para el Middleware, que comprueba si el usuario es administrador o no. Usuario por defecto
+            //Para el Middleware, que comprueba si el usuario es administrador o no. Usuario por defecto
             $table->timestamps();
+
+            $table->foreignId('rol_id')->references('id')->on('rols');
         });
     }
 
@@ -31,5 +29,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('users');
     }
-    
+
 };

@@ -42,19 +42,19 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function rol ()
+    public function rol()
     {
-        return $this->hasOne(Rol::class, 'foreign_key', 'local_key');
+        return $this->belongsTo(Rol::class);
     }
 
     public function cart ()
     {
-        return $this->hasOne(Cart::class, 'foreign_key', 'local_key');
+        return $this->hasOne(Cart::class);
     }
 
     public function discount ()
     {
-        return $this->hasOne(Discount::class, 'foreign_key', 'local_key');
+        return $this->hasOne(Discount::class);
     }
 
 }
