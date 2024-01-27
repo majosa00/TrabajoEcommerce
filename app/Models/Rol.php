@@ -13,9 +13,9 @@ class Rol extends Model
         'name',
     ];
 
-    //Relación uno a uno
-    public function user()
+    //Relación uno a muchos
+    public function user ()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(User::class);
     }
 }
