@@ -48,10 +48,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Cart::class);
     }
 
-    //Relación uno a uno
+    //Relación uno a muchos (inversa)
     public function rol ()
     {
-        return $this->hasOne(Rol::class);
+        return $this->belongsTo(Rol::class);
     }
-
 }
