@@ -9,12 +9,16 @@ class Cart extends Model
 {
     use HasFactory;
 
+    //Relación uno a uno
     public function user ()
     {
-        return $this->belongsTo(User::class, 'foreign_key', 'owner_key');
+        return $this->belongsTo(User::class);
     }
 
-    public function product () {
-        return $this->belongsToMany(Product::class, 'rol_user', 'user_id', 'rol_id');
+    //Relación muchos a muchos (inversa)
+    public function product ()
+    {
+        return $this->belongsToMany(Product::class);
     }
+
 }

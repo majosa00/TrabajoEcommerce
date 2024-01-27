@@ -11,17 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('invoices', function (Blueprint $table) {
+        Schema::create('order_product', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('orders_id');
+            $table->integer('amount');
+            $table->unsignedBigInteger('order_id');
+            $table->unsignedBigInteger('product_id');
 
-            $table->unsignedBigInteger('order_id')->unique();
             $table->foreign('order_id')
                     ->references('id')
                     ->on('orders')
-                    ->onDelete('cascade') //Si se elimina el pedido, se elimina esta factura
-                    ->onUpdate('cascade'); //Si el pedido cambia el id, se cambia el id de esta factura
+                    ->onDelete('cascade');
+            $table->foreign('product_id')
+                    ->references('id')
+                    ->on('products')
+                    ->onDelete('cascade');
 
             $table->timestamps();
         });
@@ -32,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('invoices');
+        Schema::dropIfExists('order_product');
     }
 };

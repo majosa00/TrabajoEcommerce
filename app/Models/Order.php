@@ -9,13 +9,16 @@ class Order extends Model
 {
     use HasFactory;
 
+    //Relación uno a uno
     public function invoice()
     {
-        return $this->hasOne(Invoice::class, 'foreign_key', 'local_key');
+        return $this->hasOne(Invoice::class);
     }
 
-    public function product()
+    //Relación muchos a muchos (inversa)
+    public function product ()
     {
-        return $this->belongsToMany(Product::class, 'rol_user', 'user_id', 'rol_id');
+        return $this->belongsToMany(Product::class);
     }
+
 }

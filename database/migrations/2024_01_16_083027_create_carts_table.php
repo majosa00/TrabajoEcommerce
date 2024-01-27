@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('users_id');
+
+            $table->unsignedBigInteger('user_id')->unique();
+            $table->foreign('user_id')
+                    ->references('id')
+                    ->on('users')
+                    ->onDelete('cascade') //Si se elimina el usuario, se elimina este carrito
+                    ->onUpdate('cascade'); //Si el usuario cambia el id, se cambia el id de este carrito
+
             $table->timestamps();
         });
     }

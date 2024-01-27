@@ -22,23 +22,33 @@ class Product extends Model
         'iva',
     ];
 
-    public function image()
+    //Relación uno a uno
+    public function discount ()
     {
-        return $this->hasMany(Image::class, 'foreign_key', 'local_key');
+        return $this->hasOne(Discount::class);
     }
 
-    public function ingredient()
+    //Relación uno a muchos
+    public function image ()
     {
-        return $this->belongsToMany(Ingredient::class);
+        return $this->hasMany(Image::class);
     }
 
-    public function cart()
+    //Relación muchos a muchos
+    public function order ()
+    {
+        return $this->belongsToMany(Order::class);
+    }
+
+    //Relación muchos a muchos
+    public function cart ()
     {
         return $this->belongsToMany(Cart::class);
     }
 
-    public function order()
+    //Relación muchos a muchos
+    public function ingredient ()
     {
-        return $this->belongsToMany(Order::class);
+        return $this->belongsToMany(Ingredient::class);
     }
 }

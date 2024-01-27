@@ -9,8 +9,9 @@ class Discount extends Model
 {
     use HasFactory;
 
-    public function user ()
+    //Relación uno a uno 
+    public function product ()
     {
-        return $this->belongsTo(User::class, 'foreign_key', 'owner_key');
+        return $this->belongsTo(Product::class);
     }
 }

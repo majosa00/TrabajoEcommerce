@@ -12,9 +12,10 @@ class Rol extends Model
     protected $fillable = [
         'name',
     ];
-    
-    public function user ()
+
+    //Relación uno a uno
+    public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 }
