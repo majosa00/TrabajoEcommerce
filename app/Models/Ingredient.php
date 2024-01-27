@@ -9,8 +9,10 @@ class Ingredient extends Model
 {
     use HasFactory;
 
-    public function product()
+    //Relación muchos a muchos (inversa)
+    public function product ()
     {
-        return $this->belongsToMany(Product::class, 'rol_user', 'user_id', 'rol_id');
+        return $this->belongsToMany(Product::class);
     }
+
 }

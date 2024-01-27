@@ -9,8 +9,9 @@ class Invoice extends Model
 {
     use HasFactory;
 
+    //Relación uno a uno 
     public function order ()
     {
-        return $this->belongsTo(Order::class, 'foreign_key', 'owner_key');
+        return $this->belongsTo(Order::class);
     }
 }

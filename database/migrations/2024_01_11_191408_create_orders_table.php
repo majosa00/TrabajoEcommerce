@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+
             $table->integer('id_product');
             $table->integer('id_user');
             $table->integer('state');
@@ -19,6 +20,7 @@ return new class extends Migration {
             $table->date('orderDate');
             $table->integer('cartProduct_id_cart');
             $table->float('totalPrice');
+            
             $table->timestamps();
         });
     }

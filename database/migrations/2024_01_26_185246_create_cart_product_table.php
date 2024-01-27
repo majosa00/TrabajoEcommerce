@@ -11,19 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('images', function (Blueprint $table) {
+        Schema::create('cart_product', function (Blueprint $table) {
             $table->id();
 
-            $table->string('image1', 45);
+            $table->integer('amount');
+            $table->unsignedBigInteger('cart_id');
+            $table->unsignedBigInteger('product_id');
 
-            $table->unsignedBigInteger('product_id')->unique();
+            $table->foreign('cart_id')
+                    ->references('id')
+                    ->on('carts')
+                    ->onDelete('cascade');
             $table->foreign('product_id')
                     ->references('id')
                     ->on('products')
-                    ->onDelete('cascade') //Si se elimina el producto, se eliminan las fotos
-                    ->onUpdate('cascade'); //Si el producto cambia el id, se cambia el id de estas fotos
-            
+                    ->onDelete('cascade');
+
             $table->timestamps();
+
         });
     }
 
@@ -32,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('images');
+        Schema::dropIfExists('cart_product');
     }
 };
