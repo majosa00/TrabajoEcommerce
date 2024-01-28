@@ -16,16 +16,19 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="../img/energeticwave-logo.png" alt="Logotipo" width="200" class="d-inline-block align-text-top">
+                <img src="../../img/energeticwave-logo" alt="Logotipo" width="200"
+                    class="d-inline-block align-text-top">
 
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             Productos
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -45,7 +48,8 @@
                         <a class="nav-link" href="#"><i class="fas fa-shopping-basket"></i></a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -58,9 +62,11 @@
         </div>
     </nav>
 
-    <footer class="bg-light text-center text-lg-start mt-4 footer"> <!-- Agregar la clase 'footer' para aplicar los estilos -->
+    <footer class="bg-light text-center text-lg-start mt-4 footer">
+        <!-- Agregar la clase 'footer' para aplicar los estilos -->
         <div class="text-center p-3">
-            &copy; <script>
+            &copy;
+            <script>
                 document.write(new Date().getFullYear())
             </script> EnergeticWave - Todos los derechos reservados.
         </div>
