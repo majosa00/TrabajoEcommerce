@@ -21,15 +21,19 @@ class ProductController extends Controller
 
     public function create(Request $request)
     {
-
-        $request->validate(['title' => 'required', 'text' => 'required']);
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required'
+        ]);
+    
         $newProduct = new Product;
-        $newProduct->title = $request->title;
-        $newProduct->text = $request->text;
+        $newProduct->name = $request->name;
+        $newProduct->description = $request->description;
         $newProduct->save();
-        return back()->with('mensaje', 'Producto agregado exitosamente');
+    
+        return redirect()->route('products.index')->with('mensaje', 'Producto agregado exitosamente');
     }
-
+    
     public function newProduct()
     {
         return view('products.create');
