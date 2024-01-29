@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,8 @@ Route::get('/', function () {
 });
 
 Route::get('/logged', [UserController::class, 'products']);
+
+Route::get('/orderadmin', [OrderController::class, 'orders']);
 
 Route::get('/home', function () {
     return view('auth.dashboard');
