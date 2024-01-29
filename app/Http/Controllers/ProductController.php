@@ -62,19 +62,38 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         return view('products.edit', compact('product'));
     }
+
     public function update(Request $request, $id)
     {
         $request->validate([
             'name' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'flavor' => 'required',
+            'brand' => 'required',
+            'price' => 'required|numeric',
+            'dimension' => 'required|numeric',
+            'udpack' => 'required|integer',
+            'weight' => 'required|numeric',
+            'stock' => 'required|integer',
+            'iva' => 'required|numeric',
         ]);
+
         $productUpdate = Product::findOrFail($id);
-        $productUpdate->title = $request->name;
-        $productUpdate->text = $request->description;
+        $productUpdate->name = $request->name;
+        $productUpdate->description = $request->description;
+        $productUpdate->flavor = $request->flavor;
+        $productUpdate->brand = $request->brand;
+        $productUpdate->price = $request->price;
+        $productUpdate->dimension = $request->dimension;
+        $productUpdate->udpack = $request->udpack;
+        $productUpdate->weight = $request->weight;
+        $productUpdate->stock = $request->stock;
+        $productUpdate->iva = $request->iva;
         $productUpdate->save();
 
         return back()->with('mensaje', 'Producto actualizado');
     }
+
 
     public function delete($id)
     {
