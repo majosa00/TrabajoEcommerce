@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -9,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
 
+    //Crear usuario con el rol_id predeterminado
     public function create (array $input) {
         $user = new User();
         $user->name = $input['name'];
@@ -19,5 +21,12 @@ class UserController extends Controller
         $user->save();
 
         return $user;
+    }
+
+    //Mostrar los productos
+    public function products()
+    {
+        $products = Product::all();
+        return view('/logged')->with('products', $products);
     }
 }
