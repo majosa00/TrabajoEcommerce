@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,6 +12,7 @@ return new class extends Migration
     {
         Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
+
             $table->string('caffeine', 45);
             $table->string('taurine', 45);
             $table->string('sugars', 45);
@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('carnitine', 45);
             $table->string('niacin', 45);
             $table->string('riboflavin', 45);
+
             $table->timestamps();
         });
     }

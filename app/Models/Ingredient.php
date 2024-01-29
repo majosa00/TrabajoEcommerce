@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Ingredient extends Model
 {
     use HasFactory;
+
+    //Relación muchos a muchos (inversa)
+    public function product ()
+    {
+        return $this->belongsToMany(Product::class);
+    }
+
 }

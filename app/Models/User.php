@@ -41,4 +41,16 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    //Relación uno a uno
+    public function cart ()
+    {
+        return $this->hasOne(Cart::class);
+    }
+
+    //Relación uno a muchos (inversa)
+    public function rol ()
+    {
+        return $this->belongsTo(Rol::class);
+    }
 }

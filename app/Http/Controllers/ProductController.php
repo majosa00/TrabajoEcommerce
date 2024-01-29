@@ -20,16 +20,38 @@ class ProductController extends Controller
     }
 
     public function create(Request $request)
-    {
+{
+    $request->validate([
+        'name' => 'required',
+        'description' => 'required',
+        'flavor' => 'required',
+        'brand' => 'required',
+        'price' => 'required|numeric',
+        'dimension' => 'required|numeric',
+        'udpack' => 'required|integer',
+        'weight' => 'required|numeric',
+        'stock' => 'required|integer',
+        'iva' => 'required|numeric'
+    ]);
 
-        $request->validate(['title' => 'required', 'text' => 'required']);
-        $newProduct = new Product;
-        $newProduct->title = $request->title;
-        $newProduct->text = $request->text;
-        $newProduct->save();
-        return back()->with('mensaje', 'Producto agregado exitosamente');
-    }
+    $newProduct = new Product;
+    $newProduct->name = $request->name;
+    $newProduct->description = $request->description;
+    $newProduct->flavor = $request->flavor;
+    $newProduct->brand = $request->brand;
+    $newProduct->price = $request->price;
+    $newProduct->dimension = $request->dimension;
+    $newProduct->udpack = $request->udpack;
+    $newProduct->weight = $request->weight;
+    $newProduct->stock = $request->stock;
+    $newProduct->iva = $request->iva;
 
+    $newProduct->save();
+
+    return redirect()->route('products.index')->with('mensaje', 'Producto agregado exitosamente');
+}
+
+    
     public function newProduct()
     {
         return view('products.create');

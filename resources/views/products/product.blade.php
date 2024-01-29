@@ -8,12 +8,14 @@
 
 <body>
     <h1>PRODUCTOS</h1>
-    <a href="new_product">Nuevo producto</a>
+    <a href="{{ route('products.new') }}" class="btn btn-primary">Añadir Nuevo Producto</a>
+
     <table border='1' class="table table-responsive">
         <thead>
             <tr>
                 <th>Nombre</th>
                 <th>Descripción</th>
+                
                 <th>Detalles</th>
                 <th>Editar</th>
                 <th>Eliminar</th>
@@ -30,7 +32,7 @@
                     <form action="{{ route('products.delete', $product->id) }}" method="POST" class="d-inline">
                         @method('DELETE')
                         @csrf
-                        <button class="btn btn-danger btn-sm" type="submit">Eliminar</button>
+                        <button class="btn btn-danger btn-sm" type="submit">Eliminar</button> 
                     </form>
                 </td>
             </tr>
