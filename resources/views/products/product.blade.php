@@ -8,7 +8,8 @@
 
 <body>
     <h1>PRODUCTOS</h1>
-    <a href="{{ route('products.new') }}" class="btn btn-primary">Añadir Nuevo Producto</a>
+    <a href="{{ url('new_product') }}" class="btn btn-primary">Añadir Nuevo Producto</a>
+
 
     <table border='1' class="table table-responsive">
         <thead>
