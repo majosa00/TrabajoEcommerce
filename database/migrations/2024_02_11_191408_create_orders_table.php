@@ -15,7 +15,7 @@ return new class extends Migration {
 
             $table->integer('id_product');
             $table->integer('id_user');
-            $table->integer('state');
+            $table->string('state');
             $table->integer('id_payment');
             $table->date('orderDate');
             $table->integer('cartProduct_id_cart');
