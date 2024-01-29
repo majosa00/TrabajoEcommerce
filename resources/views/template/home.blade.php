@@ -62,6 +62,8 @@
         </div>
     </nav>
 
+
+
     <footer class="bg-light text-center text-lg-start mt-4 footer">
         <!-- Agregar la clase 'footer' para aplicar los estilos -->
         <div class="text-center p-3">
