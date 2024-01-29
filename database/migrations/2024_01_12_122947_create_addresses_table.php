@@ -10,16 +10,15 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('order', function (Blueprint $table) {
+        Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_product');
-            $table->integer('id_user');
-            $table->integer('state');
-            $table->integer('id_payment');
-            $table->date('orderDate');
-            $table->integer('cartProduct_id_cart');
-            $table->float('totalPrice');
+            $table->string('address', 255);
+            $table->string('city', 255);
+            $table->integer('postalCode');
+            $table->string('country', 255);
             $table->timestamps();
+
+            $table->foreignId('user_id')->references('id')->on('users');
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('order');
+        Schema::dropIfExists('addresses');
     }
 };
