@@ -9,21 +9,32 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    protected $cartController;
 
-    //Crear usuario con el rol_id predeterminado
-    public function create (array $input) {
+ 
+    public function __construct(CartController $cartController)
+    {
+        $this->cartController = $cartController;
+    }
+
+  
+    public function create(array $input)
+    {
         $user = new User();
         $user->name = $input['name'];
         $user->email = $input['email'];
         $user->password = Hash::make($input['password']);
-        $user->rol_id=1;
+        $user->rol_id = 1;
 
         $user->save();
 
+        $this->cartController->create($user->id);
+
+        $this->cartController->create($user->id);
         return $user;
     }
 
-    //Mostrar los productos
+    
     public function products()
     {
         $products = Product::all();
