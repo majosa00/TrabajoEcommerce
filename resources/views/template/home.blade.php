@@ -18,7 +18,6 @@
             <a class="navbar-brand" href="#">
                 <img src="../../img/energeticwave-logo" alt="Logotipo" width="200"
                     class="d-inline-block align-text-top">
-
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,6 +60,8 @@
             </div>
         </div>
     </nav>
+
+
 
     <footer class="bg-light text-center text-lg-start mt-4 footer">
         <!-- Agregar la clase 'footer' para aplicar los estilos -->
