@@ -10,6 +10,10 @@ class Cart extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+    ];
+
     // Relación uno a uno con User
     public function user()
     {
@@ -17,8 +21,8 @@ class Cart extends Model
     }
 
     //Relación muchos a muchos (inversa)
-    public function product ()
+    public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class)->withPivot('amount');
     }
 }
