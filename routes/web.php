@@ -56,3 +56,4 @@ Route::put('edit_product/{id}', [ ProductController::class, 'update' ]) -> name(
 Route::delete('delete_product/{id}', [ ProductController::class, 'delete' ]) -> name('products.delete');
 
 Route::get('products', [ ProductController::class, 'products' ])->name('products.index');
+Route::get('cart', [CartController::class, ''])->name();

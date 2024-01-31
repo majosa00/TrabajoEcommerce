@@ -10,6 +10,16 @@ class CartController extends Controller
     {
         
 
-        return back()->with('success', 'Producto añadido al carrito.');
+     
+    }
+
+
+    public function remove(Product $product)
+    {
+
+    }
+
+    public function clear (){
+        
     }
 }
