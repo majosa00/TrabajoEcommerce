@@ -18,7 +18,7 @@ class OrdersSeeder extends Seeder
         Order::create( [
             'id_product' => 1,
             'id_user' => 1,
-            'state' => 'Pendiente',
+            'state' => 'Pending',
             'id_payment' => 1,
             'orderDate' => '2024/03/12',
             'cartProduct_id_cart' => 1,

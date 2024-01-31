@@ -11,9 +11,9 @@
     <table class="table table-responsive">
         <thead>
             <tr>
-                <th>ID Usuario</th>
-                <th>ID Pedido</th>
-                <th>Estado</th>
+                <th>ID User</th>
+                <th>ID Order</th>
+                <th>State</th>
             </tr>
         </thead>
         @foreach ($orders as $order)
