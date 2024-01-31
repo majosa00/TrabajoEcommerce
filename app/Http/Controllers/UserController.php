@@ -3,19 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    protected $cartController;
+  
 
- 
-    public function __construct(CartController $cartController)
-    {
-        $this->cartController = $cartController;
-    }
+
 
   
     public function create(array $input)
@@ -25,13 +22,16 @@ class UserController extends Controller
         $user->email = $input['email'];
         $user->password = Hash::make($input['password']);
         $user->rol_id = 1;
-
         $user->save();
 
-        $this->cartController->create($user->id);
 
-        $this->cartController->create($user->id);
+        // $this->cartController->create($user->id); 
+
+        $cart = new Cart(); //
+        $cart->user_id = $user->id;
+        $cart->save();
         return $user;
+
     }
 
     
