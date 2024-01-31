@@ -15,14 +15,14 @@ class OrdersSeeder extends Seeder
     {
 
         //Para probar que funciona en borrador
-        Order::create( [
-            'id_product' => 1,
-            'id_user' => 1,
+        /*Order::create( [
+            //'product_id' => 1,
+            'user_id' => 1,
             'state' => 'Pending',
-            'id_payment' => 1,
+            //'payment_id' => 1,
             'orderDate' => '2024/03/12',
-            'cartProduct_id_cart' => 1,
+            '//cartProduct_id_cart' => 1,
             'totalPrice' => 10
-        ]);
+        ]);*/
     }
 }

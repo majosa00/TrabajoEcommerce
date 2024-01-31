@@ -51,8 +51,9 @@ Route::group([
 
 Route::post('/cart/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('cart.addToCart');
 Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
+Route::post('/cart/pay', [CartController::class, 'pay'])->name('cart.pay');
 
-//nombre de la ruta - controller - nombre función dentro del controlador - nombre es para renombrar la ruta porque est´dentro de un formulario y queremos que tenga ese name
+//nombre de la ruta - controller - nombre función dentro del controlador - nombre es para renombrar la ruta porque está dentro de un formulario y queremos que tenga ese name
 // Route::get('products', [ ProductController::class, 'products' ]);
 // Route::get('products/{id}', [ ProductController::class, 'detail' ]);
 // Route::get('new_product', [ ProductController::class, 'newProduct' ]);
