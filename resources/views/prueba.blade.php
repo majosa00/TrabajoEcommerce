@@ -28,15 +28,15 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            Products
+                            Productos
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Category 1</a></li>
-                            <li><a class="dropdown-item" href="#">Category 2</a></li>
+                            <li><a class="dropdown-item" href="#">Categoría 1</a></li>
+                            <li><a class="dropdown-item" href="#">Categoría 2</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Orders</a>
+                        <a class="nav-link" href="#">Pedidos</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
@@ -52,8 +52,8 @@
                             <i class="fas fa-user"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                            <li><a class="dropdown-item" href="#">Perfil</a></li>
+                            <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -69,7 +69,7 @@
             &copy;
             <script>
                 document.write(new Date().getFullYear())
-            </script> EnergeticWave - All rights reserved.
+            </script> EnergeticWave - Todos los derechos reservados.
         </div>
     </footer>
 
