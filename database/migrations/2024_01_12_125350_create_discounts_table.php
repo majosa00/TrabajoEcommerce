@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->foreign('product_id')
                 ->references('id')
                 ->on('products')
-                ->onDelete('cascade') //Si se elimina el producto, se elimina este descuento
+                //Si se elimina el producto, se elimina este descuento
                 ->onUpdate('cascade'); //Si el producto cambia el id, se cambia el id de este descuento
 
             $table->timestamps();

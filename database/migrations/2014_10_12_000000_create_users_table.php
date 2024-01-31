@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->foreign('rol_id')
                     ->references('id')
                     ->on('rols')
-                    ->onDelete('cascade') //Si se elimina el usuario, se elimina este rol
+                    //Si se elimina el usuario, se elimina este rol
                     ->onUpdate('cascade'); //Si el usuario cambia el id, se cambia el id de este rol
             
             $table->timestamps();
