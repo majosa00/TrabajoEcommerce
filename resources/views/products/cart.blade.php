@@ -1,16 +1,23 @@
+{{-- resources/views/products/cart.blade.php --}}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Carrito</title>
+    <title>Carrito de Compras</title>
 </head>
 <body>
-    <h1>Añadir al carro</h1>
-    <form action="{{ route('products.create') }}" method="post">
-    
-    @csrf
-    <label for='name'>Nombre</label>
-    <input type=
-</form>
+    <h1>Tu Carrito</h1>
+    @foreach ($products as $product)
+    <tr>
+        <td>{{ $product->name }}</td>
+        <td>{{ $product->description }}</td>
+        <td>
+            <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                @csrf
+                <button class="btn btn-danger btn-sm" type="submit">Buy</button>
+            </form>
+        </td>
+    </tr>
+@endforeach
 
 </body>
 </html>

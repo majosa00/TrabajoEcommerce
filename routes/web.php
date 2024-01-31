@@ -4,7 +4,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CartController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,13 +47,13 @@ Route::get('/home', function () {
     Route::delete('/admin/delete_product/{id}', [ProductController::class, 'delete'])->name('products.delete');
 });*/
 
-Route::get('products', [ ProductController::class, 'products' ]);
-Route::get('products/{id}', [ ProductController::class, 'detail' ]);
-Route::get('new_product', [ ProductController::class, 'newProduct' ]);
-Route::post('products', [ ProductController::class, 'create' ]) -> name('products.create');
-Route::get('edit_product/{id}', [ ProductController::class, 'edit' ]) -> name('products.edit'); 
-Route::put('edit_product/{id}', [ ProductController::class, 'update' ]) -> name('products.update'); 
-Route::delete('delete_product/{id}', [ ProductController::class, 'delete' ]) -> name('products.delete');
+Route::get('products', [ProductController::class, 'products'])->name('products.index');
+Route::get('products/{id}', [ProductController::class, 'detail']);
+Route::get('new_product', [ProductController::class, 'newProduct']);
+Route::post('products', [ProductController::class, 'create'])->name('products.create');
+Route::get('edit_product/{id}', [ProductController::class, 'edit'])->name('products.edit'); 
+Route::put('edit_product/{id}', [ProductController::class, 'update'])->name('products.update'); 
+Route::delete('delete_product/{id}', [ProductController::class, 'delete'])->name('products.delete');
 
-Route::get('products', [ ProductController::class, 'products' ])->name('products.index');
-Route::get('cart', [CartController::class, ''])->name();
+Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
