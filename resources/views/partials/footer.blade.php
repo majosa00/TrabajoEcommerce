@@ -3,6 +3,6 @@
         &copy;
         <script>
             document.write(new Date().getFullYear())
-        </script> EnergeticWave - Todos los derechos reservados.
+            </script> EnergeticWave - All rights reserved.
     </div>
 </footer>
