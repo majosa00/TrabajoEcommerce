@@ -20,22 +20,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/logged', [UserController::class, 'products']);
+Route::get('logged', [UserController::class, 'products']);
 
-Route::get('/orderadmin', [OrderController::class, 'orders']);
-
-Route::get('/home', function () {
-    return view('auth.dashboard');
-})->middleware('auth');
+Route::get('orderadmin', [OrderController::class, 'orders']);
 
 //Pedir que el correo sea verificado
-Route::get('/home', function () {
-    return view('auth.dashboard');
+Route::get('home', function () {
+    if (Auth::user()->rol_id == 2) {
+        return redirect('admin/products');
+    } else {
+        return view('auth.dashboard');
+    }
 })->middleware(['auth', 'verified']);
 
-/*Route::group([
+
+//Si eres administrador
+Route::group([
     'middleware' => 'admin',
-    'prefix' => 'admin',
+    // 'prefix' => 'admin',
     'namespace' => 'Admin'
 ], function () {
     Route::get('admin/products', [ProductController::class, 'products']);
