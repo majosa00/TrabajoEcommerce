@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreign('order_id')
                     ->references('id')
                     ->on('orders')
-                    ->onDelete('cascade') //Si se elimina el pedido, se elimina esta factura
+                    //Si se elimina el pedido, se elimina esta factura
                     ->onUpdate('cascade'); //Si el pedido cambia el id, se cambia el id de esta factura
 
             $table->timestamps();

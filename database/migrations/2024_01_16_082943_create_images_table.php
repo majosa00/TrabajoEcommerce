@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreign('product_id')
                     ->references('id')
                     ->on('products')
-                    ->onDelete('cascade') //Si se elimina el producto, se eliminan las fotos
+                    //Si se elimina el producto, se eliminan las fotos
                     ->onUpdate('cascade'); //Si el producto cambia el id, se cambia el id de estas fotos
             
             $table->timestamps();
