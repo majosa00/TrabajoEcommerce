@@ -17,12 +17,20 @@
             </tr>
         </thead>
         @foreach ($products as $product)
-            <tr>
-                <td>{{ $product->name }}</td>
-                <td>{{ $product->description }}</td>
-                <td>{{ $product->pivot->amount }}</td>
-            </tr>
-        @endforeach
+    <tr>
+        <td>{{ $product->name }}</td>
+        <td>{{ $product->description }}</td>
+        <td>{{ $product->pivot->amount }}</td>
+        <td>
+            <form action="{{ route('cart.remove', $product->id) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit">Eliminar</button>
+            </form>
+        </td>
+    </tr>
+@endforeach
+
     </table>
 </body>
 
