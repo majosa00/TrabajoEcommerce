@@ -3,27 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+  
 
-    //Crear usuario con el rol_id predeterminado
-    public function create (array $input) {
+
+
+  
+    public function create(array $input)
+    {
         $user = new User();
         $user->name = $input['name'];
         $user->email = $input['email'];
         $user->password = Hash::make($input['password']);
-        $user->rol_id=1;
-
+        $user->rol_id = 1;
         $user->save();
 
+
+        // $this->cartController->create($user->id); 
+
+        $cart = new Cart(); //
+        $cart->user_id = $user->id;
+        $cart->save();
         return $user;
+
     }
 
-    //Mostrar los productos
+    
     public function products()
     {
         $products = Product::all();
