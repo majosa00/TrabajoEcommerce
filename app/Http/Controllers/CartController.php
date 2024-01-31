@@ -12,27 +12,38 @@ class CartController extends Controller
 {
     public function addToCart(Request $request, $productId)
     {
+        //Obtener el usuario autenticado actualmente
         $user = Auth::user(); 
+        //Busca en la base de datos el ID del producto
         $product = Product::find($productId);
     
-        if (!$product) {
-            return back()->with('error', 'Producto no encontrado.');
+        if (!$product) { //Si no lo encuentra, vuelve a la página anterior con un mensaje de error
+            return back()->with('error', 'Product not found.');
         }
     
+        //Busca el carrito asociado al usuario, si no existe lo crea
         $cart = $user->cart ?? new Cart(['user_id' => $user->id]);
         $cart->save();
     
+        //Asocia el corrito al producto del usuario. Si ya está el producto en el carrito, aumenta la cantidad en 1, sino lo añade con 1
         $cart->products()->attach($productId, ['amount' => 1]); 
-        return back()->with('success', 'Producto añadido al carrito');
+
+        //Si funciona, redirige a la página anterior con un mensaje de éxito indicando que el producto fue añadido al carrito
+        return redirect()->route('cart.view')->with('success', 'Product added to the cart.');
     }
 
     public function viewCart()
     {
+
+        //Obtener el usuario autenticado actualmente
         $user = Auth::user();
+
+        //Obtener carrito del usuario
         $cart = $user->cart;
 
+        //Obtener productos del carrito y la cantidad
         if ($cart) {
-            $products = $cart->products; 
+            $products = $cart->products()->withPivot('amount')->get();
         } else {
             $products = collect(); 
         }
