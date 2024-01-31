@@ -35,9 +35,9 @@ class Product extends Model
     }
 
     //Relación muchos a muchos
-    public function order()
+    public function orders()
     {
-        return $this->belongsToMany(Order::class);
+        return $this->belongsToMany(Order::class, 'order_product')->withPivot('amount');
     }
 
     //Relación muchos a muchos
