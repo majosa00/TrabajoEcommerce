@@ -55,9 +55,5 @@ Route::post('products', [ ProductController::class, 'create' ]) -> name('product
 Route::get('edit_product/{id}', [ ProductController::class, 'edit' ]) -> name('products.edit');
 Route::put('edit_product/{id}', [ ProductController::class, 'update' ]) -> name('products.update');
 Route::delete('delete_product/{id}', [ ProductController::class, 'delete' ]) -> name('products.delete');
-<<<<<<< HEAD
 Route::get('productslist', [ ProductController::class, 'products' ])->name('products.index');
-=======
-
 Route::get('products', [ ProductController::class, 'products' ])->name('products.index');
->>>>>>> 57595e5672138ae950a6bf82d6639560780a79d1
