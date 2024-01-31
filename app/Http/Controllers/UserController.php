@@ -10,11 +10,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-  
-
-
-
-  
     public function create(array $input)
     {
         $user = new User();
@@ -24,14 +19,13 @@ class UserController extends Controller
         $user->rol_id = 1;
         $user->save();
 
-
         // $this->cartController->create($user->id); 
 
         $cart = new Cart(); //
         $cart->user_id = $user->id;
         $cart->save();
+        
         return $user;
-
     }
 
     

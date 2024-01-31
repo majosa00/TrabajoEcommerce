@@ -15,15 +15,11 @@ return new class extends Migration {
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            /*$table->enum('rol', ['admin', 'user'])->default('user');
-            //Para el Middleware, que comprueba si el usuario es administrador o no. Usuario por defecto*/
-
             $table->unsignedBigInteger('rol_id');
 
             $table->foreign('rol_id')
                     ->references('id')
                     ->on('rols')
-                    //Si se elimina el usuario, se elimina este rol
                     ->onUpdate('cascade'); //Si el usuario cambia el id, se cambia el id de este rol
             
             $table->timestamps();
