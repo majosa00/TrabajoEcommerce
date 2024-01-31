@@ -16,8 +16,8 @@ class Cart extends Model
         return $this->belongsTo(User::class);
     }
 
-    // Relación muchos a muchos con Product
-    public function products()
+    //Relación muchos a muchos (inversa)
+    public function product ()
     {
         return $this->belongsToMany(Product::class);
     }

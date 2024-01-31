@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreign('user_id')
                     ->references('id')
                     ->on('users')
-                    ->onDelete('cascade') //Si se elimina el usuario, se elimina este carrito
+                    //Si se elimina el usuario, se elimina este carrito
                     ->onUpdate('cascade'); //Si el usuario cambia el id, se cambia el id de este carrito
 
             $table->timestamps();

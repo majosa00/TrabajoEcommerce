@@ -4,5 +4,5 @@
         <script>
             document.write(new Date().getFullYear())
             </script> EnergeticWave - All rights reserved.
-</div>
+    </div>
 </footer>

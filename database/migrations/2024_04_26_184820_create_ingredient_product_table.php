@@ -20,11 +20,11 @@ return new class extends Migration
             $table->foreign('ingredient_id')
                     ->references('id')
                     ->on('ingredients')
-                    ->onDelete('cascade');
+                   ;
             $table->foreign('product_id')
                     ->references('id')
                     ->on('products')
-                    ->onDelete('cascade');            
+                   ;            
                     
             $table->timestamps();
 
