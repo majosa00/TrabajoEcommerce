@@ -17,8 +17,9 @@ return new class extends Migration {
             $table->rememberToken();
             /*$table->enum('rol', ['admin', 'user'])->default('user');
             //Para el Middleware, que comprueba si el usuario es administrador o no. Usuario por defecto*/
-            $table->unsignedBigInteger('rol_id'); 
-            
+
+            $table->unsignedBigInteger('rol_id');
+
             $table->foreign('rol_id')
                     ->references('id')
                     ->on('rols')

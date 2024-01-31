@@ -13,8 +13,8 @@ class ProductsSeeder extends Seeder
         Product::create( [
             'id' => 1,
             'name' => 'Blue Chameleon',
-            'description' => 'Bebida energética blue late, 250 ml.',
-            'flavor' => "Carbonatado",
+            'description' => 'Blue late energy drink, 250 ml.',
+            'flavor' => "Carbonated",
             'brand' => 'Blue Chameleon',
             'price' => 0.8,
             'dimension' => 10,
@@ -27,8 +27,8 @@ class ProductsSeeder extends Seeder
         Product::create( [
             'id' => '2',
             'name' => 'Burn Energy Drink',
-            'description' => 'Bebida energética con sabor suave y frescante, 500 ml.',
-            'flavor' => "Carbonatado",
+            'description' => 'Energy drink with a smooth and refreshing taste, 500 ml.',
+            'flavor' => "Carbonated",
             'brand' => 'Burn',
             'price' => '4.60',
             'dimension' => '50',
@@ -41,8 +41,8 @@ class ProductsSeeder extends Seeder
         Product::create( [
             'id' => '3',
             'name' => 'Red Bull Regular',
-            'description' => 'Bebida energética óptima para cuando necesitas un impulso, 250 ml.',
-            'flavor' => "Rosa",
+            'description' => 'Optimal energy drink for when you need a boost, 250 ml.',
+            'flavor' => "Pink",
             'brand' => 'Red Bull',
             'price' => '28',
             'dimension' => '25',
@@ -55,7 +55,7 @@ class ProductsSeeder extends Seeder
         Product::create( [
             'id' => '4',
             'name' => 'Monster Energy Original',
-            'description' => 'Bebida energética blue late, 250 ml.',
+            'description' => 'Blue late energy drink, 250 ml.',
             'flavor' => "Ginseng",
             'brand' => 'Monster',
             'price' => '6.68',
