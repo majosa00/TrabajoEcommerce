@@ -11,8 +11,8 @@
     <table class="table table-responsive">
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
+                <th>Name</th>
+                <th>Description</th>
             </tr>
         </thead>
         @foreach ($products as $product)
@@ -21,7 +21,7 @@
                 <td>{{ $product->description }}</td>
                 </td>
                 <td>
-                    <button class="btn btn-danger btn-sm" type="submit">Comprar</button>
+                    <button class="btn btn-danger btn-sm" type="submit">Buy</button>
                 </td>
             </tr>
         @endforeach
