@@ -48,7 +48,7 @@ class ProductController extends Controller
 
     $newProduct->save();
 
-    return redirect()->route('products.index')->with('mensaje', 'Producto agregado exitosamente');
+    return redirect()->route('products.index')->with('mensaje', 'Product added successfully');
 }
 
     
@@ -91,7 +91,7 @@ class ProductController extends Controller
         $productUpdate->iva = $request->iva;
         $productUpdate->save();
 
-        return back()->with('mensaje', 'Producto actualizado');
+        return back()->with('mensaje', 'Product updated');
     }
 
 
@@ -99,6 +99,6 @@ class ProductController extends Controller
     {
         $productDelete = Product::findOrFail($id);
         $productDelete->delete();
-        return back()->with('mensaje', 'Producto eliminado');
+        return back()->with('mensaje', 'Product removed');
     }
 }
