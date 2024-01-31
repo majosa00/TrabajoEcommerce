@@ -1,5 +1,6 @@
 <?php
 
+// App\Models\Cart.php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,16 +10,15 @@ class Cart extends Model
 {
     use HasFactory;
 
-    //Relación uno a uno
-    public function user ()
+    // Relación uno a uno con User
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
     //Relación muchos a muchos (inversa)
-    public function products ()
+    public function product ()
     {
         return $this->belongsToMany(Product::class);
     }
-
 }
