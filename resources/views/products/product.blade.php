@@ -1,5 +1,6 @@
 @extends('layaouts.app')
 
+
 @section('content')
     <div class="container">
         <h1>PRODUCTOS</h1>
