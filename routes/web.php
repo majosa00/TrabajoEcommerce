@@ -53,7 +53,18 @@ Route::post('/cart/add-to-cart/{productId}', [CartController::class, 'addToCart'
 Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
 Route::post('/cart/pay', [CartController::class, 'pay'])->name('cart.pay');
 
-//nombre de la ruta - controller - nombre función dentro del controlador - nombre es para renombrar la ruta porque está dentro de un formulario y queremos que tenga ese name
+
+Route::get('products', [ ProductController::class, 'products' ]);
+Route::get('products/{id}', [ ProductController::class, 'detail' ]);
+Route::get('new_product', [ ProductController::class, 'newProduct' ]);
+Route::post('products', [ ProductController::class, 'create' ]) -> name('products.create');
+Route::get('edit_product/{id}', [ ProductController::class, 'edit' ]) -> name('products.edit');
+Route::put('edit_product/{id}', [ ProductController::class, 'update' ]) -> name('products.update');
+Route::delete('delete_product/{id}', [ ProductController::class, 'delete' ]) -> name('products.delete');
+Route::get('productslist', [ ProductController::class, 'products' ])->name('products.index');
+Route::get('products', [ ProductController::class, 'products' ])->name('products.index');
+
+
 // Route::get('products', [ ProductController::class, 'products' ]);
 // Route::get('products/{id}', [ ProductController::class, 'detail' ]);
 // Route::get('new_product', [ ProductController::class, 'newProduct' ]);
