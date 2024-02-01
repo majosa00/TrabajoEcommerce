@@ -52,9 +52,13 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <li>
+                                <a class="dropdown-item" href="#">Profile</a>
+                                <!-- Enlace de Profile sin destino temporal -->
+                            </li>
+                            <li>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();">
+                                            document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -62,6 +66,7 @@
                                 </form>
                             </li>
                         </ul>
+
                     </li>
                 @endguest
             </ul>
