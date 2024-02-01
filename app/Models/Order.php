@@ -10,12 +10,12 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id_product',
-        'id_user',
+        'product_id',
+        'user_id',
         'state',
-        'id_payment',
+        //'id_payment',
         'orderDate',
-        'cartProduct_id_cart',
+        //'cartProduct_id_cart',
         'totalPrice',
     ];
 
@@ -27,9 +27,9 @@ class Order extends Model
     }
 
     //Relación muchos a muchos (inversa)
-    public function product ()
+    public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class)->withPivot('amount');
     }
 
 }
