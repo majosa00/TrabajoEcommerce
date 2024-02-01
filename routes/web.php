@@ -4,7 +4,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CartController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -49,7 +49,10 @@ Route::group([
     Route::delete('admin/delete_product/{id}', [ProductController::class, 'delete'])->name('products.delete');
 })->middleware(['auth', 'verified']);
 
-//nombre de la ruta - controller - nombre función dentro del controlador - nombre es para renombrar la ruta porque est´dentro de un formulario y queremos que tenga ese name
+Route::post('/cart/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('cart.addToCart');
+Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
+Route::post('/cart/pay', [CartController::class, 'pay'])->name('cart.pay');
+
 
 Route::get('products', [ ProductController::class, 'products' ]);
 Route::get('products/{id}', [ ProductController::class, 'detail' ]);
@@ -61,6 +64,7 @@ Route::delete('delete_product/{id}', [ ProductController::class, 'delete' ]) -> 
 Route::get('productslist', [ ProductController::class, 'products' ])->name('products.index');
 Route::get('products', [ ProductController::class, 'products' ])->name('products.index');
 
+
 // Route::get('products', [ ProductController::class, 'products' ]);
 // Route::get('products/{id}', [ ProductController::class, 'detail' ]);
 // Route::get('new_product', [ ProductController::class, 'newProduct' ]);
@@ -70,4 +74,3 @@ Route::get('products', [ ProductController::class, 'products' ])->name('products
 // Route::delete('delete_product/{id}', [ ProductController::class, 'delete' ]) -> name('products.delete');
 // Route::get('productslist', [ ProductController::class, 'products' ])->name('products.index');
 // Route::get('products', [ ProductController::class, 'products' ])->name('products.index');
-

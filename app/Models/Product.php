@@ -23,31 +23,31 @@ class Product extends Model
     ];
 
     //Relación uno a uno
-    public function discount ()
+    public function discount()
     {
         return $this->hasOne(Discount::class);
     }
 
     //Relación uno a muchos
-    public function image ()
+    public function image()
     {
         return $this->hasMany(Image::class);
     }
 
     //Relación muchos a muchos
-    public function order ()
+    public function orders()
     {
-        return $this->belongsToMany(Order::class);
+        return $this->belongsToMany(Order::class, 'order_product')->withPivot('amount');
     }
 
     //Relación muchos a muchos
-    public function cart ()
+    public function carts()
     {
-        return $this->belongsToMany(Cart::class);
+        return $this->belongsToMany(Cart::class)->withPivot('amount');
     }
 
     //Relación muchos a muchos
-    public function ingredient ()
+    public function ingredient()
     {
         return $this->belongsToMany(Ingredient::class);
     }
