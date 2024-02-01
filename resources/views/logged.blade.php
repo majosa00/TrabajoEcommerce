@@ -2,9 +2,9 @@
 <html>
 
 <head>
-    @vite(['resources/js/app.js', 'resources/css/app.scss']) 
-</head>
+    @vite(['resources/js/app.js', 'resources/css/app.scss'])
 
+</head>
 
 <body>
     <h1>PRODUCTOS</h1>

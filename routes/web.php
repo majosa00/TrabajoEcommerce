@@ -60,7 +60,7 @@ Route::put('edit_product/{id}', [ ProductController::class, 'update' ]) -> name(
 Route::delete('delete_product/{id}', [ ProductController::class, 'delete' ]) -> name('products.delete');
 Route::get('productslist', [ ProductController::class, 'products' ])->name('products.index');
 Route::get('products', [ ProductController::class, 'products' ])->name('products.index');
-=======
+
 // Route::get('products', [ ProductController::class, 'products' ]);
 // Route::get('products/{id}', [ ProductController::class, 'detail' ]);
 // Route::get('new_product', [ ProductController::class, 'newProduct' ]);
