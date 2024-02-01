@@ -1,4 +1,6 @@
-@extends('auth.template')
+<!-- @ extends('auth.template')    Antiguo navbar-->
+
+@extends('layaouts.app')
 
 @section('content')
     <div class="container">

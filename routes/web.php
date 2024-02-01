@@ -4,17 +4,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CartController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -49,21 +40,17 @@ Route::group([
     Route::delete('admin/delete_product/{id}', [ProductController::class, 'delete'])->name('products.delete');
 })->middleware(['auth', 'verified']);
 
-Route::post('/cart/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('cart.addToCart');
-Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
-Route::post('/cart/pay', [CartController::class, 'pay'])->name('cart.pay');
+//nombre de la ruta - controller - nombre función dentro del controlador - nombre es para renombrar la ruta porque est´dentro de un formulario y queremos que tenga ese name
 
-
-Route::get('products', [ ProductController::class, 'products' ]);
-Route::get('products/{id}', [ ProductController::class, 'detail' ]);
-Route::get('new_product', [ ProductController::class, 'newProduct' ]);
-Route::post('products', [ ProductController::class, 'create' ]) -> name('products.create');
-Route::get('edit_product/{id}', [ ProductController::class, 'edit' ]) -> name('products.edit');
-Route::put('edit_product/{id}', [ ProductController::class, 'update' ]) -> name('products.update');
-Route::delete('delete_product/{id}', [ ProductController::class, 'delete' ]) -> name('products.delete');
-Route::get('productslist', [ ProductController::class, 'products' ])->name('products.index');
-Route::get('products', [ ProductController::class, 'products' ])->name('products.index');
-
+Route::get('products', [ProductController::class, 'products']);
+Route::get('products/{id}', [ProductController::class, 'detail']);
+Route::get('new_product', [ProductController::class, 'newProduct']);
+Route::post('products', [ProductController::class, 'create'])->name('products.create');
+Route::get('edit_product/{id}', [ProductController::class, 'edit'])->name('products.edit');
+Route::put('edit_product/{id}', [ProductController::class, 'update'])->name('products.update');
+Route::delete('delete_product/{id}', [ProductController::class, 'delete'])->name('products.delete');
+Route::get('productslist', [ProductController::class, 'products'])->name('products.index');
+Route::get('products', [ProductController::class, 'products'])->name('products.index');
 
 // Route::get('products', [ ProductController::class, 'products' ]);
 // Route::get('products/{id}', [ ProductController::class, 'detail' ]);

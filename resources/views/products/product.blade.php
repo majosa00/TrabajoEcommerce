@@ -1,11 +1,12 @@
 @extends('layaouts.app')
 
+
 @section('content')
     <div class="container">
         <h1>PRODUCTOS</h1>
         <a href="{{ url('new_product') }}" class="btn btn-primary">Añadir Nuevo Producto</a>
 
-        <table border='1' class="table table-responsive">
+        <table class="table table-responsive">
             <thead>
                 <tr>
                     <th>Nombre</th>
