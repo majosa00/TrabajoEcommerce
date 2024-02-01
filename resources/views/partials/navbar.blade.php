@@ -17,16 +17,15 @@
                         Products
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-
-                        <li><a class="dropdown-item" href="#">Categoría 1</a></li>
+                        <li><a class="dropdown-item" href="/products">Todos los productos</a></li>
                         <li><a class="dropdown-item" href="#">Categoría 2</a></li>
-
                     </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Orders</a>
                 </li>
             </ul>
+
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="fas fa-heart"></i></a>

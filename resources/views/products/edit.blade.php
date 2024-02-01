@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html>
+@extends('layaouts.app')
 
-<head>
-
-</head>
-
-<body>
+@section('content')
     <h2>Editando el producto {{ $product->id }}</h2>
     @if (session('mensaje'))
         <div class="alert alert-success">{{ session('mensaje') }}</div>
@@ -71,6 +66,5 @@
 
         <button class="btn btn-primary btn-block" type="submit">Guardar cambios</button>
     </form>
-</body>
-
-</html>
+    </div>
+@endsection

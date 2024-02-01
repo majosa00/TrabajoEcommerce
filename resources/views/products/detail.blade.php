@@ -1,21 +1,55 @@
-<!DOCTYPE html>
-<html>
+@extends('layaouts.app')
 
-<head>
-
-</head>
-
-<body>
-    <p>Nombre: {{$product->name}}</p>
-    <p>Descripción: {{$product->description}}</p>
-    <p>Sabor: {{$product->flavor}}</p>
-    <p>Marca: {{$product->brand}}</p>
-    <p>Precio: {{$product->price}}</p>
-    <p>Dimensión: {{$product->dimension}}</p>
-    <p>Unidades por Paquete: {{$product->udpack}}</p>
-    <p>Peso: {{$product->weight}}</p>
-    <p>Stock: {{$product->stock}}</p>
-    <p>IVA: {{$product->iva}}</p>
-</body>
-
-</html>
+@section('content')
+    <div class="container">
+        <table class="table table-responsive-sm table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" colspan="2">Detalles del Producto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Nombre</th>
+                    <td>{{ $product->name }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Descripción</th>
+                    <td>{{ $product->description }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Sabor</th>
+                    <td>{{ $product->flavor }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Marca</th>
+                    <td>{{ $product->brand }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Precio</th>
+                    <td>{{ $product->price }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Dimensión</th>
+                    <td>{{ $product->dimension }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Unidades por Paquete</th>
+                    <td>{{ $product->udpack }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Peso</th>
+                    <td>{{ $product->weight }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Stock</th>
+                    <td>{{ $product->stock }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">IVA</th>
+                    <td>{{ $product->iva }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+@endsection
