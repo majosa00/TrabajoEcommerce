@@ -16,7 +16,7 @@ class ProductController extends Controller
     public function detail($id)
     {
         $product = Product::findOrFail($id);
-        return view('products.detail', @compact('product'));
+        return view('products.detail', @compact('product'));  
     }
 
     public function create(Request $request)
@@ -50,7 +50,6 @@ class ProductController extends Controller
 
     return redirect()->route('products.index')->with('mensaje', 'Product added successfully');
 }
-
     
     public function newProduct()
     {
