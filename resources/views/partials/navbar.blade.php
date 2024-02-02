@@ -18,7 +18,7 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item" href="/products">Todos los productos</a></li>
-                        <li><a class="dropdown-item" href="#">Categoría 2</a></li>
+                        <li><a class="dropdown-item" href="/productsbrands">Marcas</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -28,10 +28,10 @@
 
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-heart"></i></a>
+                    <a class="nav-link" href="/whislist"><i class="fas fa-heart"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-shopping-basket"></i></a>
+                    <a class="nav-link" href="/cart"><i class="fas fa-shopping-basket"></i></a>
                 </li>
 
                 <!-- Authentication Links -->
@@ -46,13 +46,13 @@
                     @endif
                 @else
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        <a class="nav-link dropdown-toggle" href="/profile" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user"></i> {{ Auth::user()->name }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <li>
-                                <a class="dropdown-item" href="#">Profile</a>
+                                <a class="dropdown-item" href="/profile">Profile</a>
                                 <!-- Enlace de Profile sin destino temporal -->
                             </li>
                             <li>
@@ -73,3 +73,4 @@
         </div>
     </div>
 </nav>
+<div class="mb-5"></div>
