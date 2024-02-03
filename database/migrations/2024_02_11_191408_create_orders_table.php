@@ -15,7 +15,7 @@ return new class extends Migration {
 
             //$table->integer('product_id');
             $table->integer('user_id');
-            $table->string('state');
+            $table->enum('state', ['pending', 'processing', 'completed']);
             //$table->integer('payment_id');
             $table->date('orderDate');
             //$table->integer('cartProduct_id_cart');

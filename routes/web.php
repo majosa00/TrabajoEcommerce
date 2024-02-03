@@ -12,7 +12,8 @@ Route::get('/', function () {
 });
 
 Route::get('products', [UserController::class, 'products']);
-Route::get('orders', [OrderController::class, 'ordersByID']);
+Route::get('orders', [OrderController::class, 'showOrder']);
+Route::get('new_order', [OrderController::class, 'createOrder']);
 
 //Pedir que el correo sea verificado
 Route::get('home', function () {
