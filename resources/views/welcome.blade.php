@@ -1,7 +1,7 @@
-@extends('layaouts.app')
+@extends('layaouts.app3')
 
 @section('content')
-    <div class="container">
+    <div class="container p-5">
 
     </div>
 @endsection

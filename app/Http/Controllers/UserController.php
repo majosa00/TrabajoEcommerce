@@ -24,11 +24,10 @@ class UserController extends Controller
         $cart = new Cart(); //
         $cart->user_id = $user->id;
         $cart->save();
-        
+
         return $user;
     }
 
-    
     public function products()
     {
         $products = Product::all();

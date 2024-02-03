@@ -11,37 +11,15 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Products
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-<<<<<<< HEAD
-                        <li><a class="dropdown-item" href="/products">Todos los productos</a></li>
-                        <li><a class="dropdown-item" href="/productsbrands">Marcas</a></li>
-=======
-                        <li><a class="dropdown-item" href="/products">Products</a></li>
-                        <li><a class="dropdown-item" href="/productsbrands">Brands</a></li>
->>>>>>> origin/main
-                    </ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="products">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/orders">Orders</a>
+                    <a class="nav-link" href="orderadmin">Orders</a>
                 </li>
             </ul>
 
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-<<<<<<< HEAD
-                    <a class="nav-link" href="/whislist"><i class="fas fa-heart"></i></a>
-=======
-                    <a class="nav-link" href="/wishlist"><i class="fas fa-heart"></i></a>
->>>>>>> origin/main
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/cart"><i class="fas fa-shopping-basket"></i></a>
-                </li>
 
                 <!-- Authentication Links -->
                 @guest
@@ -55,7 +33,7 @@
                     @endif
                 @else
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/profile" id="navbarDropdown" role="button"
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user"></i> {{ Auth::user()->name }}
                         </a>
@@ -82,4 +60,3 @@
         </div>
     </div>
 </nav>
-<div class="mb-5"></div>
