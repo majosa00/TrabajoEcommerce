@@ -28,7 +28,6 @@ class OrderConfirmation extends Mailable
         $this->logoUrl = asset('images/energeticwave-logo.png');
 
     }
-
     /**
      * Build the message.
      *
