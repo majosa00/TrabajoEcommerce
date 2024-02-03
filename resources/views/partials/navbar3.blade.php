@@ -11,29 +11,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Products
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="/products">Products</a></li>
-                        <li><a class="dropdown-item" href="/productsbrands">Brands</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/orders">Orders</a>
-                </li>
+            
             </ul>
 
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/wishlist"><i class="fas fa-heart"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/cart"><i class="fas fa-shopping-basket"></i></a>
-                </li>
-
                 <!-- Authentication Links -->
                 @guest
                     <li class="nav-item">
