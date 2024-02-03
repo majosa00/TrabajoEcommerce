@@ -1,16 +1,20 @@
 @component('mail::message')
-# Order Confirmation
+# Gracias por tu compra en EnergeticWave
 
-Thank you for your purchase!
-
-Here are the details of your order:
+Aquí los detalles de tu pedido:
 
 @foreach ($order->products as $product)
-- {{ $product->name }} x{{ $product->pivot->amount }}: ${{ $product->price }}
+- **Producto:** {{ $product->name }}
+  **Cantidad:** {{ $product->pivot->amount }}
+  **Precio:** ${{ number_format($product->price, 2) }}
 @endforeach
 
-**Total Price:** ${{ $order->totalPrice }}
+**Precio Total:** ${{ number_format($order->totalPrice, 2) }}
 
-Thanks,<br>
+![Icono de EnergeticWave]({{ $logoUrl }})
+
+Gracias por confiar en EnergeticWave. ¡Esperamos que disfrutes de tus productos!
+
+Saludos,
 {{ config('app.name') }}
 @endcomponent

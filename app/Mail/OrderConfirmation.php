@@ -13,6 +13,7 @@ class OrderConfirmation extends Mailable
     use Queueable, SerializesModels;
 
     public $order;
+    public $logoUrl;
 
     /**
      * Create a new message instance.
@@ -23,6 +24,9 @@ class OrderConfirmation extends Mailable
     public function __construct(Order $order)
     {
         $this->order = $order;
+        // Asegúrate de reemplazar 'url_publica_de_la_imagen' con la URL real de tu imagen
+        $this->logoUrl = asset('images/energeticwave-logo.png');
+
     }
 
     /**
@@ -33,6 +37,6 @@ class OrderConfirmation extends Mailable
     public function build()
     {
         return $this->markdown('emails.orders.confirmation')
-                    ->subject('Order Confirmation');
+            ->subject('Order Confirmation');
     }
 }
