@@ -8,6 +8,8 @@ use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderConfirmation; // Asegúrate de haber creado esta Mailable
 
 class CartController extends Controller
 {
@@ -44,7 +46,6 @@ class CartController extends Controller
 
     public function viewCart()
     {
-
         //Obtener el usuario autenticado actualmente
         $user = Auth::user();
 
@@ -73,18 +74,19 @@ class CartController extends Controller
         //Crear nuevo pedido
         $order = new Order();
         $order->user_id = $user->id;
-
         //Completar campos del pedido
         $order->state = 'Pending'; //Los pedidos estarán en pendiente de inicio
         $order->orderDate = now();
         $order->totalPrice = $cart->products->sum('price'); // Calcular el precio total desde los productos en el carrito
         $order->save();
 
+        // Enviar correo electrónico
+        Mail::to($user->email)->send(new OrderConfirmation($order));
+
         // Puedes limpiar el carrito después de realizar el pedido si es necesario
         $cart->products()->detach();
 
         return redirect()->route('cart.view')->with('success', 'Payment successful!');
-
     }
 
     public function remove($productId){

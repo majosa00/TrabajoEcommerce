@@ -14,7 +14,26 @@ class OrderController extends Controller
         return view('/orderadmin')->with('orders', $orders);
     }
 
-    public function ordersByID ()
+    public function createOrder ($orderId, $productId, $amount)
+    {
+
+        //Obtener el usuario autenticado actualmente
+        $user = Auth::user();
+
+        //Verificar si ya existe un registro en order_product para este producto en el pedido actual
+        $existingRecord = $user->orders()->find($orderId)->products()->where('product_id', $productId)->first();
+
+        if ($existingRecord) {
+            //Si ya existe, actualizar la cantidad
+            $existingRecord->pivot->amount += $amount;
+            $existingRecord->pivot->save();
+        } else {
+            //Si no existe, crear un nuevo registro
+            $user->orders()->find($orderId)->products()->attach($productId, ['amount' => $amount]);
+        }
+    }
+
+    public function showOrder ()
     {
 
         //Obtener el usuario autenticado actualmente
