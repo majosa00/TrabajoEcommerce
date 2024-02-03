@@ -46,6 +46,8 @@ Route::post('/cart/add-to-cart/{productId}', [CartController::class, 'addToCart'
 //Pagar
 Route::post('/cart/pay', [CartController::class, 'pay'])->name('cart.pay');
 
+Route::delete('/cart/remove/{productId}', [CartController::class, 'remove'])->name('cart.remove');
+
 //Faltan:
 // Route::get('/wishlist', [UserController::class, 'products']);
 // Route::get('/productsbrands', [UserController::class, 'products']);

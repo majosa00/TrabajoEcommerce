@@ -76,4 +76,16 @@ class CartController extends Controller
         return redirect()->route('cart.view')->with('success', 'Payment successful!');
 
     }
+
+    public function remove($productId){
+        $user = Auth::user();//obtencion del usuario
+        $cart = $user->cart;
+    
+        if ($cart) {
+            $cart->products()->detach($productId);
+            return back()->with('success', 'Producto eliminado .');
+        }
+    
+        return back()->with('error', 'No hay carro.');
+    }
 }
