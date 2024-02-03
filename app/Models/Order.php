@@ -29,7 +29,12 @@ class Order extends Model
     //Relación muchos a muchos (inversa)
     public function products()
     {
-        return $this->belongsToMany(Product::class)->withPivot('amount');
+        return $this->belongsToMany(Product::class, 'order_product')->withPivot('amount');
     }
 
+    //Relación uno a muchos (inversa)
+    public function user ()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

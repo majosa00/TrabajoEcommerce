@@ -46,7 +46,7 @@ Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
 Route::post('/cart/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('cart.addToCart');
 //Pagar
 Route::post('/cart/pay', [CartController::class, 'pay'])->name('cart.pay');
-
+//Eliminar producto del carrito
 Route::delete('/cart/remove/{productId}', [CartController::class, 'remove'])->name('cart.remove');
 
 //Faltan:
