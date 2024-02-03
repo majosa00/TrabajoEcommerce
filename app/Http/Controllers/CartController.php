@@ -77,7 +77,10 @@ class CartController extends Controller
         //Completar campos del pedido
         $order->state = 'Pending'; //Los pedidos estarán en pendiente de inicio
         $order->orderDate = now();
-        $order->totalPrice = $cart->products->sum('price'); // Calcular el precio total desde los productos en el carrito
+        $totalPrice = $cart->products()->withPivot('amount')->get()->sum(function ($product) {// Calcular el precio total desde los productos en el carrito
+            return $product->price * $product->pivot->amount;  
+        });
+        $order->totalPrice = $totalPrice;
         $order->save();
 
         // Enviar correo electrónico
