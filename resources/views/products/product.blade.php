@@ -1,19 +1,19 @@
-@extends('layaouts.app')
-
+@extends('layaouts.app2')
 
 @section('content')
-    <div class="container">
-        <h1>PRODUCTOS</h1>
-        <a href="{{ url('new_product') }}" class="btn btn-primary">Añadir Nuevo Producto</a>
+    <div class="container p-5">
+        <h1 class="mb-3">PRODUCTS</h1>
+        <a href="{{ url('new_product') }}" class="btn btn-warning mb-4">
+            <i class="fas fa-plus"></i> New Product </a>
 
         <table class="table table-responsive">
             <thead>
                 <tr>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Detalles</th>
-                    <th>Editar</th>
-                    <th>Eliminar</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Details</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,13 +21,17 @@
                     <tr>
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->description }}</td>
-                        <td><a href="{{ url('products/' . $product->id) }}">Ver detalles</a></td>
-                        <td><a href="{{ route('products.edit', $product) }}" class="btn btn-warning btn-sm"> Editar </a></td>
+                        <td><a href="{{ url('products/' . $product->id) }}" class="btn btn-primary btn-sm"><i
+                                    class="fas fa-eye"></i> Details </a></td>
+                        <td><a href="{{ route('products.edit', $product) }}" class="btn btn-warning btn-sm">
+                                <i class="fas fa-edit"></i> Edit </a>
+                        </td>
                         <td>
                             <form action="{{ route('products.delete', $product->id) }}" method="POST" class="d-inline">
                                 @method('DELETE')
                                 @csrf
-                                <button class="btn btn-danger btn-sm" type="submit">Eliminar</button>
+                                <button class="btn btn-danger btn-sm" type="submit">
+                                    <i class="fas fa-trash-alt"></i> Delete </button>
                             </form>
                         </td>
                     </tr>

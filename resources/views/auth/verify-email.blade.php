@@ -3,7 +3,7 @@
 @extends('layaouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container p-5">
         <div class="row justify-content-center">
             @if (session('status'))
                 <div class="alert alert-success" role="alert">
@@ -30,7 +30,7 @@
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary" value="Resend">
+                                    <button type="submit" class="btn btn-warning" value="Resend">
                                         {{ __('Resend Email') }}
                                     </button>
 
