@@ -1,7 +1,7 @@
-@extends('layaouts.app')
+@extends('layaouts.app2')
 
 @section('content')
-    <div class="container">
+    <div class="container p-5">
         <table class="table table-responsive-sm table-bordered table-hover">
             <thead class="thead-dark">
                 <tr>
