@@ -88,3 +88,31 @@ body .navbar {
     vertical-align: bottom;
     border-bottom: 2px solid #dee2e6;
 }
+
+/*Marta*/
+.cards_inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2em;
+}
+
+.card {
+    padding: 1.5em 2em;
+    gap: 0.15em;
+    color: #eceff1;
+    background-color: rgba(0, 0, 0, 0.9);
+    border: 1px solid rgba(19, 19, 19, 0.9);
+    border-radius: 15px;
+    width: 15vw;
+    height: auto;
+}
+
+.cards_inner img {
+    width: 30%;
+}
+
+.price-container {
+    display: flex;
+    justify-content: space-between;
+}
+
