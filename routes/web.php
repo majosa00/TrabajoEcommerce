@@ -14,6 +14,7 @@ Route::get('/', function () {
 Route::get('products', [UserController::class, 'products']);
 Route::get('orders', [OrderController::class, 'showOrder']);
 Route::get('new_order', [OrderController::class, 'createOrder']);
+Route::get('productsbrands', [UserController::class, 'brands']);
 
 //Pedir que el correo sea verificado
 Route::get('home', function () {
@@ -30,6 +31,7 @@ Route::group([
     // 'prefix' => 'admin',
     'namespace' => 'Admin'
 ], function () {
+    //Productos
     Route::get('admin/products', [ProductController::class, 'products']);
     Route::get('admin/products/{id}', [ProductController::class, 'detail']);
     Route::get('admin/new_product', [ProductController::class, 'newProduct']);
@@ -37,7 +39,16 @@ Route::group([
     Route::get('admin/edit_product/{id}', [ProductController::class, 'edit'])->name('products.edit');
     Route::put('admin/edit_product/{id}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('admin/delete_product/{id}', [ProductController::class, 'delete'])->name('products.delete');
+    //Pedidos
     Route::get('admin/orderadmin', [OrderController::class, 'orders']);
+    //Marcas
+    Route::get('admin/brands', [ProductController::class, 'brands']);
+    Route::get('admin/brands/{id}', [ProductController::class, 'detailBrands']);
+    Route::get('admin/new_brand', [ProductController::class, 'newBrand']);
+    Route::post('admin/brands', [ProductController::class, 'createBrands'])->name('brands.createBrand');
+    Route::get('admin/edit_brand/{id}', [ProductController::class, 'editBrand'])->name('brands.editBrand');
+    Route::put('admin/edit_brand/{id}', [ProductController::class, 'updateBrand'])->name('brands.updateBrand');
+    Route::delete('admin/delete_brand/{id}', [ProductController::class, 'deleteBrand'])->name('brands.deleteBrand');
 })->middleware(['auth', 'verified']);
 
 //Ruta carrito
@@ -51,7 +62,6 @@ Route::delete('/cart/remove/{productId}', [CartController::class, 'remove'])->na
 
 //Faltan:
 // Route::get('/wishlist', [UserController::class, 'products']);
-// Route::get('/productsbrands', [UserController::class, 'products']);
 // Route::get('/profile', [UserController::class, 'products']);
 // Route::get('/shipping', [UserController::class, 'products']);
 

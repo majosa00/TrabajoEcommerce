@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\User;
@@ -32,5 +33,11 @@ class UserController extends Controller
     {
         $products = Product::all();
         return view('/logged')->with('products', $products);
+    }
+
+    public function brands()
+    {
+        $brands = Brand::all();
+        return view('productsbrands')->with('brands', $brands);
     }
 }

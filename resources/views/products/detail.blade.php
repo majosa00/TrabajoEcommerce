@@ -5,40 +5,40 @@
         <table class="table table-responsive-sm table-bordered table-hover">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col" colspan="2">Detalles del Producto</th>
+                    <th scope="col" colspan="2">Product Details</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <th scope="row">Nombre</th>
+                    <th scope="row">Name</th>
                     <td>{{ $product->name }}</td>
                 </tr>
                 <tr>
-                    <th scope="row">Descripción</th>
+                    <th scope="row">Description</th>
                     <td>{{ $product->description }}</td>
                 </tr>
                 <tr>
-                    <th scope="row">Sabor</th>
+                    <th scope="row">Flavor</th>
                     <td>{{ $product->flavor }}</td>
                 </tr>
                 <tr>
-                    <th scope="row">Marca</th>
+                    <th scope="row">Brand</th>
                     <td>{{ $product->brand }}</td>
                 </tr>
                 <tr>
-                    <th scope="row">Precio</th>
+                    <th scope="row">Price</th>
                     <td>{{ $product->price }}</td>
                 </tr>
                 <tr>
-                    <th scope="row">Dimensión</th>
+                    <th scope="row">Dimension</th>
                     <td>{{ $product->dimension }}</td>
                 </tr>
                 <tr>
-                    <th scope="row">Unidades por Paquete</th>
+                    <th scope="row">Units per package</th>
                     <td>{{ $product->udpack }}</td>
                 </tr>
                 <tr>
-                    <th scope="row">Peso</th>
+                    <th scope="row">Weight</th>
                     <td>{{ $product->weight }}</td>
                 </tr>
                 <tr>
