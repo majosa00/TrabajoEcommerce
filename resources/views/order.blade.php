@@ -8,6 +8,7 @@
                 <tr>
                     <th>ID Order</th>
                     <th>Products</th>
+                    <th>Amount</th>
                     <th>Order Date</th>
                     <th>Total Price</th>
                     <th>State</th>
@@ -17,9 +18,18 @@
                 <tr>
                     <td>{{ $order->id }}</td>
                     <td>
-                        @foreach ($order->productIds as $productId)
-                                <li>{{ $productId->name }}</li>
-                        @endforeach
+                        <ul class="list-unstyled">
+                            @foreach ($order->products as $product)
+                                <li>{{ $product->name }}</li>
+                            @endforeach
+                        </ul>
+                    </td>
+                    <td>
+                        <ul class="list-unstyled">
+                            @foreach ($order->products as $product)
+                                <li>{{ $product->pivot->amount }}</li>
+                            @endforeach
+                        </ul>
                     </td>
                     <td>{{ $order->orderDate }}</td>
                     <td>{{ $order->totalPrice }} $</td>

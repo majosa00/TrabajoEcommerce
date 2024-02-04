@@ -84,8 +84,19 @@ class CartController extends Controller
         $order->totalPrice = $totalPrice;
         $order->save();
 
+        foreach ($cart->products as $product) {
+            $productId = $product->id;
+
+            // Obtener la cantidad desde la tabla pivote cartproduct
+            $pivotData = $cart->products()->where('product_id', $productId)->first()->pivot;
+            $amount = $pivotData->amount; // Asumiendo que la cantidad está almacenada en la columna 'amount' de la tabla pivote
+
+            // Asociar el producto y la cantidad al pedido
+            $order->products()->attach($productId, ['amount' => $amount]);
+        }
+
         //Enviar correo electrónico (comentado mientras practicamos para no tener 21701293 correos)
-        //Mail::to($user->email)->send(new OrderConfirmation($order));
+        Mail::to($user->email)->send(new OrderConfirmation($order));
 
         //Puedes limpiar el carrito después de realizar el pedido si es necesario
         $cart->products()->detach();
