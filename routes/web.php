@@ -15,6 +15,13 @@ Route::get('products', [UserController::class, 'products']);
 Route::get('orders', [OrderController::class, 'showOrder']);
 Route::get('new_order', [OrderController::class, 'createOrder']);
 Route::get('productsbrands', [UserController::class, 'brands']);
+Route::get('profile', [UserController::class, 'profile']);
+Route::get('profile/change-password', [UserController::class, 'changePassword'])->name('profile.changepassword');
+//Direcciones de envío
+Route::get('profile/change-address', [UserController::class, 'changeAddress'])->name('profile.changeaddress');
+Route::get('profile/update-address', [UserController::class, 'updateAddress'])->name('profile.updateaddress');
+Route::get('profile/save-address', [UserController::class, 'saveAddress'])->name('profile.saveaddress');
+Route::get('profile/delete-address', [UserController::class, 'deleteAddress'])->name('profile.deleteaddress');
 
 //Pedir que el correo sea verificado
 Route::get('home', function () {
@@ -62,7 +69,6 @@ Route::delete('/cart/remove/{productId}', [CartController::class, 'remove'])->na
 
 //Faltan:
 // Route::get('/wishlist', [UserController::class, 'products']);
-// Route::get('/profile', [UserController::class, 'products']);
 // Route::get('/shipping', [UserController::class, 'products']);
 
 //nombre de la ruta - controller - nombre función dentro del controlador - nombre es para renombrar la ruta porque est´dentro de un formulario y queremos que tenga ese name
