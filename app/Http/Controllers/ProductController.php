@@ -25,16 +25,16 @@ class ProductController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'flavor' => 'required',
-            'brand' => 'required',
-            'price' => 'required|numeric',
-            'dimension' => 'required|numeric',
-            'udpack' => 'required|integer',
-            'weight' => 'required|numeric',
-            'stock' => 'required|integer',
-            'iva' => 'required|numeric'
+            'name' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
+            'description' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
+            'flavor' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
+            'brand' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
+            'price' => 'required|numeric|min:0',
+            'dimension' => 'required|numeric|min:0',
+            'udpack' => 'required|integer|min:0',
+            'weight' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'iva' => 'required|numeric|min:0'
         ]);
 
         $newProduct = new Product;
@@ -68,16 +68,16 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'flavor' => 'required',
-            'brand' => 'required',
-            'price' => 'required|numeric',
-            'dimension' => 'required|numeric',
-            'udpack' => 'required|integer',
-            'weight' => 'required|numeric',
-            'stock' => 'required|integer',
-            'iva' => 'required|numeric',
+            'name' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
+            'description' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
+            'flavor' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
+            'brand' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
+            'price' => 'required|numeric|min:0',
+            'dimension' => 'required|numeric|min:0',
+            'udpack' => 'required|integer|min:0',
+            'weight' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'iva' => 'required|numeric|min:0'
         ]);
 
         $productUpdate = Product::findOrFail($id);
@@ -121,7 +121,7 @@ class ProductController extends Controller
     public function createBrands(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:brands,name|max:255',
         ]);
 
         $newBrand = new Brand;
@@ -145,7 +145,7 @@ class ProductController extends Controller
     public function updateBrand(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:brands,name|max:255',
         ]);
 
         $brandUpdate = Brand::findOrFail($id);
