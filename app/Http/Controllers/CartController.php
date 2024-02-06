@@ -19,15 +19,15 @@ class CartController extends Controller
         $user = Auth::user();
         // Buscar en la base de datos el ID del producto
         $product = Product::find($productId);
-    
+
         if (!$product) { // Si no lo encuentra, vuelve a la página anterior con un mensaje de error
             return back()->with('error', 'Product not found.');
         }
-    
+
         // Busca el carrito asociado al usuario, si no existe lo crea
         $cart = $user->cart ?? new Cart(['user_id' => $user->id]);
         $cart->save();
-    
+
         // Verificar si el producto ya está en el carrito
         if ($cart->products()->where('product_id', $productId)->exists()) {
             // Obtener el registro pivot para ese producto
@@ -39,7 +39,7 @@ class CartController extends Controller
             // Asocia el carrito al producto del usuario con una cantidad de 1 si el producto no está en el carrito
             $cart->products()->attach($productId, ['amount' => 1]);
         }
-    
+
         // Si funciona, redirige a la página anterior con un mensaje de éxito indicando que el producto fue añadido al carrito
         return redirect()->route('cart.view')->with('success', 'Product added to the cart.');
     }
@@ -58,7 +58,7 @@ class CartController extends Controller
         } else {
             $products = collect();
         }
-        
+
 
         return view('products.cart', compact('products'));
     }
@@ -74,30 +74,46 @@ class CartController extends Controller
         //Crear nuevo pedido
         $order = new Order();
         $order->user_id = $user->id;
+
         //Completar campos del pedido
         $order->state = 'Pending'; //Los pedidos estarán en pendiente de inicio
         $order->orderDate = now();
-        $order->totalPrice = $cart->products->sum('price'); // Calcular el precio total desde los productos en el carrito
+        $totalPrice = $cart->products->sum(function ($product) {
+            return $product->price * $product->pivot->amount;
+        });
+        $order->totalPrice = $totalPrice;
         $order->save();
 
-        // Enviar correo electrónico
+        foreach ($cart->products as $product) {
+            $productId = $product->id;
+
+            // Obtener la cantidad desde la tabla pivote cartproduct
+            $pivotData = $cart->products()->where('product_id', $productId)->first()->pivot;
+            $amount = $pivotData->amount; // Asumiendo que la cantidad está almacenada en la columna 'amount' de la tabla pivote
+
+            // Asociar el producto y la cantidad al pedido
+            $order->products()->attach($productId, ['amount' => $amount]);
+        }
+
+        //Enviar correo electrónico (comentado mientras practicamos para no tener 21701293 correos)
         Mail::to($user->email)->send(new OrderConfirmation($order));
 
-        // Puedes limpiar el carrito después de realizar el pedido si es necesario
+        //Puedes limpiar el carrito después de realizar el pedido si es necesario
         $cart->products()->detach();
 
         return redirect()->route('cart.view')->with('success', 'Payment successful!');
     }
 
-    public function remove($productId){
-        $user = Auth::user();//obtencion del usuario
-        $cart = $user->cart;//
-    
+    public function remove($productId)
+    {
+        $user = Auth::user(); //obtencion del usuario
+        $cart = $user->cart; //
+
         if ($cart) {
             $cart->products()->detach($productId);
             return back()->with('success', 'Producto eliminado .');
         }
-    
+
         return back()->with('error', 'No hay carro.');
     }
 }

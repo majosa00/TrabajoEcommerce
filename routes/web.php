@@ -14,6 +14,14 @@ Route::get('/', function () {
 Route::get('products', [UserController::class, 'products']);
 Route::get('orders', [OrderController::class, 'showOrder']);
 Route::get('new_order', [OrderController::class, 'createOrder']);
+Route::get('productsbrands', [UserController::class, 'brands']);
+Route::get('profile', [UserController::class, 'profile']);
+Route::get('profile/change-password', [UserController::class, 'changePassword'])->name('profile.changepassword');
+//Direcciones de envío
+Route::get('profile/change-address', [UserController::class, 'changeAddress'])->name('profile.changeaddress');
+Route::get('profile/update-address', [UserController::class, 'updateAddress'])->name('profile.updateaddress');
+Route::get('profile/save-address', [UserController::class, 'saveAddress'])->name('profile.saveaddress');
+Route::get('profile/delete-address', [UserController::class, 'deleteAddress'])->name('profile.deleteaddress');
 
 //Pedir que el correo sea verificado
 Route::get('home', function () {
@@ -30,6 +38,7 @@ Route::group([
     // 'prefix' => 'admin',
     'namespace' => 'Admin'
 ], function () {
+    //Productos
     Route::get('admin/products', [ProductController::class, 'products']);
     Route::get('admin/products/{id}', [ProductController::class, 'detail']);
     Route::get('admin/new_product', [ProductController::class, 'newProduct']);
@@ -37,7 +46,14 @@ Route::group([
     Route::get('admin/edit_product/{id}', [ProductController::class, 'edit'])->name('products.edit');
     Route::put('admin/edit_product/{id}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('admin/delete_product/{id}', [ProductController::class, 'delete'])->name('products.delete');
+    //Pedidos
     Route::get('admin/orderadmin', [OrderController::class, 'orders']);
+    //Marcas
+    Route::get('admin/brands', [ProductController::class, 'brands']);
+    Route::post('admin/brands', [ProductController::class, 'createBrands'])->name('brands.createBrand');
+    Route::get('admin/edit_brand/{id}', [ProductController::class, 'editBrand'])->name('brands.editBrand');
+    Route::put('admin/edit_brand/{id}', [ProductController::class, 'updateBrand'])->name('brands.updateBrand');
+    Route::delete('admin/delete_brand/{id}', [ProductController::class, 'deleteBrand'])->name('brands.deleteBrand');
 })->middleware(['auth', 'verified']);
 
 //Ruta carrito
@@ -46,13 +62,21 @@ Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
 Route::post('/cart/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('cart.addToCart');
 //Pagar
 Route::post('/cart/pay', [CartController::class, 'pay'])->name('cart.pay');
-
+//Eliminar producto del carrito
 Route::delete('/cart/remove/{productId}', [CartController::class, 'remove'])->name('cart.remove');
+
+
+
+
+Route::get('/language/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'es'])) {
+        session()->put('locale', $locale);
+    }
+    return back();
+});
 
 //Faltan:
 // Route::get('/wishlist', [UserController::class, 'products']);
-// Route::get('/productsbrands', [UserController::class, 'products']);
-// Route::get('/profile', [UserController::class, 'products']);
 // Route::get('/shipping', [UserController::class, 'products']);
 
 //nombre de la ruta - controller - nombre función dentro del controlador - nombre es para renombrar la ruta porque est´dentro de un formulario y queremos que tenga ese name

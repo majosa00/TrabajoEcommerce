@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -9,48 +10,50 @@ class ProductController extends Controller
 {
     public function products()
     {
-        $products = Product::all();
+        // Ordena los productos por fecha de creación de manera descendente
+        $products = Product::orderBy('created_at', 'desc')->get();
         return view('products.product')->with('products', $products);
     }
+
 
     public function detail($id)
     {
         $product = Product::findOrFail($id);
-        return view('products.detail', @compact('product'));  
+        return view('products.detail', @compact('product'));
     }
 
     public function create(Request $request)
-{
-    $request->validate([
-        'name' => 'required',
-        'description' => 'required',
-        'flavor' => 'required',
-        'brand' => 'required',
-        'price' => 'required|numeric',
-        'dimension' => 'required|numeric',
-        'udpack' => 'required|integer',
-        'weight' => 'required|numeric',
-        'stock' => 'required|integer',
-        'iva' => 'required|numeric'
-    ]);
+    {
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'flavor' => 'required',
+            'brand' => 'required',
+            'price' => 'required|numeric',
+            'dimension' => 'required|numeric',
+            'udpack' => 'required|integer',
+            'weight' => 'required|numeric',
+            'stock' => 'required|integer',
+            'iva' => 'required|numeric'
+        ]);
 
-    $newProduct = new Product;
-    $newProduct->name = $request->name;
-    $newProduct->description = $request->description;
-    $newProduct->flavor = $request->flavor;
-    $newProduct->brand = $request->brand;
-    $newProduct->price = $request->price;
-    $newProduct->dimension = $request->dimension;
-    $newProduct->udpack = $request->udpack;
-    $newProduct->weight = $request->weight;
-    $newProduct->stock = $request->stock;
-    $newProduct->iva = $request->iva;
+        $newProduct = new Product;
+        $newProduct->name = $request->name;
+        $newProduct->description = $request->description;
+        $newProduct->flavor = $request->flavor;
+        $newProduct->brand = $request->brand;
+        $newProduct->price = $request->price;
+        $newProduct->dimension = $request->dimension;
+        $newProduct->udpack = $request->udpack;
+        $newProduct->weight = $request->weight;
+        $newProduct->stock = $request->stock;
+        $newProduct->iva = $request->iva;
 
-    $newProduct->save();
+        $newProduct->save();
 
-    return redirect()->route('products.index')->with('mensaje', 'Product added successfully');
-}
-    
+        return redirect()->route('products.create')->with('mensaje', 'Product added successfully');
+    }
+
     public function newProduct()
     {
         return view('products.create');
@@ -100,4 +103,65 @@ class ProductController extends Controller
         $productDelete->delete();
         return back()->with('mensaje', 'Product removed');
     }
+
+    public function brands()
+    {
+        // Ordena las marcas por fecha de creación de manera descendente
+        $brands = Brand::orderBy('created_at', 'desc')->get();
+        return view('brands.brand')->with('brands', $brands);
+    }
+
+
+    public function detailBrands($id)
+    {
+        $brand = Brand::findOrFail($id);
+        return view('brands.detail', @compact('brand'));
+    }
+
+    public function createBrands(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $newBrand = new Brand;
+        $newBrand->name = $request->input('name');
+        $newBrand->save();
+
+        return redirect()->route('brands.createBrand')->with('mensaje', 'Brand added successfully');
+    }
+
+    public function newBrand()
+    {
+        return view('brands.create');
+    }
+
+    public function editBrand($id)
+    {
+        $brand = Brand::findOrFail($id);
+        return view('brands.edit', compact('brand'));
+    }
+
+    public function updateBrand(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $brandUpdate = Brand::findOrFail($id);
+        $brandUpdate->update($request->all());
+
+        return back()->with('mensaje', 'Brand updated');
+    }
+
+
+    public function deleteBrand($id)
+    {
+        $brandDelete = Brand::findOrFail($id);
+        $brandDelete->delete();
+        return back()->with('mensaje', 'Brand removed');
+    }
+
+
+
 }

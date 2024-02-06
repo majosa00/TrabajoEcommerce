@@ -1,8 +1,8 @@
-@extends('layaouts.app')
+@extends('layaouts.app2')
 
 @section('content')
-    <div class="container">
-        <h2>Editando el producto {{ $product->id }}</h2>
+    <div class="container p-5">
+        <h2 class="mb-3">Edit Product: {{ $product->name }}</h2>
         @if (session('mensaje'))
             <div class="alert alert-success">{{ session('mensaje') }}</div>
         @endif
@@ -13,60 +13,60 @@
 
             {{-- Validación errores --}}
             @error('name')
-                <div class="alert alert-danger"> El nombre es obligatorio </div>
+                <div class="alert alert-danger"> The name is required </div>
             @enderror
             @error('description')
-                <div class="alert alert-danger"> La descripción es obligatoria </div>
+                <div class="alert alert-danger"> The description is required </div>
             @enderror
             @error('flavor')
-                <div class="alert alert-danger"> El sabor es obligatorio </div>
+                <div class="alert alert-danger"> The flavor is required </div>
             @enderror
             @error('brand')
-                <div class="alert alert-danger"> La marca es obligatoria </div>
+                <div class="alert alert-danger"> The brand is required </div>
             @enderror
             @error('price')
-                <div class="alert alert-danger"> El precio es obligatorio y debe ser numérico </div>
+                <div class="alert alert-danger"> The price is required and must be numeric </div>
             @enderror
             @error('dimension')
-                <div class="alert alert-danger"> La dimensión es obligatoria y debe ser numérica </div>
+                <div class="alert alert-danger"> The dimension is required and must be numeric </div>
             @enderror
             @error('udpack')
-                <div class="alert alert-danger"> El udpack es obligatorio y debe ser un número entero </div>
+                <div class="alert alert-danger"> The udpack is required and must be an integer </div>
             @enderror
             @error('weight')
-                <div class="alert alert-danger"> El peso es obligatorio y debe ser numérico </div>
+                <div class="alert alert-danger"> The weight is required and must be numeric </div>
             @enderror
             @error('stock')
-                <div class="alert alert-danger"> El stock es obligatorio y debe ser un número entero </div>
+                <div class="alert alert-danger"> The stock is required and must be an integer </div>
             @enderror
             @error('iva')
-                <div class="alert alert-danger"> El IVA es obligatorio y debe ser numérico </div>
+                <div class="alert alert-danger"> The VAT is required and must be numeric </div>
             @enderror
 
             {{-- Formulario --}}
             <input type="text" name="name" class="form-control mb-2" value="{{ $product->name }}"
-                placeholder="Nombre del producto" autofocus>
-            <input type="text" name="description" placeholder="Descripción del producto" class="form-control mb-2"
+                placeholder="Product Name" autofocus>
+            <input type="text" name="description" placeholder="Product Description" class="form-control mb-2"
                 value="{{ $product->description }}">
-            <input type="text" name="flavor" placeholder="Sabor del producto" class="form-control mb-2"
+            <input type="text" name="flavor" placeholder="Product Flavor" class="form-control mb-2"
                 value="{{ $product->flavor }}">
-            <input type="text" name="brand" placeholder="Marca del producto" class="form-control mb-2"
+            <input type="text" name="brand" placeholder="Product Brand" class="form-control mb-2"
                 value="{{ $product->brand }}">
-            <input type="text" name="price" placeholder="Precio del producto" class="form-control mb-2"
+            <input type="text" name="price" placeholder="Product Price" class="form-control mb-2"
                 value="{{ $product->price }}">
-            <input type="text" name="dimension" placeholder="Dimensión del producto" class="form-control mb-2"
+            <input type="text" name="dimension" placeholder="Product Dimension" class="form-control mb-2"
                 value="{{ $product->dimension }}">
-            <input type="text" name="udpack" placeholder="UDPack del producto" class="form-control mb-2"
+            <input type="text" name="udpack" placeholder="Product UDPack" class="form-control mb-2"
                 value="{{ $product->udpack }}">
-            <input type="text" name="weight" placeholder="Peso del producto" class="form-control mb-2"
+            <input type="text" name="weight" placeholder="Product Weight" class="form-control mb-2"
                 value="{{ $product->weight }}">
-            <input type="text" name="stock" placeholder="Stock del producto" class="form-control mb-2"
+            <input type="text" name="stock" placeholder="Product Stock" class="form-control mb-2"
                 value="{{ $product->stock }}">
-            <input type="text" name="iva" placeholder="IVA del producto" class="form-control mb-2"
+            <input type="text" name="iva" placeholder="Product VAT" class="form-control mb-2"
                 value="{{ $product->iva }}">
 
-            <button class="btn btn-primary btn-block" type="submit">Guardar cambios</button>
-        </form>
+            <button class="btn btn-warning btn-block mt-2" type="submit">Save Changes</button>
     </div>
     </div>
 @endsection
+
