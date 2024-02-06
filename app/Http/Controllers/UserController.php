@@ -62,28 +62,17 @@ class UserController extends Controller
 
     public function updateAddress(Request $request, $id)
     {
-        $user = Auth::user();
-        $address = $user->addresses()->findOrFail($id);
-        $address->update($request->except('_token', '_method'));
-
-        return redirect()->route('dashboard')->with('address_updated', true);
+        
     }
 
     public function saveAddress(Request $request)
     {
-        $user = Auth::user();
-        $user->addresses()->create($request->except('_token'));
-
-        return redirect()->route('dashboard')->with('address_added', true);
+        
     }
 
     public function deleteAddress($id)
     {
-        $user = Auth::user();
-        $address = $user->addresses()->findOrFail($id);
-        $address->delete();
-
-        return redirect()->route('dashboard')->with('address_deleted', true);
+        
     }
 
 }
