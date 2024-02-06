@@ -18,6 +18,7 @@
                     <div class="modal-body">
                         <form action="{{ route('products.create') }}" method="post" class="needs-validation" novalidate>
                             @csrf
+                            <!-- Formulario de nuevo producto -->
                             <div class="form-group">
                                 <label for="name">Name:</label>
                                 <input type="text" class="form-control" name="name" id="name" required>
@@ -54,7 +55,8 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="price">Price:</label>
-                                        <input type="number" class="form-control" step="0.01" name="price" id="price" required>
+                                        <input type="number" class="form-control" step="0.01" name="price"
+                                            id="price" required>
                                         <div class="invalid-feedback">
                                             Please enter the product price.
                                         </div>
@@ -64,7 +66,8 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="dimension">Dimensions:</label>
-                                        <input type="number" class="form-control" step="0.01" name="dimension" id="dimension" required>
+                                        <input type="number" class="form-control" step="0.01" name="dimension"
+                                            id="dimension" required>
                                         <div class="invalid-feedback">
                                             Please enter the product dimensions.
                                         </div>
@@ -81,11 +84,12 @@
                                             Please enter the units per package.
                                         </div>
                                     </div>
-                            </div>
+                                </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="weight">Weight:</label>
-                                        <input type="number" class="form-control" step="0.01" name="weight" id="weight" required>
+                                        <input type="number" class="form-control" step="0.01" name="weight"
+                                            id="weight" required>
                                         <div class="invalid-feedback">
                                             Please enter the product weight.
                                         </div>
@@ -107,7 +111,8 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="iva">IVA:</label>
-                                        <input type="number" class="form-control" step="0.01" name="iva" id="iva" required>
+                                        <input type="number" class="form-control" step="0.01" name="iva"
+                                            id="iva" required>
                                         <div class="invalid-feedback">
                                             Please enter the applicable IVA.
                                         </div>
@@ -138,86 +143,175 @@
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->description }}</td>
                         <td>
-                        <a href="#detailBrandModal{{ $product->id }}" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#detailBrandModal{{ $product->id }}">
-                            <i class="fas fa-eye"></i> Details
-                        </a>
+                            <a href="#" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#detailProductModal{{ $product->id }}">
+                                <i class="fas fa-eye"></i> Details
+                            </a>
+                        </td>
                         <td>
-                            <a href="#updateBrandModal{{ $product->id }}" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateBrandModal{{ $product->id }}">
+                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#updateProductModal{{ $product->id }}">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
                         </td>
                         <td>
-                        <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteBrandModal{{ $product->id }}">
+                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#deleteProductModal{{ $product->id }}">
                                 <i class="fas fa-trash-alt"></i> Delete
                             </a>
                         </td>
                     </tr>
-
-                    <!-- Modal detalles producto -->
-                    <div class="modal fade" id="detailBrandModal{{$product->id}}" tabindex="-1" aria-labelledby='detailBrandModal{{ $product->id }}" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h2 class="modal-title">{{ $product->name }}</h2>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                /* TO DO: Marta */
-                                    {{-- <table class="table table-responsive-sm table-bordered table-hover">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th scope="col" colspan="2">Product Details</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">Name</th>
-                                            <td>{{ $product->name }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Description</th>
-                                            <td>{{ $product->description }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Flavor</th>
-                                            <td>{{ $product->flavor }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Brand</th>
-                                            <td>{{ $product->brand }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Price</th>
-                                            <td>{{ $product->price }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Dimension</th>
-                                            <td>{{ $product->dimension }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Units per package</th>
-                                            <td>{{ $product->udpack }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Weight</th>
-                                            <td>{{ $product->weight }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Stock</th>
-                                            <td>{{ $product->stock }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">IVA</th>
-                                            <td>{{ $product->iva }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table> --}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 @endforeach
             </tbody>
         </table>
+
+
+
+        <!-- Modal editar producto -->
+        @foreach ($products as $product)
+            <div class="modal fade" id="updateProductModal{{ $product->id }}" tabindex="-1"
+                aria-labelledby="updateProductModalLabel{{ $product->id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title">Edit Product: {{ $product->name }}</h2>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('products.update', $product->id) }}" method="POST">
+                                @method('PUT')
+                                @csrf
+
+                                {{-- Validación errores --}}
+                                @error('name')
+                                    <div class="alert alert-danger"> The name is required </div>
+                                @enderror
+                                @error('description')
+                                    <div class="alert alert-danger"> The description is required </div>
+                                @enderror
+                                @error('flavor')
+                                    <div class="alert alert-danger"> The flavor is required </div>
+                                @enderror
+                                @error('brand')
+                                    <div class="alert alert-danger"> The brand is required </div>
+                                @enderror
+                                @error('price')
+                                    <div class="alert alert-danger"> The price is required and must be numeric </div>
+                                @enderror
+                                @error('dimension')
+                                    <div class="alert alert-danger"> The dimension is required and must be numeric </div>
+                                @enderror
+                                @error('udpack')
+                                    <div class="alert alert-danger"> The udpack is required and must be an integer </div>
+                                @enderror
+                                @error('weight')
+                                    <div class="alert alert-danger"> The weight is required and must be numeric </div>
+                                @enderror
+                                @error('stock')
+                                    <div class="alert alert-danger"> The stock is required and must be an integer </div>
+                                @enderror
+                                @error('iva')
+                                    <div class="alert alert-danger"> The VAT is required and must be numeric </div>
+                                @enderror
+
+                                {{-- Formulario --}}
+                                <div class="modal-body">
+                                    <input type="text" name="name" class="form-control mb-2"
+                                        value="{{ $product->name }}" placeholder="Product Name" autofocus>
+                                    <input type="text" name="description" placeholder="Product Description"
+                                        class="form-control mb-2" value="{{ $product->description }}">
+                                    <input type="text" name="flavor" placeholder="Product Flavor"
+                                        class="form-control mb-2" value="{{ $product->flavor }}">
+                                    <input type="text" name="brand" placeholder="Product Brand"
+                                        class="form-control mb-2" value="{{ $product->brand }}">
+                                    <input type="text" name="price" placeholder="Product Price"
+                                        class="form-control mb-2" value="{{ $product->price }}">
+                                    <input type="text" name="dimension" placeholder="Product Dimension"
+                                        class="form-control mb-2" value="{{ $product->dimension }}">
+                                    <input type="text" name="udpack" placeholder="Product UDPack"
+                                        class="form-control mb-2" value="{{ $product->udpack }}">
+                                    <input type="text" name="weight" placeholder="Product Weight"
+                                        class="form-control mb-2" value="{{ $product->weight }}">
+                                    <input type="text" name="stock" placeholder="Product Stock"
+                                        class="form-control mb-2" value="{{ $product->stock }}">
+                                    <input type="text" name="iva" placeholder="Product VAT"
+                                        class="form-control mb-2" value="{{ $product->iva }}">
+                                </div>
+
+                                <button class="btn btn-warning btn-block mt-2" type="submit">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+
+        <!-- Modal detalles producto -->
+        @foreach ($products as $product)
+            <div class="modal fade" id="detailProductModal{{ $product->id }}" tabindex="-1"
+                aria-labelledby="detailProductModalLabel{{ $product->id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title">{{ $product->name }}</h2>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-responsive-sm table-bordered table-hover">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col" colspan="2">Product Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Name</th>
+                                        <td>{{ $product->name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Description</th>
+                                        <td>{{ $product->description }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Flavor</th>
+                                        <td>{{ $product->flavor }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Brand</th>
+                                        <td>{{ $product->brand }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Price</th>
+                                        <td>{{ $product->price }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Dimension</th>
+                                        <td>{{ $product->dimension }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Units per package</th>
+                                        <td>{{ $product->udpack }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Weight</th>
+                                        <td>{{ $product->weight }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Stock</th>
+                                        <td>{{ $product->stock }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">IVA</th>
+                                        <td>{{ $product->iva }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        @endforeach
+
     </div>
 @endsection
