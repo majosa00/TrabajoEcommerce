@@ -60,6 +60,16 @@ Route::post('/cart/pay', [CartController::class, 'pay'])->name('cart.pay');
 //Eliminar producto del carrito
 Route::delete('/cart/remove/{productId}', [CartController::class, 'remove'])->name('cart.remove');
 
+
+
+
+Route::get('/language/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'es'])) {
+        session()->put('locale', $locale);
+    }
+    return back();
+});
+
 //Faltan:
 // Route::get('/wishlist', [UserController::class, 'products']);
 // Route::get('/profile', [UserController::class, 'products']);

@@ -10,9 +10,11 @@ class ProductController extends Controller
 {
     public function products()
     {
-        $products = Product::all();
+        // Ordena los productos por fecha de creación de manera descendente
+        $products = Product::orderBy('created_at', 'desc')->get();
         return view('products.product')->with('products', $products);
     }
+
 
     public function detail($id)
     {
@@ -104,9 +106,11 @@ class ProductController extends Controller
 
     public function brands()
     {
-        $brands = Brand::all();
+        // Ordena las marcas por fecha de creación de manera descendente
+        $brands = Brand::orderBy('created_at', 'desc')->get();
         return view('brands.brand')->with('brands', $brands);
     }
+
 
     public function detailBrands($id)
     {
@@ -157,5 +161,7 @@ class ProductController extends Controller
         $brandDelete->delete();
         return back()->with('mensaje', 'Brand removed');
     }
+
+
 
 }
