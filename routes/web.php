@@ -50,8 +50,6 @@ Route::group([
     Route::get('admin/orderadmin', [OrderController::class, 'orders']);
     //Marcas
     Route::get('admin/brands', [ProductController::class, 'brands']);
-    Route::get('admin/brands/{id}', [ProductController::class, 'detailBrands']);
-    Route::get('admin/new_brand', [ProductController::class, 'newBrand']);
     Route::post('admin/brands', [ProductController::class, 'createBrands'])->name('brands.createBrand');
     Route::get('admin/edit_brand/{id}', [ProductController::class, 'editBrand'])->name('brands.editBrand');
     Route::put('admin/edit_brand/{id}', [ProductController::class, 'updateBrand'])->name('brands.updateBrand');

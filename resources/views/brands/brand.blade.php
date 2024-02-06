@@ -3,14 +3,39 @@
 @section('content')
     <div class="container p-5">
         <h1 class="mb-3">BRANDS</h1>
-        <a href="{{ url('admin/new_brand') }}" class="btn btn-warning mb-4">
-            <i class="fas fa-plus"></i> New Brand </a>
+        <a href="#" class="btn btn-warning mb-4" data-bs-toggle="modal" data-bs-target="#newBrandModal">
+            <i class="fas fa-plus"></i> New Brand
+        </a>
+
+        <!-- Modal nueva marca -->
+        <div class="modal fade" id="newBrandModal" tabindex="-1" aria-labelledby="newBrandModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title">Add New Brand</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('brands.createBrand') }}" method="post" class="needs-validation" novalidate>
+                            @csrf
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input type="text" class="form-control" name="name" id="name" required>
+                                <div class="invalid-feedback">
+                                    Please enter the brand name.
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-warning mt-4">Add Brand</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <table class="table table-responsive">
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Details</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -19,22 +44,51 @@
                 @foreach ($brands as $brand)
                     <tr>
                         <td>{{ $brand->name }}</td>
-                        <td><a href="{{ url('admin/brands', $brand->id) }}" class="btn btn-primary btn-sm"><i
-                                    class="fas fa-eye"></i> Details </a></td>
-                        <td><a href="{{ route('brands.editBrand', $brand) }}" class="btn btn-warning btn-sm">
-                                <i class="fas fa-edit"></i> Edit </a>
+                        <td> 
+                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateBrandModal{{ $brand->id }}">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
                         </td>
                         <td>
-                            <form action="{{ route('brands.deleteBrand', $brand->id) }}" method="POST" class="d-inline">
-                                @method('DELETE')
-                                @csrf
-                                <button class="btn btn-danger btn-sm" type="submit">
-                                    <i class="fas fa-trash-alt"></i> Delete </button>
-                            </form>
+                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteBrandModal{{ $brand->id }}">
+                                <i class="fas fa-trash-alt"></i> Delete
+                            </a>
                         </td>
                     </tr>
+
+                    <!-- Modal edición marca -->
+                    <div class="modal fade" id="updateBrandModal{{ $brand->id }}" tabindex="-1" aria-labelledby="updateBrandModalLabel{{ $brand->id }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2 class="modal-title">Edit Brand: {{ $brand->name }}</h2>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ route('brands.updateBrand', $brand->id) }}" method="POST">
+                                        @method('PUT')
+                                        @csrf
+
+                                        {{-- Validación errores --}}
+                                        @error('name')
+                                            <div class="alert alert-danger">The name is required</div>
+                                        @enderror
+
+                                        {{-- Formulario --}}
+                                        <input type="text" name="name" class="form-control mb-2" value="{{ $brand->name }}" placeholder="Brand Name" autofocus>
+
+                                        <button class="btn btn-warning btn-block mt-2" type="submit">Save Changes</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
             </tbody>
         </table>
     </div>
+
+
+        
+
 @endsection
