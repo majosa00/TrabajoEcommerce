@@ -1,19 +1,40 @@
 "use strict";
-
-function actualizarCantidad(cantidad) {
-    // Obtén el ID del producto o la información necesaria
-    let productoId = 1; // Reemplaza esto con la lógica adecuada para obtener el ID del producto
-
-    // Realiza una solicitud AJAX a tu controlador
-    axios.post('/actualizar-cantidad', {
-        producto_id: productoId,
-        cantidad: cantidad
-    })
-    .then(response => {
-        // Actualiza la cantidad en la interfaz
-        document.getElementById('cantidad').innerText = response.data.nuevaCantidad;
-    })
-    .catch(error => {
-        console.error('Error al actualizar la cantidad', error);
+function updateQuantity(productId, newQuantity) {
+    // Realizar la solicitud AJAX
+    $.ajax({
+        type: 'PUT',
+        url: '/cart/updateAmount/' + productId,
+        data: { quantity: newQuantity },
+        success: function (response) {
+            // Manejar la respuesta del servidor si es necesario
+            console.log(response.message);
+        },
+        error: function (error) {
+            // Manejar el error si es necesario
+            console.error('Error al actualizar la cantidad: ', error);
+        }
     });
+}
+
+function more(productId) {
+    let amountElement = document.getElementById('amount' + productId);
+    let currentAmount = parseInt(amountElement.textContent);
+    currentAmount += 1;
+    amountElement.textContent = currentAmount;
+
+    // Llamar a la función para actualizar la cantidad en la base de datos
+    updateQuantity(productId, currentAmount);
+}
+
+function less(productId) {
+    let amountElement = document.getElementById('amount' + productId);
+    let currentAmount = parseInt(amountElement.textContent);
+
+    if (currentAmount > 1) {
+        currentAmount -= 1;
+        amountElement.textContent = currentAmount;
+
+        // Llamar a la función para actualizar la cantidad en la base de datos
+        updateQuantity(productId, currentAmount);
+    }
 }

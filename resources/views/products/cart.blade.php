@@ -31,9 +31,13 @@
                     <p>{{ $product->price }} $</p>
                 </div>
                 <div class="col-lg-3 col-md-3">
-                    <button class="btn" onclick="actualizarCantidad(-1)">-</button>
-                    <span id="cantidad">{{ $product->pivot->amount }}</span>
-                    <button class="btn" onclick="actualizarCantidad(1)">+</button>
+                    <button class="btn btn-sm border border-dark" onclick="less({{ $product->id }})">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <span id="amount{{ $product->id }}" class="amount">{{ $product->pivot->amount }}</span>
+                    <button class="btn btn-sm border border-dark" onclick="more({{ $product->id }})">
+                        <i class="fas fa-plus"></i>
+                    </button>
                 </div>
             </div>
             <hr>

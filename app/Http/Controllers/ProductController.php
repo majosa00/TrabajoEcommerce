@@ -162,17 +162,4 @@ class ProductController extends Controller
         return back()->with('mensaje', 'Brand removed');
     }
 
-    public function actualizarCantidad(Request $request)
-    {
-        // Lógica para actualizar la cantidad en la base de datos
-        $productoId = $request->input('producto_id');
-        $cantidad = $request->input('cantidad');
-
-        // Realiza la lógica necesaria para actualizar la cantidad en tu base de datos
-        // ...
-
-        // Devuelve la nueva cantidad actualizada
-        return response()->json(['nuevaCantidad' => $nuevaCantidad]);
-    }
-
 }
