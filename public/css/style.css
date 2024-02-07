@@ -88,3 +88,7 @@ body .navbar {
     vertical-align: bottom;
     border-bottom: 2px solid #dee2e6;
 }
+
+.card-img-top {
+    width: 25% !important;
+}
