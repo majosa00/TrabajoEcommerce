@@ -15,6 +15,12 @@ Route::get('products', [UserController::class, 'products']);
 Route::get('orders', [OrderController::class, 'showOrder']);
 Route::get('new_order', [OrderController::class, 'createOrder']);
 Route::get('productsbrands', [UserController::class, 'brands']);
+
+Route::get('shipping', function () {
+    return view('products.shipping');
+});
+Route::post('/checkout/process', [CartController::class, 'process'])->name('checkout.process');
+
 Route::get('profile', [UserController::class, 'profile']);
 Route::get('profile/change-password', [UserController::class, 'changePassword'])->name('profile.changepassword');
 //Direcciones de envío
@@ -22,6 +28,7 @@ Route::get('profile/change-address', [UserController::class, 'changeAddress'])->
 Route::get('profile/update-address', [UserController::class, 'updateAddress'])->name('profile.updateaddress');
 Route::get('profile/save-address', [UserController::class, 'saveAddress'])->name('profile.saveaddress');
 Route::get('profile/delete-address', [UserController::class, 'deleteAddress'])->name('profile.deleteaddress');
+
 
 //Pedir que el correo sea verificado
 Route::get('home', function () {
@@ -57,15 +64,15 @@ Route::group([
 })->middleware(['auth', 'verified']);
 
 //Ruta carrito
-Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
+Route::get('cart', [CartController::class, 'viewCart'])->name('cart.view');
 //Añadir al carrito con formulario
-Route::post('/cart/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('cart.addToCart');
+Route::post('cart/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('cart.addToCart');
 //Pagar
-Route::post('/cart/pay', [CartController::class, 'pay'])->name('cart.pay');
+Route::get('cart/shipping', [CartController::class, 'pay']);
 //Eliminar producto del carrito
-Route::delete('/cart/remove/{productId}', [CartController::class, 'remove'])->name('cart.remove');
+Route::delete('cart/remove/{productId}', [CartController::class, 'remove'])->name('cart.remove');
 //Actualizar cantidades en el carrito
-Route::put('/cart/updateAmount/{productId}', [CartController::class, 'updateAmount'])->name('cart.updateAmount');
+Route::put('cart/updateAmount/{productId}', [CartController::class, 'updateAmount'])->name('cart.updateAmount');
 
 Route::get('/language/{locale}', function ($locale) {
     if (in_array($locale, ['en', 'es'])) {
@@ -76,7 +83,6 @@ Route::get('/language/{locale}', function ($locale) {
 
 //Faltan:
 // Route::get('/wishlist', [UserController::class, 'products']);
-// Route::get('/shipping', [UserController::class, 'products']);
 
 //nombre de la ruta - controller - nombre función dentro del controlador - nombre es para renombrar la ruta porque est´dentro de un formulario y queremos que tenga ese name
 // Route::get('products', [ProductController::class, 'products']);

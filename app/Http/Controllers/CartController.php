@@ -135,5 +135,4 @@ class CartController extends Controller
         return response()->json(['message' => 'Cantidad actualizada exitosamente']);
     }
 
-
 }

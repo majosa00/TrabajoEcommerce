@@ -45,10 +45,7 @@
 
         <div class="row">
             <div class="col-lg-3 col-md-3">
-                <form action="{{ route('cart.pay') }}" method="POST" class="mt-3">
-                    @csrf
-                    <button class="btn btn-warning btn-sm" type="submit">Payment</button>
-                </form>
+                <a href="{{ view('products.shipping') }}" class="btn btn-warning btn-sm">Payment</a>
             </div>
             <div class="col-lg-3 col-md-3">
             </div>
