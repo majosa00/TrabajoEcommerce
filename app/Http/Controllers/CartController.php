@@ -111,9 +111,28 @@ class CartController extends Controller
 
         if ($cart) {
             $cart->products()->detach($productId);
-            return back()->with('success', 'Producto eliminado .');
+            return back()->with('success', 'Product removed.');
         }
 
-        return back()->with('error', 'No hay carro.');
+        return back()->with('error', 'There is not any cart.');
     }
+
+    public function updateAmount(Request $request, $productId)
+    {
+        // Validar la solicitud
+        $request->validate([
+            'quantity' => 'required|integer|min:1',
+        ]);
+
+        // Obtener el producto
+        $product = Product::find($productId);
+
+        // Actualizar la cantidad en la tabla pivote
+        $user = auth()->user();
+        $user->cart()->updateExistingPivot($product, ['amount' => $request->input('quantity')]);
+
+        // Puedes devolver una respuesta JSON si lo prefieres
+        return response()->json(['message' => 'Cantidad actualizada exitosamente']);
+    }
+
 }
