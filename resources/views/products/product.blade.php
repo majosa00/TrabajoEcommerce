@@ -162,6 +162,9 @@
                         </td>
                     </tr>
                 @endforeach
+                @push('scripts')
+        <script src="{{ asset('js/validacion.js') }}"></script>
+    @endpush
             </tbody>
         </table>
 
