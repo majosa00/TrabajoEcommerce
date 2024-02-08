@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('address', 255);
             $table->string('city', 255);
-            $table->integer('postalCode');
+            $table->integer('zipCode');
             $table->string('country', 255);
             $table->timestamps();
 

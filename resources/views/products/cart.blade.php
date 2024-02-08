@@ -31,21 +31,33 @@
                     <p>{{ $product->price }} $</p>
                 </div>
                 <div class="col-lg-3 col-md-3">
-                    <button class="btn btn-sm border border-dark" onclick="less({{ $product->id }})">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <span id="amount{{ $product->id }}" class="amount">{{ $product->pivot->amount }}</span>
-                    <button class="btn btn-sm border border-dark" onclick="more({{ $product->id }})">
-                        <i class="fas fa-plus"></i>
-                    </button>
+                    <div class="d-flex align-items-center">
+                        <form action="{{ route('cart.decrease', $product->id) }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-sm border border-dark">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </form>
+                        <span id="amount{{ $product->id }}" class="amount mx-2">{{ $product->pivot->amount }}</span>
+                        <form action="{{ route('cart.increase', $product->id) }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-sm border border-dark">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
             <hr>
         @endforeach
 
+
         <div class="row">
             <div class="col-lg-3 col-md-3">
-                <a href="{{ view('products.shipping') }}" class="btn btn-warning btn-sm">Payment</a>
+                <form action="{{ route('cart.viewShipping') }}" method="POST" class="mt-3">
+                    @csrf
+                    <button class="btn btn-warning btn-sm" type="submit">Payment</button>
+                </form>
             </div>
             <div class="col-lg-3 col-md-3">
             </div>

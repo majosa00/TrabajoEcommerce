@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Cart;
+use App\Models\Address;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -95,6 +96,13 @@ class CartController extends Controller
             $order->products()->attach($productId, ['amount' => $amount]);
         }
 
+        $address = new Address();
+        $address->address = $request->input('address');
+        $address->city = $request->input('city');
+        $address->country = $request->input('country');
+        $address->zipcode = $request->input('zipCode');
+        $address->save();
+
         //Enviar correo electrónico (comentado mientras practicamos para no tener 21701293 correos)
         Mail::to($user->email)->send(new OrderConfirmation($order));
 
@@ -117,22 +125,45 @@ class CartController extends Controller
         return back()->with('error', 'There is not any cart.');
     }
 
-    public function updateAmount(Request $request, $productId)
+    public function increase(Product $product)
     {
-        // Validar la solicitud
-        $request->validate([
-            'quantity' => 'required|integer|min:1',
-        ]);
+        $user = Auth::user();
+        $cart = $user->cart;
 
-        // Obtener el producto
-        $product = Product::find($productId);
+        // Verificar si el producto ya está en el carrito
+        $pivotRecord = $cart->products()->where('product_id', $product->id)->first();
 
-        // Actualizar la cantidad en la tabla pivote
-        $user = auth()->user();
-        $user->cart()->updateExistingPivot($product, ['amount' => $request->input('quantity')]);
+        if ($pivotRecord) {
+            // Aumentar la cantidad en 1
+            $pivotRecord->pivot->update(['amount' => $pivotRecord->pivot->amount + 1]);
+        }
 
-        // Puedes devolver una respuesta JSON si lo prefieres
-        return response()->json(['message' => 'Cantidad actualizada exitosamente']);
+        return redirect()->back();
     }
+
+    public function decrease(Product $product)
+    {
+        $user = Auth::user();
+        $cart = $user->cart;
+
+        // Verificar si el producto ya está en el carrito
+        $pivotRecord = $cart->products()->where('product_id', $product->id)->first();
+
+        if ($pivotRecord) {
+            // Disminuir la cantidad en 1, evitando que sea menor a 0
+            $pivotRecord->pivot->update(['amount' => max($pivotRecord->pivot->amount - 1, 0)]);
+        }
+
+        return redirect()->back();
+    }
+
+    public function viewShipping()
+    {
+        return view('products.shipping');
+
+    }
+
+
+
 
 }
