@@ -66,7 +66,7 @@ class UserController extends Controller
         $user->email = $request->input('email');
         $user->save();
 
-        return redirect()->route('profile')->with('success', 'Profile updated successfully!');
+        return redirect()->route('profile')->with('mensaje', 'Profile updated successfully!');
     }
 
     public function addresses()
@@ -91,14 +91,16 @@ class UserController extends Controller
                 $user->password = Hash::make($request->input('new_password'));
                 $user->save();
 
-                return redirect()->route('profile')->with('success', 'Password changed successfully!');
+                return redirect()->route('profile')->with('mensaje', 'Password changed successfully!');
             } else {
-                return redirect()->route('profile')->with('error', 'New password and confirmation do not match.');
+                return redirect()->route('profile')->withErrors(['new_password_confirmation' => 'New password and confirmation do not match.']);
             }
         } else {
-            return redirect()->route('profile')->with('error', 'Current password is incorrect.');
+            return redirect()->route('profile')->withErrors(['password' => 'Current password is incorrect.']);
         }
     }
+
+
 
 
 

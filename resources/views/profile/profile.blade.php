@@ -3,6 +3,21 @@
 @section('content')
     <div class="container p-5">
         <h1 class="mb-3">Hello {{ Auth::user()->name }}</h1>
+        @if (session('mensaje'))
+            <div class="alert alert-success">
+                {{ session('mensaje') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <!-- Cambiar datos user -->
         <h3>About you</h3>
@@ -10,15 +25,6 @@
             <form action="{{ route('user.update', Auth::id()) }}" method="POST">
                 @method('PUT')
                 @csrf
-
-                {{-- Validation errors --}}
-                @error('name')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-                @error('email')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-
                 {{-- Form --}}
                 <div class="row mb-3">
                     <div class="col-lg-6">
@@ -95,7 +101,7 @@
             <h3>Password</h3>
             <div class="col-md-6">
                 <button type="button" class="btn btn-warning mb-3" data-bs-toggle="modal"
-                    data-bs-target="#changePasswordModal" data-bs-dismiss="modal">
+                    data-bs-target="#changePasswordModal">
                     <i class="fas fa-key"></i> Change Password
                 </button>
             </div>
@@ -111,7 +117,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('profile.changepassword') }}" method="POST">
+                        <form action="{{ route('profile.changepassword') }}" method="POST" id="changePasswordForm">
                             @csrf
                             @method('PUT')
 
