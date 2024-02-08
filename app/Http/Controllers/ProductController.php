@@ -29,12 +29,12 @@ class ProductController extends Controller
             'description' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
             'flavor' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
             'brand' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
-            'price' => 'required|numeric|min:0',
-            'dimension' => 'required|numeric|min:0',
-            'udpack' => 'required|integer|min:0',
-            'weight' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-            'iva' => 'required|numeric|min:0'
+            'price' => 'required|numeric|min:0.1',
+            'dimension' => 'required|numeric|min:0.1',
+            'udpack' => 'required|integer|min:1',
+            'weight' => 'required|numeric|min:0.1',
+            'stock' => 'required|integer|min:1',
+            'iva' => 'required|numeric|min:0.1'
         ]);
 
         $newProduct = new Product;
@@ -72,12 +72,12 @@ class ProductController extends Controller
             'description' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
             'flavor' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
             'brand' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
-            'price' => 'required|numeric|min:0',
-            'dimension' => 'required|numeric|min:0',
-            'udpack' => 'required|integer|min:0',
-            'weight' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-            'iva' => 'required|numeric|min:0'
+            'price' => 'required|numeric|min:0.1',
+            'dimension' => 'required|numeric|min:0.1',
+            'udpack' => 'required|integer|min:1',
+            'weight' => 'required|numeric|min:0.1',
+            'stock' => 'required|integer|min:1',
+            'iva' => 'required|numeric|min:0.1'
         ]);
 
         $productUpdate = Product::findOrFail($id);
@@ -94,6 +94,7 @@ class ProductController extends Controller
         $productUpdate->save();
 
         return back()->with('mensaje', 'Product updated');
+        return back()->with('error', 'The product could not be created.');
     }
 
 
@@ -129,6 +130,7 @@ class ProductController extends Controller
         $newBrand->save();
 
         return redirect()->route('brands.createBrand')->with('mensaje', 'Brand added successfully');
+        return back()->with('error', 'The product could not be created.');
     }
 
     public function newBrand()

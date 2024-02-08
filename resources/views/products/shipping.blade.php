@@ -3,6 +3,11 @@
 @section('content')
 <div class="container p-5">
     <h4 class="mb-3">Billing address</h4>
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
     <form class="needs-validation" novalidate method="POST" action="{{ route('cart.viewShipping') }}">
         @csrf
         <div class="row g-3">

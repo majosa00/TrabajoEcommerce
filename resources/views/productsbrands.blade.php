@@ -1,7 +1,13 @@
-@extends('layaouts.app')
+@extends('layouts.app')
 
 @section('content')
     <div class="container mt-4">
+        @if(session('mensaje'))
+            <div class="alert alert-success">
+                {{ session('mensaje') }}
+            </div>
+        @endif
+
         <h1 class="mb-3">BRANDS</h1>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             @foreach ($brands as $brand)
