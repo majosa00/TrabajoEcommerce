@@ -1,18 +1,19 @@
 @extends('layaouts.app')
 
 @section('content')
-@if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
-
-@if(session('message'))
-    <div class="alert alert-message"> <!-- Cambiado a alert-info para un mensaje general -->
-        {{ session('message') }}
-    </div>
-@endif
     <div class="container p-5">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('message'))
+            <div class="alert alert-message"> <!-- Cambiado a alert-info para un mensaje general -->
+                {{ session('message') }}
+            </div>
+        @endif
+        
         <div class="row">
             <div class="col-lg-3 col-md-3">
                 <h4>Cart</h4>
@@ -79,7 +80,7 @@
                     {{ $products->sum(function ($product) {
                         return $product->price * $product->pivot->amount;
                     }) }}
-                    
+
                 </h4>
             </div>
         </div>
