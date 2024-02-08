@@ -19,10 +19,13 @@ Route::get('products', [UserController::class, 'products']);
 Route::get('orders', [OrderController::class, 'showOrder']);
 Route::get('new_order', [OrderController::class, 'createOrder']);
 Route::get('productsbrands', [UserController::class, 'brands']);
-Route::get('profile', [UserController::class, 'profile']);
-Route::get('profile/change-password', [UserController::class, 'changePassword'])->name('profile.changepassword');
+//Editar perfil
+Route::get('profile', [UserController::class, 'profile'])->name('profile');
+Route::put('profile/changepassword', [UserController::class, 'changePassword'])->name('profile.changepassword');
+Route::put('profile/update', [UserController::class, 'update'])->name('user.update');
 //Direcciones de envío
-Route::get('profile/change-address', [UserController::class, 'changeAddress'])->name('profile.changeaddress');
+Route::post('profile/addresses', [UserController::class, 'addresses'])->name('profile.addresses');
+Route::get('profile/new-address', [UserController::class, 'newadress'])->name('profile.newadress');
 Route::get('profile/update-address', [UserController::class, 'updateAddress'])->name('profile.updateaddress');
 Route::get('profile/save-address', [UserController::class, 'saveAddress'])->name('profile.saveaddress');
 Route::get('profile/delete-address', [UserController::class, 'deleteAddress'])->name('profile.deleteaddress');
@@ -88,10 +91,6 @@ Route::post('wishlist/add/{productId}', [WishlistController::class, 'addToWishli
 Route::delete('wishlist/remove/{wishlistId}', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
 // Mostrar la Lista de Deseos
 Route::get('wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.show');
-
-
-//Faltan:
-// Route::get('/wishlist', [UserController::class, 'products']);
 
 //nombre de la ruta - controller - nombre función dentro del controlador - nombre es para renombrar la ruta porque est´dentro de un formulario y queremos que tenga ese name
 // Route::get('products', [ProductController::class, 'products']);

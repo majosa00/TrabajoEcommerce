@@ -66,23 +66,35 @@ class CartController extends Controller
 
     public function pay(Request $request)
     {
-        //Obtener el usuario autenticado actualmente
+        // Obtener el usuario autenticado actualmente
         $user = Auth::user();
 
-        //Obtener carrito del usuario
+        // Obtener carrito del usuario
         $cart = $user->cart;
 
-        //Crear nuevo pedido
+        // Crear nueva dirección
+        $address = new Address();
+        $address->user_id = $user->id;
+        $address->address = $request->input('address');
+        $address->city = $request->input('city');
+        $address->country = $request->input('country');
+        $address->zipCode = $request->input('zip');
+        $address->save();
+
+        // Crear nuevo pedido
         $order = new Order();
         $order->user_id = $user->id;
 
-        //Completar campos del pedido
-        $order->state = 'Pending'; //Los pedidos estarán en pendiente de inicio
+        // Completar campos del pedido
+        $order->state = 'Pending'; // Los pedidos estarán en pendiente de inicio
         $order->orderDate = now();
         $totalPrice = $cart->products->sum(function ($product) {
             return $product->price * $product->pivot->amount;
         });
         $order->totalPrice = $totalPrice;
+
+        // Asociar la dirección al pedido
+        $order->address_id = $address->id;
         $order->save();
 
         foreach ($cart->products as $product) {
@@ -96,21 +108,15 @@ class CartController extends Controller
             $order->products()->attach($productId, ['amount' => $amount]);
         }
 
-        $address = new Address();
-        $address->address = $request->input('address');
-        $address->city = $request->input('city');
-        $address->country = $request->input('country');
-        $address->zipcode = $request->input('zipCode');
-        $address->save();
-
-        //Enviar correo electrónico (comentado mientras practicamos para no tener 21701293 correos)
+        // Enviar correo electrónico (comentado mientras practicamos para no tener 21701293 correos)
         Mail::to($user->email)->send(new OrderConfirmation($order));
 
-        //Puedes limpiar el carrito después de realizar el pedido si es necesario
+        // Puedes limpiar el carrito después de realizar el pedido si es necesario
         $cart->products()->detach();
 
-        return redirect()->route('cart.view')->with('success', 'Payment successful!');
+        return redirect()->route('orders')->with('success', 'Payment successful!');
     }
+
 
     public function remove($productId)
     {
