@@ -15,8 +15,10 @@ Route::get('products', [UserController::class, 'products']);
 Route::get('orders', [OrderController::class, 'showOrder']);
 Route::get('new_order', [OrderController::class, 'createOrder']);
 Route::get('productsbrands', [UserController::class, 'brands']);
+//Editar perfil
 Route::get('profile', [UserController::class, 'profile']);
 Route::get('profile/change-password', [UserController::class, 'changePassword'])->name('profile.changepassword');
+Route::PUT('profile/update', [UserController::class, 'update'])->name('user.update');
 //Direcciones de envío
 Route::get('profile/change-address', [UserController::class, 'changeAddress'])->name('profile.changeaddress');
 Route::get('profile/update-address', [UserController::class, 'updateAddress'])->name('profile.updateaddress');

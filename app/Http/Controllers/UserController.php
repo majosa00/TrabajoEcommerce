@@ -50,6 +50,25 @@ class UserController extends Controller
         return view('profile.profile', compact('user'));
     }
 
+    public function update(Request $request)
+    {
+        // Validar los datos del formulario
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
+        ]);
+
+        // Obtener el usuario autenticado
+        $user = Auth::user();
+
+        // Actualizar el nombre y correo electrónico del usuario
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->save();
+
+        return redirect()->route('profile')->with('success', 'Profile updated successfully!');
+    }
+
     public function changePassword()
     {
 
@@ -62,17 +81,17 @@ class UserController extends Controller
 
     public function updateAddress(Request $request, $id)
     {
-        
+
     }
 
     public function saveAddress(Request $request)
     {
-        
+
     }
 
     public function deleteAddress($id)
     {
-        
+
     }
 
 }
