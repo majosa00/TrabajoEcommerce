@@ -8,6 +8,8 @@ use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\WishlistController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -80,6 +82,13 @@ Route::get('/language/{locale}', function ($locale) {
     }
     return back();
 });
+
+Route::post('wishlist/add/{productId}', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
+// Remover de la Lista de Deseos
+Route::delete('wishlist/remove/{wishlistId}', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
+// Mostrar la Lista de Deseos
+Route::get('wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.show');
+
 
 //Faltan:
 // Route::get('/wishlist', [UserController::class, 'products']);
