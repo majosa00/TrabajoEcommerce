@@ -10,6 +10,8 @@ use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderConfirmation; // Asegúrate de haber creado esta Mailable
+use Illuminate\Support\Facades\DB;
+
 
 class CartController extends Controller
 {
@@ -117,22 +119,39 @@ class CartController extends Controller
         return back()->with('error', 'There is not any cart.');
     }
 
-    public function updateAmount(Request $request, $productId)
+    public function increase(Product $product)
     {
-        // Validar la solicitud
-        $request->validate([
-            'quantity' => 'required|integer|min:1',
-        ]);
+        $user = Auth::user();
+        $cart = $user->cart;
 
-        // Obtener el producto
-        $product = Product::find($productId);
+        // Verificar si el producto ya está en el carrito
+        $pivotRecord = $cart->products()->where('product_id', $product->id)->first();
 
-        // Actualizar la cantidad en la tabla pivote
-        $user = auth()->user();
-        $user->cart()->updateExistingPivot($product, ['amount' => $request->input('quantity')]);
+        if ($pivotRecord) {
+            // Aumentar la cantidad en 1
+            $pivotRecord->pivot->update(['amount' => $pivotRecord->pivot->amount + 1]);
+        }
 
-        // Puedes devolver una respuesta JSON si lo prefieres
-        return response()->json(['message' => 'Cantidad actualizada exitosamente']);
+        return redirect()->back();
     }
+
+    public function decrease(Product $product)
+    {
+        $user = Auth::user();
+        $cart = $user->cart;
+
+        // Verificar si el producto ya está en el carrito
+        $pivotRecord = $cart->products()->where('product_id', $product->id)->first();
+
+        if ($pivotRecord) {
+            // Disminuir la cantidad en 1, evitando que sea menor a 0
+            $pivotRecord->pivot->update(['amount' => max($pivotRecord->pivot->amount - 1, 0)]);
+        }
+
+        return redirect()->back();
+    }
+
+
+
 
 }
