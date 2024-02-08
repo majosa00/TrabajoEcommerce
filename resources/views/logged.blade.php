@@ -18,9 +18,9 @@
                                     <button class="btn btn-warning" type="submit"><i class="fas fa-shopping-cart"></i> {{ __('messages.add_to_cart') }}</button> <!-- Traducción para "Add to Cart" -->
                                 </form>
                                 <!-- Mientras, pongo esa ruta para que no me de fallo -->
-                                <form action="{{ route('cart.addToCart', $product->id) }}" method="POST" class="d-flex justify-content-end">
+                                <form action="{{ route('wishlist.add', $product->id) }}" method="POST" class="d-flex justify-content-end">
                                     @csrf
-                                    <button class="btn btn-danger" type="submit"><i class="fas fa-heart"></i></button> <!-- Aquí podrías querer agregar texto o dejarlo tal cual si solo quieres el ícono -->
+                                    <button class="btn btn-danger" type="submit"><i class="fas fa-heart"></i></button>
                                 </form>
                             </div>
                         </div>

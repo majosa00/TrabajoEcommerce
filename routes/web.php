@@ -6,7 +6,7 @@ use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CartController;
-
+use App\Http\Controllers\WishlistController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -65,7 +65,13 @@ Route::post('/cart/pay', [CartController::class, 'pay'])->name('cart.pay');
 //Eliminar producto del carrito
 Route::delete('/cart/remove/{productId}', [CartController::class, 'remove'])->name('cart.remove');
 
+Route::post('/wishlist/add/{productId}', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
 
+// Eliminar de la lista de deseos
+Route::post('/wishlist/remove/{wishlistId}', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
+
+// Mostrar la lista de deseos
+Route::get('/wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.show');
 
 
 Route::get('/language/{locale}', function ($locale) {
