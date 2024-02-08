@@ -16,11 +16,12 @@ Route::get('orders', [OrderController::class, 'showOrder']);
 Route::get('new_order', [OrderController::class, 'createOrder']);
 Route::get('productsbrands', [UserController::class, 'brands']);
 //Editar perfil
-Route::get('profile', [UserController::class, 'profile']);
-Route::get('profile/change-password', [UserController::class, 'changePassword'])->name('profile.changepassword');
-Route::PUT('profile/update', [UserController::class, 'update'])->name('user.update');
+Route::get('profile', [UserController::class, 'profile'])->name('profile');
+Route::put('profile/changepassword', [UserController::class, 'changePassword'])->name('profile.changepassword');
+Route::put('profile/update', [UserController::class, 'update'])->name('user.update');
 //Direcciones de envío
-Route::get('profile/change-address', [UserController::class, 'changeAddress'])->name('profile.changeaddress');
+Route::post('profile/addresses', [UserController::class, 'addresses'])->name('profile.addresses');
+Route::get('profile/new-address', [UserController::class, 'newadress'])->name('profile.newadress');
 Route::get('profile/update-address', [UserController::class, 'updateAddress'])->name('profile.updateaddress');
 Route::get('profile/save-address', [UserController::class, 'saveAddress'])->name('profile.saveaddress');
 Route::get('profile/delete-address', [UserController::class, 'deleteAddress'])->name('profile.deleteaddress');
