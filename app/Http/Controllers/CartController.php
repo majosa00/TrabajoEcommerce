@@ -144,7 +144,8 @@ class CartController extends Controller
             $pivotRecord->pivot->update(['amount' => $pivotRecord->pivot->amount + 1]);
         }
 
-        return redirect()->back();
+       
+        return redirect()->back()->with('message', 'Product quantity increased.');
     }
 
     public function decrease(Product $product)
@@ -160,7 +161,8 @@ class CartController extends Controller
             $pivotRecord->pivot->update(['amount' => max($pivotRecord->pivot->amount - 1, 0)]);
         }
 
-        return redirect()->back();
+      
+        return redirect()->back()->with('success', 'Product quantity decreased.');
     }
 
     public function viewShipping()

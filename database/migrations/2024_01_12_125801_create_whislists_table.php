@@ -11,10 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('whislists', function (Blueprint $table) {
+        Schema::create('wishlists', function (Blueprint $table) {
             $table->id();
-            
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('product_id');
             $table->timestamps();
+
+            // Establece la clave foránea para user_id referenciando a la tabla users.
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // Establece la clave foránea para product_id referenciando a la tabla products.
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 
@@ -23,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('whislists');
+        Schema::dropIfExists('wishlists');
     }
 };
