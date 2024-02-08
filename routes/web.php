@@ -1,12 +1,14 @@
 <?php
 
+
+
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\WishlistController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -22,6 +24,7 @@ Route::get('profile/change-address', [UserController::class, 'changeAddress'])->
 Route::get('profile/update-address', [UserController::class, 'updateAddress'])->name('profile.updateaddress');
 Route::get('profile/save-address', [UserController::class, 'saveAddress'])->name('profile.saveaddress');
 Route::get('profile/delete-address', [UserController::class, 'deleteAddress'])->name('profile.deleteaddress');
+
 
 //Pedir que el correo sea verificado
 Route::get('home', function () {
@@ -57,22 +60,19 @@ Route::group([
 })->middleware(['auth', 'verified']);
 
 //Ruta carrito
-Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
+Route::get('cart', [CartController::class, 'viewCart'])->name('cart.view');
 //Añadir al carrito con formulario
-Route::post('/cart/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('cart.addToCart');
+Route::post('cart/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('cart.addToCart');
 //Pagar
-Route::post('/cart/pay', [CartController::class, 'pay'])->name('cart.pay');
+Route::post('cart/pay', [CartController::class, 'pay'])->name('cart.pay');
+//Shipping
+Route::post('cart/view-shipping', [CartController::class, 'viewShipping'])->name('cart.viewShipping');
+Route::post('/cart/increase/{product}', [CartController::class, 'increase'])->name('cart.increase');
+Route::post('/cart/decrease/{product}', [CartController::class, 'decrease'])->name('cart.decrease');
 //Eliminar producto del carrito
-Route::delete('/cart/remove/{productId}', [CartController::class, 'remove'])->name('cart.remove');
-
-Route::post('/wishlist/add/{productId}', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
-
-// Eliminar de la lista de deseos
-Route::post('/wishlist/remove/{wishlistId}', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
-
-// Mostrar la lista de deseos
-Route::get('/wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.show');
-
+Route::delete('cart/remove/{productId}', [CartController::class, 'remove'])->name('cart.remove');
+//Actualizar cantidades en el carrito
+Route::put('cart/updateAmount/{productId}', [CartController::class, 'updateAmount'])->name('cart.updateAmount');
 
 Route::get('/language/{locale}', function ($locale) {
     if (in_array($locale, ['en', 'es'])) {
@@ -83,7 +83,6 @@ Route::get('/language/{locale}', function ($locale) {
 
 //Faltan:
 // Route::get('/wishlist', [UserController::class, 'products']);
-// Route::get('/shipping', [UserController::class, 'products']);
 
 //nombre de la ruta - controller - nombre función dentro del controlador - nombre es para renombrar la ruta porque est´dentro de un formulario y queremos que tenga ese name
 // Route::get('products', [ProductController::class, 'products']);
