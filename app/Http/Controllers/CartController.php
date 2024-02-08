@@ -6,12 +6,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Cart;
+use App\Models\Address;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderConfirmation; // Asegúrate de haber creado esta Mailable
-use Illuminate\Support\Facades\DB;
-
 
 class CartController extends Controller
 {
@@ -97,6 +96,13 @@ class CartController extends Controller
             $order->products()->attach($productId, ['amount' => $amount]);
         }
 
+        $address = new Address();
+        $address->address = $request->input('address');
+        $address->city = $request->input('city');
+        $address->country = $request->input('country');
+        $address->zipcode = $request->input('zipCode');
+        $address->save();
+
         //Enviar correo electrónico (comentado mientras practicamos para no tener 21701293 correos)
         Mail::to($user->email)->send(new OrderConfirmation($order));
 
@@ -149,6 +155,12 @@ class CartController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function viewShipping()
+    {
+        return view('products.shipping');
+
     }
 
 

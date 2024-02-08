@@ -15,9 +15,6 @@ Route::get('products', [UserController::class, 'products']);
 Route::get('orders', [OrderController::class, 'showOrder']);
 Route::get('new_order', [OrderController::class, 'createOrder']);
 Route::get('productsbrands', [UserController::class, 'brands']);
-Route::get('shipping', [CartController::class, 'process'])->name('cart.shipping');
-Route::post('checkout/process', [CartController::class, 'process'])->name('checkout.process');
-
 Route::get('profile', [UserController::class, 'profile']);
 Route::get('profile/change-password', [UserController::class, 'changePassword'])->name('profile.changepassword');
 //Direcciones de envío
@@ -65,7 +62,9 @@ Route::get('cart', [CartController::class, 'viewCart'])->name('cart.view');
 //Añadir al carrito con formulario
 Route::post('cart/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('cart.addToCart');
 //Pagar
-Route::post('/cart/pay', [CartController::class, 'pay'])->name('cart.pay');
+Route::post('cart/pay', [CartController::class, 'pay'])->name('cart.pay');
+//Shipping
+Route::post('cart/view-shipping', [CartController::class, 'viewShipping'])->name('cart.viewShipping');
 Route::post('/cart/increase/{product}', [CartController::class, 'increase'])->name('cart.increase');
 Route::post('/cart/decrease/{product}', [CartController::class, 'decrease'])->name('cart.decrease');
 //Eliminar producto del carrito
