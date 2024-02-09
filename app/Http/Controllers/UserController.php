@@ -23,9 +23,7 @@ class UserController extends Controller
         $user->rol_id = 1;
         $user->save();
 
-        // $this->cartController->create($user->id); 
-
-        $cart = new Cart(); //
+        $cart = new Cart();
         $cart->user_id = $user->id;
         $cart->save();
 
@@ -69,14 +67,6 @@ class UserController extends Controller
         return redirect()->route('profile')->with('mensaje', 'Profile updated successfully!');
     }
 
-    public function addresses()
-    {
-        $user = Auth::user();
-        $addresses = $user->addresses;
-
-        return view('profile.profile', compact('addresses'));
-    }
-
     public function changePassword(Request $request)
     {
         $user = Auth::user();
@@ -100,28 +90,34 @@ class UserController extends Controller
         }
     }
 
+    public function address()
+    {
+        $user = Auth::user();
+        $addresses = $user->addresses;
+
+        return view('profile.profile', compact('addresses'));
+    }
 
 
-
-
-
-    public function newadress(Request $request)
+    public function createNewAddress(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:addresses,name|max:255',
+            'address' => 'required|unique:addresses,address|max:255',
             'country' => 'required|max:255',
             'city' => 'required|max:255',
             'zipcode' => 'required|max:10',
         ]);
 
         $newAddress = new Address;
-        $newAddress->name = $request->input('name');
+        $newAddress->address = $request->input('address');
         $newAddress->country = $request->input('country');
         $newAddress->city = $request->input('city');
-        $newAddress->zipcode = $request->input('zipcode');
+        $newAddress->zipCode = $request->input('zipcode');
+        $newAddress->user_id = auth()->user()->id;
+
         $newAddress->save();
 
-        return redirect()->route('profile.newadress')->with('mensaje', 'Address added successfully');
+        return redirect()->route('profile')->with('mensaje', 'Address added successfully');
     }
 
     public function deleteAddress($id)

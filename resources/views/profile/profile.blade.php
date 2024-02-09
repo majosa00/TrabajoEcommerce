@@ -50,12 +50,13 @@
         <!-- Direcciones -->
         <h3>Your addresses</h3>
         <div class="col-md-6">
-            <a href="#" class="btn btn-warning mb-4" data-bs-toggle="modal" data-bs-target="#newAddressModal">
+            <a href="#newAddressModal" class="btn btn-warning mb-4" data-bs-toggle="modal"
+                data-bs-target="#newAddressModal">
                 <i class="fas fa-plus"></i> New Address
             </a>
         </div>
 
-        @if (isset($addresses) && count($addresses) > 0)
+        @if (!empty($addresses))
             @foreach ($addresses as $address)
                 <p>{{ $address->address }}</p>
                 <p>{{ $address->country }}</p>
@@ -66,35 +67,43 @@
             <p>No addresses found.</p>
         @endif
 
-        {{-- <!-- Modal nueva dirección -->
-        @foreach ($addresses as $address)
-            <div class="modal fade" id="newAddressModal{{ $address->id }}" tabindex="-1"
-                aria-labelledby="newAddressModalLabel{{ $address->id }}" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2 class="modal-title">New Address</h2>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="{{ route('profile.newadress', $product->id) }}" method="GET">
-                                @method('PUT')
-                                @csrf
-                                <div class="modal-body">
-                                    <input type="text" name="address" class="form-control mb-2"
-                                        value="{{ $address->address }}" placeholder="Product Name" autofocus>
-                                    <input type="text" name="description" placeholder="Product Description"
-                                        class="form-control mb-2" value="{{ $address->country }}">
-                                    <input type="text" name="flavor" placeholder="Product Flavor"
-                                        class="form-control mb-2" value="{{ $address->city }}">
-                                    <input type="text" name="brand" placeholder="Product Brand"
-                                        class="form-control mb-2" value="{{ $address->zip }}">
+        <!-- Modal nueva dirección -->
+        <div class="modal fade" id="newAddressModal" tabindex="-1" aria-labelledby="newAddressModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">New Address</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('profile.create-new-address') }}" method="POST">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="mb-2">
+                                    <label for="address" class="form-label">Address:</label>
+                                    <input type="text" name="address" class="form-control" placeholder="Enter address"
+                                        autofocus>
                                 </div>
-                            </form>
-                        </div>
+                                <div class="mb-2">
+                                    <label for="country" class="form-label">Country:</label>
+                                    <input type="text" name="country" class="form-control" placeholder="Enter country">
+                                </div>
+                                <div class="mb-2">
+                                    <label for="city" class="form-label">City:</label>
+                                    <input type="text" name="city" class="form-control" placeholder="Enter city">
+                                </div>
+                                <div class="mb-2">
+                                    <label for="zipcode" class="form-label">ZIP Code:</label>
+                                    <input type="text" name="zipcode" class="form-control" placeholder="Enter ZIP code">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add Address</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-        @endforeach  --}}
+            </div>
+        </div>
+
 
         <!-- Cambiar contraseña -->
         <div class="row mb-3">

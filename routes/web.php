@@ -24,8 +24,8 @@ Route::get('profile', [UserController::class, 'profile'])->name('profile');
 Route::put('profile/changepassword', [UserController::class, 'changePassword'])->name('profile.changepassword');
 Route::put('profile/update', [UserController::class, 'update'])->name('user.update');
 //Direcciones de envío
-Route::post('profile/addresses', [UserController::class, 'addresses'])->name('profile.addresses');
-Route::get('profile/new-address', [UserController::class, 'newadress'])->name('profile.newadress');
+Route::get('profile', [UserController::class, 'address'])->name('profile.address');
+Route::post('profile/new-address', [UserController::class, 'createNewAddress'])->name('profile.create-new-address');
 Route::get('profile/update-address', [UserController::class, 'updateAddress'])->name('profile.updateaddress');
 Route::get('profile/save-address', [UserController::class, 'saveAddress'])->name('profile.saveaddress');
 Route::get('profile/delete-address', [UserController::class, 'deleteAddress'])->name('profile.deleteaddress');
