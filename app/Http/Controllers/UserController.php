@@ -117,7 +117,7 @@ class UserController extends Controller
 
         $newAddress->save();
 
-        return redirect()->route('profile')->with('mensaje', 'Address added successfully');
+        return redirect()->route('profile.address')->with('mensaje', 'Address added successfully');
     }
 
     public function deleteAddress($id)

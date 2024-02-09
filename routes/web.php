@@ -26,9 +26,10 @@ Route::put('profile/update', [UserController::class, 'update'])->name('user.upda
 //Direcciones de envío
 Route::get('profile', [UserController::class, 'address'])->name('profile.address');
 Route::post('profile/new-address', [UserController::class, 'createNewAddress'])->name('profile.create-new-address');
-Route::get('profile/update-address', [UserController::class, 'updateAddress'])->name('profile.updateaddress');
-Route::get('profile/save-address', [UserController::class, 'saveAddress'])->name('profile.saveaddress');
-Route::get('profile/delete-address', [UserController::class, 'deleteAddress'])->name('profile.deleteaddress');
+Route::get('profile/edit-address/{id}', [UserController::class, 'editAddress'])->name('profile.editAddress');
+Route::put('profile/update-address/{id}', [UserController::class, 'updateAddress'])->name('profile.updateAddress');
+Route::delete('profile/delete-address/{id}', [UserController::class, 'deleteAddress'])->name('profile.deleteAddress');
+
 
 
 //Pedir que el correo sea verificado
