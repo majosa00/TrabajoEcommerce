@@ -25,7 +25,7 @@
                                 
                                 <form action="{{ route('wishlist.add', $product->id) }}" method="POST" class="d-flex justify-content-end">
                                     @csrf
-                                    <button class="btn btn-danger" type="submit"></button>
+                                    <button class="btn btn-danger" type="submit"><i class="fas fa-heart"></i></button>
                                 </form>
                             </div>
                         </div>

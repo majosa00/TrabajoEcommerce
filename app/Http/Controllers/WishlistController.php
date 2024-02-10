@@ -23,10 +23,10 @@ class WishlistController extends Controller
                 'product_id' => $productId,
             ]);
 
-            return back()->with('success', 'Producto agregado a la lista de deseos.');
+            return back()->with('success', 'Product added to the wishlist.');
         }
 
-        return back()->with('error', 'El producto ya está en tu lista de deseos.');
+        return back()->with('error', 'The product is already in your wishlist.');
     }
 
     public function removeFromWishlist($wishlistId)
@@ -35,10 +35,10 @@ class WishlistController extends Controller
 
         if ($wishlist) {
             $wishlist->delete();
-            return back()->with('success', 'Producto eliminado de la lista de deseos.');
+            return back()->with('success', 'Product removed from the wishlist.');
         }
 
-        return back()->with('error', 'No se pudo eliminar el producto de la lista de deseos.');
+        return back()->with('error', 'Unable to remove the product from the wishlist.');
     }
 
     public function showWishlist()
@@ -46,7 +46,7 @@ class WishlistController extends Controller
         $userId = Auth::id();
         $wishlists = Wishlist::where('user_id', $userId)->with('product')->get();
 
-        return view('wishlist', compact('wishlists'));
+        return view('products.wishlist', compact('wishlists'));
     }
 }
 

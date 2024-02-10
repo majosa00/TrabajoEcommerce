@@ -25,7 +25,7 @@
 
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/whislist"><i class="fas fa-heart"></i></a>
+                    <a class="nav-link" href="/wishlist"><i class="fas fa-heart"></i></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/cart"><i class="fas fa-shopping-basket"></i></a>

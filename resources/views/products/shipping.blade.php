@@ -1,84 +1,107 @@
 @extends('layaouts.app')
 
 @section('content')
-<div class="container p-5">
-    <h4 class="mb-3">Billing address</h4>
-    @if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
-    <form class="needs-validation" novalidate method="POST" action="{{ route('cart.viewShipping') }}">
-        @csrf
-        <div class="row g-3">
-            <div class="col-sm-6">
-                <label for="firstName" class="form-label">First name</label>
-                <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
-                <div class="invalid-feedback">
-                    Please enter your first name.
-                </div>
+    <div class="container p-5">
+        <h4 class="mb-3">Billing address</h4>
+        @if (session('mensaje'))
+            <div class="alert alert-success">
+                {{ session('mensaje') }}
             </div>
+        @endif
 
-            <div class="col-sm-6">
-                <label for="email" class="form-label">Email <span class="text-body-secondary"></span></label>
-                <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
-                <div class="invalid-feedback">
-                    Please enter a valid email address for shipping updates.
-                </div>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
+        @endif
+        
+        <form class="needs-validation" novalidate method="POST" action="{{ route('cart.viewShipping') }}">
+            @csrf
+            <div class="row g-3">
+                <div class="col-sm-6">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                        Please enter your first name.
+                    </div>
+                </div>
 
-            <div class="col-6">
-                <label for="address" class="form-label">Address</label>
-                <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
-                <div class="invalid-feedback">
-                    Please enter your shipping address.
+                <div class="col-sm-6">
+                    <label for="firstName" class="form-label">Second Name</label>
+                    <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                        Please enter your second name.
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-6">
-                <label for="address2" class="form-label">Address 2 <span
-                        class="text-body-secondary">(Optional)</span></label>
-                <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
-                <div class="invalid-feedback">
-                    Please enter your shipping address.
+                <div class="col-sm-6">
+                    <label for="email" class="form-label">Email <span class="text-body-secondary"></span></label>
+                    <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+                    <div class="invalid-feedback">
+                        Please enter a valid email address for shipping updates.
+                    </div>
+                    <button class="btn btn-warning btn-block mt-2" type="submit">Save</button>
                 </div>
-            </div>
 
-            <div class="col-md-4">
-                <label for="country" class="form-label">Country</label>
-                <select class="form-select" id="country" required>
-                    <option value="">Choose...</option>
-                    <option>United States</option>
-                    <option>Canada</option>
-                    <option>United Kingdom</option>
-                    <option>Germany</option>
-                    <option>Spain</option>
-                    <option>France</option>
-                    <option>Italy</option>
-                </select>
-                <div class="invalid-feedback">
-                    Please select a valid country.
+                <div class="col-sm-6">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="tel" class="form-control" id="phone" placeholder="Phone" value="" required>
+                    <div class="invalid-feedback">
+                        Please enter your phone number.
+                    </div>
                 </div>
             </div>
-
-            <div class="col-md-4">
-                <label for="city" class="form-label">City <span class="text-body-secondary"></span></label>
-                <input type="text" class="form-control" id="city" placeholder="City" required>
-                <div class="invalid-feedback">
-                    Please enter your city.
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <label for="zip" class="form-label">Zip</label>
-                <input type="text" class="form-control" id="zip" placeholder="" required>
-                <div class="invalid-feedback">
-                    Zip code required.
-                </div>
-            </div>
-        </div>
+        </form>
 
         <hr class="my-4">
+
+        <!-- Direcciones -->
+        <h3>Choose your address</h3>
+        <div class="form-group">
+            <label for="address">Select Address:</label>
+            <select name="address" id="address" class="form-control">
+                @if ($addresses->count() > 0)
+                    @foreach ($addresses as $address)
+                        <option value="{{ $address->id }}">{{ $address->address }} - {{ $address->city }},
+                            {{ $address->country }}</option>
+                    @endforeach
+                @endif
+                <option value="0" data-toggle="#newAddressForm">Create New Address</option>
+            </select>
+        </div>
+
+        <!-- Formulario para nueva dirección (inicialmente oculto) -->
+        <div id="newAddressForm" style="display: none;">
+            <form action="{{ route('cart.create-new-address-shipping') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <div class="mb-2">
+                        <label for="address" class="form-label">Address:</label>
+                        <input type="text" name="address" class="form-control" placeholder="Enter address" autofocus>
+                    </div>
+                    <div class="mb-2">
+                        <label for="country" class="form-label">Country:</label>
+                        <input type="text" name="country" class="form-control" placeholder="Enter country">
+                    </div>
+                    <div class="mb-2">
+                        <label for="city" class="form-label">City:</label>
+                        <input type="text" name="city" class="form-control" placeholder="Enter city">
+                    </div>
+                    <div class="mb-2">
+                        <label for="zipcode" class="form-label">ZIP Code:</label>
+                        <input type="text" name="zipcode" class="form-control" placeholder="Enter ZIP code">
+                    </div>
+                    <button type="submit" class="btn btn-warning">Add Address</button>
+                </div>
+            </form>
+        </div>
+
+
+        <hr>
 
         {{-- <div class="form-check">
             <input type="checkbox" class="form-check-input" id="save-info">
@@ -146,6 +169,6 @@
             @csrf
             <button class="w-100 btn btn-warning btn-lg" type="submit">Continue to checkout</button>
         </form>
-    </form>
-</div>
+        </form>
+    </div>
 @endsection
