@@ -78,6 +78,7 @@ Route::delete('cart/remove/{productId}', [CartController::class, 'remove'])->nam
 //Actualizar cantidades en el carrito
 Route::put('cart/updateAmount/{productId}', [CartController::class, 'updateAmount'])->name('cart.updateAmount');
 Route::post('cart/new-address-shipping', [CartController::class, 'createNewAddressShipping'])->name('cart.create-new-address-shipping');
+Route::get('cart/generate-ticket/{order}', [CartController::class, 'pay'])->name('cart.generateTicket');
 
 Route::get('/language/{locale}', function ($locale) {
     if (in_array($locale, ['en', 'es'])) {
