@@ -12,7 +12,7 @@ class ProductController extends Controller
     {
         // Ordena los productos por fecha de creación de manera descendente
         $products = Product::orderBy('created_at', 'desc')->simplePaginate(5);
-        return view('products.product', compact('products'));        
+        return view('products.product', compact('products'));
     }
 
 
@@ -28,26 +28,26 @@ class ProductController extends Controller
             'name' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
             'description' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
             'flavor' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
-            'brand' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
             'price' => 'required|numeric|min:0.1',
             'dimension' => 'required|numeric|min:0.1',
             'udpack' => 'required|integer|min:1',
             'weight' => 'required|numeric|min:0.1',
             'stock' => 'required|integer|min:1',
-            'iva' => 'required|numeric|min:0.1'
+            'iva' => 'required|numeric|min:0.1',
+            'brand_id' => 'required|integer|min:1'
         ]);
 
         $newProduct = new Product;
         $newProduct->name = $request->name;
         $newProduct->description = $request->description;
         $newProduct->flavor = $request->flavor;
-        $newProduct->brand = $request->brand;
         $newProduct->price = $request->price;
         $newProduct->dimension = $request->dimension;
         $newProduct->udpack = $request->udpack;
         $newProduct->weight = $request->weight;
         $newProduct->stock = $request->stock;
         $newProduct->iva = $request->iva;
+        $newProduct->brand_id = $request->brand_id;
 
         $newProduct->save();
 
@@ -77,7 +77,8 @@ class ProductController extends Controller
             'udpack' => 'required|integer|min:1',
             'weight' => 'required|numeric|min:0.1',
             'stock' => 'required|integer|min:1',
-            'iva' => 'required|numeric|min:0.1'
+            'iva' => 'required|numeric|min:0.1',
+            'brand_id' => 'required|integer|min:1'
         ]);
 
         $productUpdate = Product::findOrFail($id);
@@ -91,6 +92,7 @@ class ProductController extends Controller
         $productUpdate->weight = $request->weight;
         $productUpdate->stock = $request->stock;
         $productUpdate->iva = $request->iva;
+        $productUpdate->brand_id = $request->brand_id;
         $productUpdate->save();
 
         return back()->with('mensaje', 'Product updated');
@@ -161,21 +163,21 @@ class ProductController extends Controller
         return back()->with('mensaje', 'Brand removed');
     }
     public function showTopFavorites()
-{
-    $topProducts = Product::withCount('wishlists')
-        ->orderBy('wishlists_count', 'desc')
-        ->take(5)
-        ->get();
+    {
+        $topProducts = Product::withCount('wishlists')
+            ->orderBy('wishlists_count', 'desc')
+            ->take(5)
+            ->get();
 
-    // Cambia 'admin.wishlist' por 'wishlistadmin' para que coincida con el nombre de tu archivo de vista
-    return view('wishlistadmin', compact('topProducts'));
-}
+        // Cambia 'admin.wishlist' por 'wishlistadmin' para que coincida con el nombre de tu archivo de vista
+        return view('wishlistadmin', compact('topProducts'));
+    }
 
 
     public function showProductsByBrand($brandId)
-{
-    $brand = Brand::with('products')->findOrFail($brandId);
-    return view('brands.products', compact('brand'));
-}
+    {
+        $brand = Brand::with('products')->findOrFail($brandId);
+        return view('brands.products', compact('brand'));
+    }
 
 }

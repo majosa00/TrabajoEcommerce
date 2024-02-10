@@ -83,29 +83,29 @@ class CartController extends Controller
         });
         $order->totalPrice = $totalPrice;
 
-        if ($request->filled('address')) {
-            $selectedAddressId = $request->input('address');
-            $selectedAddress = Address::find($selectedAddressId);
+        // if ($request->filled('address')) {
+        //     $selectedAddressId = $request->input('address');
+        //     $selectedAddress = Address::find($selectedAddressId);
 
-            if ($selectedAddress) {
-                // Crear un array con los detalles de la dirección seleccionada
-                $addressDetails = [
-                    'address' => $selectedAddress->address,
-                    'city' => $selectedAddress->city,
-                    'country' => $selectedAddress->country,
-                    'zipcode' => $selectedAddress->zipCode,
-                ];
+        //     if ($selectedAddress) {
+        //         // Crear un array con los detalles de la dirección seleccionada
+        //         $addressDetails = [
+        //             'address' => $selectedAddress->address,
+        //             'city' => $selectedAddress->city,
+        //             'country' => $selectedAddress->country,
+        //             'zipcode' => $selectedAddress->zipCode,
+        //         ];
 
-                // Convertir los detalles de la dirección en una cadena
-                $formattedAddress = implode(', ', $addressDetails);
-                // Guardar la dirección en la base de datos o realizar acciones adicionales según tus necesidades
-                $order->address = $formattedAddress;
+        //         // Convertir los detalles de la dirección en una cadena
+        //         $formattedAddress = implode(', ', $addressDetails);
+        //         // Guardar la dirección en la base de datos o realizar acciones adicionales según tus necesidades
+        //         $order->address = $formattedAddress;
 
-                return back()->with('success', 'Address saved successfully!');
-            } else {
-                return back()->with('error', 'Selected address not found.');
-            }
-        }
+        //         return back()->with('success', 'Address saved successfully!');
+        //     } else {
+        //         return back()->with('error', 'Selected address not found.');
+        //     }
+        // }
 
         $order->save();
 
@@ -121,7 +121,7 @@ class CartController extends Controller
         }
 
         // Enviar correo electrónico (comentado mientras practicamos para no tener 21701293 correos)
-        Mail::to($user->email)->send(new OrderConfirmation($order));
+        // Mail::to($user->email)->send(new OrderConfirmation($order));
 
         // Puedes limpiar el carrito después de realizar el pedido si es necesario
         $cart->products()->detach();

@@ -54,19 +54,22 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="flavor">Flavor:</label>
-                                <input type="text" class="form-control" name="flavor" id="flavor" required>
-                                <div class="invalid-feedback">
-                                    Please enter the product flavor.
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label for="flavor">Flavor:</label>
+                                    <input type="text" class="form-control" name="flavor" id="flavor" required>
+                                    <div class="invalid-feedback">
+                                        Please enter the product flavor.
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="brand">Brand:</label>
-                                <input type="text" class="form-control" name="brand" id="brand" required>
-                                <div class="invalid-feedback">
-                                    Please enter the product brand.
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="brand_id">Brand ID:</label>
+                                        <input type="number" class="form-control" name="brand_id" id="brand_id" required>
+                                        <div class="invalid-feedback">
+                                            Please enter the brand ID.
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -213,9 +216,6 @@
                                 @error('flavor')
                                     <div class="alert alert-danger"> The flavor is required </div>
                                 @enderror
-                                @error('brand')
-                                    <div class="alert alert-danger"> The brand is required </div>
-                                @enderror
                                 @error('price')
                                     <div class="alert alert-danger"> The price is required and must be numeric </div>
                                 @enderror
@@ -231,6 +231,9 @@
                                 @error('stock')
                                     <div class="alert alert-danger"> The stock is required and must be an integer </div>
                                 @enderror
+                                @error('brand_id')
+                                    <div class="alert alert-danger"> The Brand_ID is required and must be numeric </div>
+                                @enderror
                                 @error('iva')
                                     <div class="alert alert-danger"> The VAT is required and must be numeric </div>
                                 @enderror
@@ -243,8 +246,6 @@
                                         class="form-control mb-2" value="{{ $product->description }}">
                                     <input type="text" name="flavor" placeholder="Product Flavor"
                                         class="form-control mb-2" value="{{ $product->flavor }}">
-                                    <input type="text" name="brand" placeholder="Product Brand"
-                                        class="form-control mb-2" value="{{ $product->brand }}">
                                     <input type="text" name="price" placeholder="Product Price"
                                         class="form-control mb-2" value="{{ $product->price }}">
                                     <input type="text" name="dimension" placeholder="Product Dimension"
@@ -255,6 +256,8 @@
                                         class="form-control mb-2" value="{{ $product->weight }}">
                                     <input type="text" name="stock" placeholder="Product Stock"
                                         class="form-control mb-2" value="{{ $product->stock }}">
+                                    <input type="number" name="brand_id" placeholder="Brand ID"
+                                        class="form-control mb-2" value="{{ $product->brand_id }}">
                                     <input type="text" name="iva" placeholder="Product VAT"
                                         class="form-control mb-2" value="{{ $product->iva }}">
                                 </div>
@@ -299,10 +302,6 @@
                                         <td>{{ $product->flavor }}</td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">Brand</th>
-                                        <td>{{ $product->brand }}</td>
-                                    </tr>
-                                    <tr>
                                         <th scope="row">Price</th>
                                         <td>{{ $product->price }}</td>
                                     </tr>
@@ -323,13 +322,17 @@
                                         <td>{{ $product->stock }}</td>
                                     </tr>
                                     <tr>
+                                        <th scope="row">Brand ID</th>
+                                        <td>{{ $product->brand_id }}</td>
+                                    </tr>
+                                    <tr>
                                         <th scope="row">IVA</th>
                                         <td>{{ $product->iva }}</td>
                                     </tr>
                                 </tbody>
                             </table>
-                                
-                         
+
+
                         </div>
                     </div>
                 </div>
