@@ -17,14 +17,17 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('flavor');
-            $table->string('brand');
             $table->float('price');
             $table->float('dimension');
             $table->integer('udpack');
             $table->float('weight');
             $table->integer('stock');
             $table->float('iva');
-
+            $table->unsignedBigInteger('brand_id'); 
+            $table->foreign('brand_id') // Asegúrate de que el nombre de la columna aquí coincida con el definido arriba
+            ->references('id') // Esto apunta a la columna 'id' en la tabla de 'brands'
+            ->on('brands') // Esto especifica la tabla a la que la clave foránea hace referencia
+            ->onDelete('cascade'); 
             $table->timestamps(); 
         });
     }
