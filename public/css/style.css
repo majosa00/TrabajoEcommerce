@@ -1,94 +1,154 @@
-/* Aumentando la especificidad para asegurar la aplicación de los estilos */
 body .navbar,
 body footer {
-    background-color: rgba(0, 0, 0, 0.9) !important;
-    /* Negro con opacidad del 90%, forzando su aplicación */
-    color: white !important;
-    /* Color del texto */
+  background-color: rgba(0, 0, 0, 0.9) !important;
+  color: white !important;
 }
 
 body .navbar .navbar-nav .nav-link,
-body footer {
-    color: white !important;
-    /* Color del texto */
-    position: relative;
-    /* Agregamos posición relativa para permitir el uso del pseudo-elemento */
+body footer a {
+  color: white !important;
+  position: relative;
+  text-decoration: none;
 }
 
-/* Estilo para los enlaces en el menú al pasar el mouse por encima */
-body .navbar .navbar-nav .nav-link::before {
-    content: "";
-    /* Agregamos un contenido vacío para el pseudo-elemento */
-    position: absolute;
-    /* Lo posicionamos de forma absoluta sobre el enlace */
-    bottom: -2px;
-    /* Ajustamos la posición para que se muestre debajo del texto */
-    left: 0;
-    /* Alineamos el subrayado a la izquierda */
-    width: 100%;
-    /* Establecemos la longitud del subrayado al 100% del ancho del enlace */
-    height: 2px;
-    /* Grosor del subrayado */
-    background-color: #f3cb09;
-    /* Color del subrayado */
-    transform: scaleX(0);
-    /* Inicialmente, el subrayado está invisible */
-    transform-origin: center;
-    /* El punto de transformación en el centro */
-    transition: transform 0.3s ease;
-    /* Agregamos una transición suave */
+/* Estilo para los enlaces en el menú y en el footer al pasar el mouse por encima */
+body .navbar .navbar-nav .nav-link::before,
+body footer a::before {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #f3cb09;
+  transform: scaleX(0);
+  transform-origin: bottom left;
+  transition: transform 0.3s ease;
 }
 
-body .navbar .navbar-nav .nav-link:hover::before {
-    transform: scaleX(1);
-    /* Al pasar el mouse, el subrayado se hace visible */
+body .navbar .navbar-nav .nav-link:hover::before,
+body footer a:hover::before {
+  transform: scaleX(1);
 }
 
 body .navbar {
-    position: sticky;
-    top: 0;
-    z-index: 1020;
+  position: sticky;
+  top: 0;
+  z-index: 1020;
 }
 
-/* styles.css */
 .footer {
-    background-color: rgba(0, 0, 0, 0.9) !important;
-    color: white !important;
+  background-color: rgba(0, 0, 0, 0.9) !important;
+  color: white !important;
 }
-
 
 #main-container {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-
 .table {
-    width: 100%;
-    margin-bottom: 1rem;
-    background-color: transparent;
-    border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1rem;
+  background-color: transparent;
+  border-collapse: collapse;
 }
 
 .table th,
 .table td {
-    padding: 0.75rem;
-    vertical-align: top;
-    border: 1px solid #dee2e6;
-    /* Color de borde claro similar al usado por Bootstrap */
+  padding: 0.75rem;
+  vertical-align: top;
+  border: 1px solid #dee2e6;
 }
 
 .table thead th {
-    vertical-align: bottom;
-    border-bottom: 2px solid #dee2e6;
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
 }
 
 .card-img-top {
-    width: 25% !important;
+  width: 25% !important;
+}
+
+.footer-logo {
+  max-width: 230px;
+}
+
+.slogan {
+  margin-top: 1rem;
+}
+
+.footer h5 {
+  margin-bottom: 1rem;
+}
+
+.footer ul {
+  padding-left: 0;
+}
+
+.footer li,
+.footer p {
+  list-style-type: none;
+  line-height: 1.5;
+  color: #ddd;
+}
+
+.footer a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.footer .container {
+  max-width: 960px;
+}
+
+.footer .row {
+  text-align: center;
+}
+
+.footer .col-lg-4 {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  flex-direction: column;
+}
+
+.footer .text-center {
+  margin: auto;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.content {
+  flex: 1;
+}
+
+body footer a {
+  text-decoration: none !important;
+}
+
+/* Aplicando el efecto de subrayado amarillo a los enlaces del footer */
+body footer a::before {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #f3cb09;
+  transition: width 0.3s ease;
+}
+
+body footer a:hover::before {
+  width: 100%;
 }
