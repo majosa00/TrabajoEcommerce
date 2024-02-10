@@ -13,11 +13,10 @@ class Brand extends Model
         'name',
     ];
 
-    //Relación 0 a 1 (inversa)
-    // Brand.php
-public function products()
-{
-    return $this->hasMany(Product::class, 'brand_id');
-}
+    //Relación uno a muchos 
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 
 }

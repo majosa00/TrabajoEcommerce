@@ -18,29 +18,32 @@
                 </ul>
             </div>
         @endif
-        
+
         <form class="needs-validation" novalidate method="POST" action="{{ route('cart.viewShipping') }}">
             @csrf
             <div class="row g-3">
                 <div class="col-sm-6">
-                    <label for="firstName" class="form-label">First Name</label>
-                    <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                    <label for="name" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder=""
+                        value="{{ old('name', auth()->user()->name) }}" required>
                     <div class="invalid-feedback">
                         Please enter your first name.
                     </div>
                 </div>
 
                 <div class="col-sm-6">
-                    <label for="firstName" class="form-label">Second Name</label>
-                    <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                    <label for="secondname" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="secondname" name="secondname" placeholder=""
+                        value="{{ old('secondname', auth()->user()->secondname) }}" required>
                     <div class="invalid-feedback">
-                        Please enter your second name.
+                        Please enter your last name.
                     </div>
                 </div>
 
                 <div class="col-sm-6">
                     <label for="email" class="form-label">Email <span class="text-body-secondary"></span></label>
-                    <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com"
+                        value="{{ old('email', auth()->user()->email) }}" required>
                     <div class="invalid-feedback">
                         Please enter a valid email address for shipping updates.
                     </div>
@@ -49,7 +52,8 @@
 
                 <div class="col-sm-6">
                     <label for="phone" class="form-label">Phone Number</label>
-                    <input type="tel" class="form-control" id="phone" placeholder="Phone" value="" required>
+                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone"
+                        value="{{ old('phone', auth()->user()->phone) }}" required>
                     <div class="invalid-feedback">
                         Please enter your phone number.
                     </div>
@@ -100,15 +104,7 @@
             </form>
         </div>
 
-
         <hr>
-
-        {{-- <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="save-info">
-            <label class="form-check-label" for="save-info">Save this information for next time</label>
-        </div>
-
-        <hr class="my-4"> --}}
 
         <h4 class="mb-3">Payment</h4>
 
@@ -117,14 +113,6 @@
                 <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
                 <label class="form-check-label" for="credit">Credit card</label>
             </div>
-            {{-- <div class="form-check">
-                <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
-                <label class="form-check-label" for="debit">Debit card</label>
-            </div>
-            <div class="form-check">
-                <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
-                <label class="form-check-label" for="paypal">PayPal</label>
-            </div> --}}
         </div>
 
         <div class="row gy-3">
@@ -164,11 +152,9 @@
 
         <hr class="my-4">
 
-
         <form action="{{ route('cart.pay') }}" method="POST" class="mt-3">
             @csrf
             <button class="w-100 btn btn-warning btn-lg" type="submit">Continue to checkout</button>
-        </form>
         </form>
     </div>
 @endsection

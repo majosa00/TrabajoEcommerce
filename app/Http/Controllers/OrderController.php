@@ -15,7 +15,7 @@ class OrderController extends Controller
         return view('/orderadmin')->with('orders', $orders);
     }
 
-    public function showOrder()
+    public function showOrders()
     {
         $userId = Auth::id();
 

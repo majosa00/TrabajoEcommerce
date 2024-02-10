@@ -53,11 +53,10 @@ class Product extends Model
         return $this->belongsToMany(Ingredient::class);
     }
 
-    //Relación 0 a 1
-   // Product.php
-public function brand()
-{
-    return $this->belongsTo(Brand::class, 'brand_id');
-}
+    //Relación uno a muchos (inversa)
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
 
 }

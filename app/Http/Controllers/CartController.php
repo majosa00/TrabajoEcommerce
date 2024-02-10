@@ -71,15 +71,6 @@ class CartController extends Controller
         // Obtener carrito del usuario
         $cart = $user->cart;
 
-        // Crear nueva dirección
-        $address = new Address();
-        $address->user_id = $user->id;
-        $address->address = $request->input('address');
-        $address->city = $request->input('city');
-        $address->country = $request->input('country');
-        $address->zipCode = $request->input('zip');
-        $address->save();
-
         // Crear nuevo pedido
         $order = new Order();
         $order->user_id = $user->id;
@@ -92,8 +83,30 @@ class CartController extends Controller
         });
         $order->totalPrice = $totalPrice;
 
-        // Asociar la dirección al pedido
-        $order->address_id = $address->id;
+        if ($request->filled('address')) {
+            $selectedAddressId = $request->input('address');
+            $selectedAddress = Address::find($selectedAddressId);
+
+            if ($selectedAddress) {
+                // Crear un array con los detalles de la dirección seleccionada
+                $addressDetails = [
+                    'address' => $selectedAddress->address,
+                    'city' => $selectedAddress->city,
+                    'country' => $selectedAddress->country,
+                    'zipcode' => $selectedAddress->zipCode,
+                ];
+
+                // Convertir los detalles de la dirección en una cadena
+                $formattedAddress = implode(', ', $addressDetails);
+                // Guardar la dirección en la base de datos o realizar acciones adicionales según tus necesidades
+                $order->address = $formattedAddress;
+
+                return back()->with('success', 'Address saved successfully!');
+            } else {
+                return back()->with('error', 'Selected address not found.');
+            }
+        }
+
         $order->save();
 
         foreach ($cart->products as $product) {
