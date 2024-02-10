@@ -1,4 +1,4 @@
-@extends('layaouts.app')
+@extends('layouts.app')
 
 @section('content')
     <div class="container p-5">
@@ -13,7 +13,7 @@
                 {{ session('message') }}
             </div>
         @endif
-        
+
         <div class="row">
             <div class="col-lg-3 col-md-3">
                 <h4>Cart</h4>
@@ -37,7 +37,11 @@
                 <div class="col-lg-3 col-md-3">
                     <h3>{{ $product->name }}</h3>
                     <p>{{ $product->description }}</p>
-                    <a href="{{ route('cart.remove', $product->id) }}" class="text-decoration-none">Remove</a>
+                    <form action="{{ route('cart.remove', $product->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-link text-decoration-none">Remove</button>
+                    </form>
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <p>{{ $product->price }} $</p>
@@ -62,9 +66,6 @@
             </div>
             <hr>
         @endforeach
-      
-                {{ $products->links() }}
-        
 
         <div class="row">
             <div class="col-lg-3 col-md-3">

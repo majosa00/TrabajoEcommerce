@@ -55,11 +55,10 @@ class CartController extends Controller
 
         //Obtener productos del carrito y la cantidad
         if ($cart) {
-            $products = $cart->products()->withPivot('amount')->simplePaginate(5);
+            $products = $cart->products()->withPivot('amount')->get();
         } else {
             $products = collect();
         }
-
 
         return view('products.cart', compact('products'));
     }
