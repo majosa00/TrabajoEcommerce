@@ -23,7 +23,6 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!-- JS -->
     <script src="{{ asset('js/checkout.js') }}" defer></script>
-    <script src="{{ asset('js/shipping.js') }}" defer></script>
 </head>
 
 <body>
@@ -31,7 +30,7 @@
 
     @yield('content')
 
-    @include('partials.footer')
+    @include('partials.footer2')
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

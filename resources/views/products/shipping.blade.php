@@ -65,44 +65,59 @@
 
         <!-- Direcciones -->
         <h3>Choose your address</h3>
-        <div class="form-group">
-            <label for="address">Select Address:</label>
-            <select name="address" id="address" class="form-control">
-                @if ($addresses->count() > 0)
-                    @foreach ($addresses as $address)
-                        <option value="{{ $address->id }}">{{ $address->address }} - {{ $address->city }},
-                            {{ $address->country }}</option>
-                    @endforeach
-                @endif
-                <option value="0" data-toggle="#newAddressForm">Create New Address</option>
-            </select>
+        <div class="row">
+            @foreach ($addresses as $address)
+                <div class="col-md-3 mb-3">
+                    <a href="#" class="address-link" data-address="{{ $address->id }}">
+                        {{ $address->address }} - {{ $address->city }}, {{ $address->country }}
+                    </a>
+                </div>
+            @endforeach
+            <div class="col-md-3">
+                <a href="addressModal" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#addressModal">
+                    <i class="fas fa-plus"></i> New Address
+                </a>
+            </div>
         </div>
 
-        <!-- Formulario para nueva dirección (inicialmente oculto) -->
-        <div id="newAddressForm" style="display: none;">
-            <form action="{{ route('cart.create-new-address-shipping') }}" method="POST">
-                @csrf
-                <div class="modal-body">
-                    <div class="mb-2">
-                        <label for="address" class="form-label">Address:</label>
-                        <input type="text" name="address" class="form-control" placeholder="Enter address" autofocus>
+        <!-- Modal para nueva dirección -->
+        <div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="addressModal"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="newAddressModalLabel">Add New Address</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <div class="mb-2">
-                        <label for="country" class="form-label">Country:</label>
-                        <input type="text" name="country" class="form-control" placeholder="Enter country">
+                    <div class="modal-body">
+                        <form action="{{ route('cart.create-new-address-shipping') }}" method="POST">
+                            @csrf
+                            <div class="mb-2">
+                                <label for="address" class="form-label">New Address:</label>
+                                <input type="text" name="address" class="form-control" placeholder="Enter new address"
+                                    autofocus>
+                            </div>
+                            <div class="mb-2">
+                                <label for="country" class="form-label">Country:</label>
+                                <input type="text" name="country" class="form-control" placeholder="Enter country">
+                            </div>
+                            <div class="mb-2">
+                                <label for="city" class="form-label">City:</label>
+                                <input type="text" name="city" class="form-control" placeholder="Enter city">
+                            </div>
+                            <div class="mb-2">
+                                <label for="zipcode" class="form-label">ZIP Code:</label>
+                                <input type="text" name="zipcode" class="form-control" placeholder="Enter ZIP code">
+                            </div>
+                            <button type="submit" class="btn btn-warning">Add Address</button>
+                        </form>
                     </div>
-                    <div class="mb-2">
-                        <label for="city" class="form-label">City:</label>
-                        <input type="text" name="city" class="form-control" placeholder="Enter city">
-                    </div>
-                    <div class="mb-2">
-                        <label for="zipcode" class="form-label">ZIP Code:</label>
-                        <input type="text" name="zipcode" class="form-control" placeholder="Enter ZIP code">
-                    </div>
-                    <button type="submit" class="btn btn-warning">Add Address</button>
                 </div>
-            </form>
+            </div>
         </div>
+
 
         <hr>
 

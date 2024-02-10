@@ -131,7 +131,7 @@
                                         value="{{ $address->country }}">
                                     <input type="text" name="city" placeholder="City" class="form-control mb-2"
                                         value="{{ $address->city }}">
-                                    <input type="text" name="zipcode" placeholder="Zip Code"
+                                    <input type="text" name="zipCode" placeholder="Zip Code"
                                         class="form-control mb-2" value="{{ $address->zipCode }}">
 
                                     <button class="btn btn-warning btn-block mt-2" type="submit">Save</button>
@@ -185,8 +185,6 @@
                 </div>
             </div>
         </div>
-
-
         <!-- Cambiar contraseña -->
         <div class="row mb-3">
             <h3>Password</h3>
@@ -232,7 +230,8 @@
 
                             {{-- Campo para confirmar la nueva contraseña --}}
                             <div class="mb-3">
-                                <label for="new_password_confirmation" class="form-label">Confirm New Password</label>
+                                <label for="new_password_confirmation" class="form-label">Confirm New
+                                    Password</label>
                                 <input type="password" name="new_password_confirmation" class="form-control" required>
                                 @error('new_password_confirmation')
                                     <div class="text-danger">{{ $message }}</div>
@@ -245,13 +244,5 @@
                 </div>
             </div>
         </div>
-    @endsection
-
-    {{-- <!-- Cambiar idioma -->
-    <div class="col-md-6">
-        <label for="language" class="form-label">Language:</label>
-        <select class="form-select form-control" id="language" name="select">
-            <option value="English">English</option>
-            <option value="Español">Español</option>
-        </select>
-    </div> --}}
+    </div>
+@endsection
