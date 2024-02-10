@@ -185,7 +185,7 @@
     @endpush
             </tbody>
         </table>
-
+        {{ $products->links() }}
 
 
         <!-- Modal editar producto -->
@@ -329,6 +329,8 @@
                                     </tr>
                                 </tbody>
                             </table>
+                                
+                         
                         </div>
                     </div>
                 </div>

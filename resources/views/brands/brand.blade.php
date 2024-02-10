@@ -102,6 +102,7 @@
                 @endforeach
             </tbody>
         </table>
+        {{ $brands->links() }}
     </div>
 
 
