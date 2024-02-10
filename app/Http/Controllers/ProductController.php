@@ -162,9 +162,9 @@ class ProductController extends Controller
     }
 
     public function showProductsByBrand($brandId)
-{
-    $brand = Brand::with('products')->findOrFail($brandId);
-    return view('brands.products', compact('brand'));
-}
-
+    {
+        $brand = Brand::with('products')->findOrFail($brandId);
+        // Asegúrate de que el nombre de la vista sea 'productsbrands'
+        return view('productsbrands', compact('brand'));
+    }
 }
