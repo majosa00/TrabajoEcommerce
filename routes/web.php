@@ -1,7 +1,5 @@
 <?php
 
-
-
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
@@ -9,7 +7,6 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\WishlistController;
-
 
 Route::get('/', function () {
     return view('welcome');
@@ -91,6 +88,11 @@ Route::post('wishlist/add/{productId}', [WishlistController::class, 'addToWishli
 Route::delete('wishlist/remove/{wishlistId}', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
 // Mostrar la Lista de Deseos
 Route::get('wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.show');
+
+Route::get('/admin/wishlist', [WishlistController::class, 'showTopWishlist'])->name('admin.wishlist');
+Route::get('/admin/wishlist', [ProductController::class, 'showTopFavorites'])->name('admin.topFavorites');
+
+
 
 Route::get('/brands/{brandId}/products', [ProductController::class, 'showProductsByBrand'])->name('brand.products');
 

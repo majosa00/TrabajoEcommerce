@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Product; 
+use App\Models\Product;
 use App\Models\Wishlist;
 
 class WishlistController extends Controller
@@ -12,10 +12,10 @@ class WishlistController extends Controller
     public function addToWishlist($productId)
     {
         $userId = Auth::id(); // Obtiene el ID del usuario autenticado
-    
+
         // Busca un registro existente en la lista de deseos
         $wishlistItem = Wishlist::where('user_id', $userId)->where('product_id', $productId)->first();
-    
+
         if ($wishlistItem) {
             // Si el producto ya está en la lista de deseos, lo elimina
             $wishlistItem->delete();
@@ -50,5 +50,17 @@ class WishlistController extends Controller
 
         return view('products.wishlist', compact('wishlists'));
     }
+    // Dentro de WishlistController.php
+
+    public function showTopWishlist()
+    {
+        $topProducts = Product::withCount('wishlists')
+            ->orderBy('wishlists_count', 'desc')
+            ->take(5)
+            ->get();
+
+        return view('admin.wishlist', compact('topProducts'));
+    }
+
 }
 
