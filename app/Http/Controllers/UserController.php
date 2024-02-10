@@ -111,7 +111,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $addresses = $user->addresses;
-
+        
         return view('profile.profile', compact('addresses'));
     }
 
