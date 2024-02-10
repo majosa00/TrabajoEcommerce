@@ -186,7 +186,7 @@
                 @endpush
             </tbody>
         </table>
-
+        {{ $products->links() }}
         <!-- Modal editar producto -->
         @foreach ($products as $product)
             <div class="modal fade" id="updateProductModal{{ $product->id }}" tabindex="-1"

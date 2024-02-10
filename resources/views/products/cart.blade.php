@@ -62,7 +62,9 @@
             </div>
             <hr>
         @endforeach
-
+      
+                {{ $products->links() }}
+        
 
         <div class="row">
             <div class="col-lg-3 col-md-3">

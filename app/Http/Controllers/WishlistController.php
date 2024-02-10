@@ -44,7 +44,8 @@ class WishlistController extends Controller
     public function showWishlist()
     {
         $userId = Auth::id();
-        $wishlists = Wishlist::where('user_id', $userId)->with('product')->get();
+        $wishlists = Wishlist::where('user_id', $userId)->with('product')->simplePaginate(5);
+
 
         return view('products.wishlist', compact('wishlists'));
     }
