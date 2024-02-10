@@ -20,6 +20,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{asset('admin/orderadmin')}}">Orders</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{asset('admin/wishlist')}}">Wishlist</a>
+                </li>
             </ul>
 
             <ul class="navbar-nav ml-auto">

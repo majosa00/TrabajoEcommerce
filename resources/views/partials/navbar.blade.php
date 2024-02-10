@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ url('/') }}">
+        <a class="navbar-brand" href="{{ url('/products') }}">
             <img src="{{ asset('images/energeticwave-logo.png') }}" alt="Logotipo" width="200" class="d-inline-block align-text-top">
         </a>
 

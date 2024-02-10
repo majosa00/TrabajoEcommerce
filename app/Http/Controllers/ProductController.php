@@ -160,6 +160,17 @@ class ProductController extends Controller
         $brandDelete->delete();
         return back()->with('mensaje', 'Brand removed');
     }
+    public function showTopFavorites()
+{
+    $topProducts = Product::withCount('wishlists')
+        ->orderBy('wishlists_count', 'desc')
+        ->take(5)
+        ->get();
+
+    // Cambia 'admin.wishlist' por 'wishlistadmin' para que coincida con el nombre de tu archivo de vista
+    return view('wishlistadmin', compact('topProducts'));
+}
+
 
     public function showProductsByBrand($brandId)
 {
