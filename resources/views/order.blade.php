@@ -8,6 +8,7 @@
                 <tr>
                     <th>ID Order</th>
                     <th>Products</th>
+                    <th>Address</th>
                     <th>Amount</th>
                     <th>Order Date</th>
                     <th>Total Price</th>
@@ -24,6 +25,7 @@
                             @endforeach
                         </ul>
                     </td>
+                    <td>{{ $order->address }}</td>
                     <td>
                         <ul class="list-unstyled">
                             @foreach ($order->products as $product)
