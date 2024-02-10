@@ -144,8 +144,8 @@ class CartController extends Controller
             $pivotRecord->pivot->update(['amount' => $pivotRecord->pivot->amount + 1]);
         }
 
-       
-        return redirect()->back()->with('message', 'Product quantity increased.');
+
+        return redirect()->back()->with('mensaje', 'Product quantity increased.');
     }
 
     public function decrease(Product $product)
@@ -161,17 +161,54 @@ class CartController extends Controller
             $pivotRecord->pivot->update(['amount' => max($pivotRecord->pivot->amount - 1, 0)]);
         }
 
-      
-        return redirect()->back()->with('success', 'Product quantity decreased.');
+
+        return redirect()->back()->with('mensaje', 'Product quantity decreased.');
     }
 
     public function viewShipping()
     {
-        return view('products.shipping');
+        $user = Auth::user();
+        $addresses = $user->addresses;
 
+        return view('products.shipping', compact('addresses'));
     }
 
+    public function createNewAddressShipping(Request $request)
+    {
+        // Validar los datos del formulario
+        $request->validate([
+            'address' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'zipcode' => 'required|string|max:10',
+        ]);
 
+        // Comprobar si la dirección ya existe para el usuario actual
+        $existingAddress = Address::where([
+            'user_id' => auth()->user()->id,
+            'address' => $request->input('address'),
+            'country' => $request->input('country'),
+            'city' => $request->input('city'),
+            'zipCode' => $request->input('zipcode'),
+        ])->first();
 
+        if ($existingAddress) {
+            // La dirección ya existe, puedes manejarlo de la forma que prefieras
+            return redirect()->route('cart.viewShipping')->with('error', 'Address already exists.');
+        }
+
+        // Si no existe, crea la nueva dirección
+        $newAddress = new Address;
+        $newAddress->address = $request->input('address');
+        $newAddress->country = $request->input('country');
+        $newAddress->city = $request->input('city');
+        $newAddress->zipCode = $request->input('zipcode');
+        $newAddress->user_id = auth()->user()->id;
+
+        $newAddress->save();
+
+        // Redirigir a la página de envío en lugar de 'profile.address'
+        return redirect()->route('cart.viewShipping')->with('mensaje', 'Address added successfully');
+    }
 
 }

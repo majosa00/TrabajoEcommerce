@@ -54,18 +54,35 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
+            'secondname' => 'nullable|string|max:255',
+            'birthday' => 'nullable|date',
+            'phone' => 'nullable|integer',
         ]);
 
         // Obtener el usuario autenticado
         $user = Auth::user();
 
-        // Actualizar el nombre y correo electrónico del usuario
+        // Actualizar solo los campos que se han proporcionado en la solicitud
         $user->name = $request->input('name');
         $user->email = $request->input('email');
+
+        if ($request->filled('secondname')) {
+            $user->secondname = $request->input('secondname');
+        }
+
+        if ($request->filled('birthday')) {
+            $user->birthday = $request->input('birthday');
+        }
+
+        if ($request->filled('phone')) {
+            $user->phone = $request->input('phone');
+        }
+
         $user->save();
 
         return redirect()->route('profile')->with('mensaje', 'Profile updated successfully!');
     }
+
 
     public function changePassword(Request $request)
     {
@@ -101,20 +118,12 @@ class UserController extends Controller
 
     public function createNewAddress(Request $request)
     {
-        $request->validate([
-            'address' => 'required|unique:addresses,address|max:255',
-            'country' => 'required|max:255',
-            'city' => 'required|max:255',
-            'zipcode' => 'required|max:10',
-        ]);
-
         $newAddress = new Address;
         $newAddress->address = $request->input('address');
         $newAddress->country = $request->input('country');
         $newAddress->city = $request->input('city');
         $newAddress->zipCode = $request->input('zipcode');
         $newAddress->user_id = auth()->user()->id;
-
         $newAddress->save();
 
         return redirect()->route('profile.address')->with('mensaje', 'Address added successfully');
@@ -122,17 +131,33 @@ class UserController extends Controller
 
     public function deleteAddress($id)
     {
-
-    }
-
-    public function editAddress()
-    {
-
+        $addressDelete = Address::findOrFail($id);
+        $addressDelete->delete();
+        return back()->with('mensaje', 'Product removed');
     }
 
     public function updateAddress(Request $request, $id)
     {
+        // Validar los datos del formulario
+        $request->validate([
+            'address' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'zipCode' => 'required|integer',
+        ]);
 
+        // Obtener el usuario autenticado
+        $user = Auth::user();
+
+        $addressUpdate = Address::findOrFail($id);
+        $addressUpdate->address = $request->address;
+        $addressUpdate->country = $request->country;
+        $addressUpdate->city = $request->city;
+        $addressUpdate->zipCode = $request->zipCode;
+        $addressUpdate->user_id = auth()->user()->id;
+        $addressUpdate->save();
+
+        return back()->with('mensaje', 'Address updated');
     }
 
 }

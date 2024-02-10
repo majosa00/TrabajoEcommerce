@@ -23,12 +23,12 @@ class UsersSeeder extends Seeder
         //Para probar
         User::create([
             'id' => 2,
-            'name' => 'marta',
+            'name' => 'Marta',
             'email' => 'martabo_so@hotmail.com',
             'password' => Hash::make('12345678'),
             'rol_id' => 1,
             'email_verified_at' => '2024-01-31 13:01:45',
         ]);
-        
+
     }
 }

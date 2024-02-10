@@ -4,21 +4,21 @@
     <div class="container p-5">
         <h1 class="mb-3">PRODUCTS</h1>
 
-        @if(session('mensaje'))
-        <div class="alert alert-success">
-            {{ session('mensaje') }}
-        </div>
-    @endif
+        @if (session('mensaje'))
+            <div class="alert alert-success">
+                {{ session('mensaje') }}
+            </div>
+        @endif
 
-    @if($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
 
         <a href="#" class="btn btn-warning mb-4" data-bs-toggle="modal" data-bs-target="#newProductModal">
@@ -26,7 +26,8 @@
         </a>
 
         <!-- Modal nuevo producto -->
-        <div class="modal fade" id="newProductModal" tabindex="-1" aria-labelledby="newProductModalLabel" aria-hidden="true">
+        <div class="modal fade" id="newProductModal" tabindex="-1" aria-labelledby="newProductModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -181,12 +182,10 @@
                     </tr>
                 @endforeach
                 @push('scripts')
-        <script src="{{ asset('js/validacion.js') }}"></script>
-    @endpush
+                    <script src="{{ asset('js/validacion.js') }}"></script>
+                @endpush
             </tbody>
         </table>
-
-
 
         <!-- Modal editar producto -->
         @foreach ($products as $product)

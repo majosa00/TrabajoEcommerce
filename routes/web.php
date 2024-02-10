@@ -24,13 +24,11 @@ Route::get('profile', [UserController::class, 'profile'])->name('profile');
 Route::put('profile/changepassword', [UserController::class, 'changePassword'])->name('profile.changepassword');
 Route::put('profile/update', [UserController::class, 'update'])->name('user.update');
 //Direcciones de envío
-Route::get('profile', [UserController::class, 'address'])->name('profile.address');
+Route::get('profile/address', [UserController::class, 'address'])->name('profile.address');
 Route::post('profile/new-address', [UserController::class, 'createNewAddress'])->name('profile.create-new-address');
 Route::get('profile/edit-address/{id}', [UserController::class, 'editAddress'])->name('profile.editAddress');
 Route::put('profile/update-address/{id}', [UserController::class, 'updateAddress'])->name('profile.updateAddress');
 Route::delete('profile/delete-address/{id}', [UserController::class, 'deleteAddress'])->name('profile.deleteAddress');
-
-
 
 //Pedir que el correo sea verificado
 Route::get('home', function () {
@@ -72,13 +70,14 @@ Route::post('cart/add-to-cart/{productId}', [CartController::class, 'addToCart']
 //Pagar
 Route::post('cart/pay', [CartController::class, 'pay'])->name('cart.pay');
 //Shipping
-Route::post('cart/view-shipping', [CartController::class, 'viewShipping'])->name('cart.viewShipping');
+Route::get('cart/view-shipping', [CartController::class, 'viewShipping'])->name('cart.viewShipping');
 Route::post('/cart/increase/{product}', [CartController::class, 'increase'])->name('cart.increase');
 Route::post('/cart/decrease/{product}', [CartController::class, 'decrease'])->name('cart.decrease');
 //Eliminar producto del carrito
 Route::delete('cart/remove/{productId}', [CartController::class, 'remove'])->name('cart.remove');
 //Actualizar cantidades en el carrito
 Route::put('cart/updateAmount/{productId}', [CartController::class, 'updateAmount'])->name('cart.updateAmount');
+Route::post('cart/new-address-shipping', [CartController::class, 'createNewAddressShipping'])->name('cart.create-new-address-shipping');
 
 Route::get('/language/{locale}', function ($locale) {
     if (in_array($locale, ['en', 'es'])) {

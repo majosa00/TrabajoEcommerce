@@ -13,15 +13,18 @@ return new class extends Migration {
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('secondname')->nullable();
+            $table->date('birthday')->nullable();
+            $table->integer('phone')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->unsignedBigInteger('rol_id');
 
             $table->foreign('rol_id')
-                    ->references('id')
-                    ->on('rols')
-                    ->onUpdate('cascade'); //Si el usuario cambia el id, se cambia el id de este rol
-            
+                ->references('id')
+                ->on('rols')
+                ->onUpdate('cascade'); //Si el usuario cambia el id, se cambia el id de este rol
+
             $table->timestamps();
         });
     }

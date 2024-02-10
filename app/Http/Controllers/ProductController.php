@@ -94,7 +94,6 @@ class ProductController extends Controller
         $productUpdate->save();
 
         return back()->with('mensaje', 'Product updated');
-        return back()->with('error', 'The product could not be created.');
     }
 
 
