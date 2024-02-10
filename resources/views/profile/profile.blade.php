@@ -37,9 +37,9 @@
 
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label for="secondname" class="form-label">Second Name</label>
+                            <label for="secondname" class="form-label">Last Name</label>
                             <input type="text" id="secondname" name="secondname" class="form-control mb-2"
-                                value="{{ old('secondname', Auth::user()->secondname) }}" placeholder="Enter your second name">
+                                value="{{ old('secondname', Auth::user()->secondname) }}" placeholder="Enter your last name">
                         </div>
                     </div>
 
@@ -131,7 +131,7 @@
                                         value="{{ $address->country }}">
                                     <input type="text" name="city" placeholder="City" class="form-control mb-2"
                                         value="{{ $address->city }}">
-                                    <input type="text" name="zipCode" placeholder="Zip Code"
+                                    <input type="text" name="zipcode" placeholder="Zip Code"
                                         class="form-control mb-2" value="{{ $address->zipCode }}">
 
                                     <button class="btn btn-warning btn-block mt-2" type="submit">Save</button>

@@ -1,16 +1,16 @@
 "use strict"
 
 document.addEventListener('DOMContentLoaded', function () {
-    var select = document.getElementById('address');
-    var form = document.getElementById('newAddressForm');
+    let select = document.getElementById('address');
+    let form = document.getElementById('newAddressForm');
 
     select.addEventListener('change', function () {
-        var option = this.options[this.selectedIndex];
-        var toggleTarget = option.getAttribute('data-toggle');
+        let option = this.options[this.selectedIndex];
+        let toggleTarget = option.getAttribute('data-toggle');
         if (toggleTarget) {
-            var targetElement = document.querySelector(toggleTarget);
+            let targetElement = document.querySelector(toggleTarget);
             if (targetElement) {
-                var display = targetElement.style.display === 'none' ? 'block' : 'none';
+                let display = targetElement.style.display === 'none' ? 'block' : 'none';
                 targetElement.style.display = display;
             }
         }

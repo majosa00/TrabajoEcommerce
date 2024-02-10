@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('products', [UserController::class, 'products']);
-Route::get('orders', [OrderController::class, 'showOrder']);
+Route::get('orders', [OrderController::class, 'showOrders'])->name('orders');
 Route::get('new_order', [OrderController::class, 'createOrder']);
 Route::get('productsbrands', [UserController::class, 'brands']);
 //Editar perfil
@@ -70,7 +70,7 @@ Route::post('cart/add-to-cart/{productId}', [CartController::class, 'addToCart']
 //Pagar
 Route::post('cart/pay', [CartController::class, 'pay'])->name('cart.pay');
 //Shipping
-Route::get('cart/view-shipping', [CartController::class, 'viewShipping'])->name('cart.viewShipping');
+Route::match(['get', 'post'], 'cart/view-shipping', [CartController::class, 'viewShipping'])->name('cart.viewShipping');
 Route::post('/cart/increase/{product}', [CartController::class, 'increase'])->name('cart.increase');
 Route::post('/cart/decrease/{product}', [CartController::class, 'decrease'])->name('cart.decrease');
 //Eliminar producto del carrito

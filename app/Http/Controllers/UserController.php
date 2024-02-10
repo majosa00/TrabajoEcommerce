@@ -118,6 +118,13 @@ class UserController extends Controller
 
     public function createNewAddress(Request $request)
     {
+        $request->validate([
+            'address' => 'required|string|max:255|unique:addresses,address,NULL,id,user_id,' . auth()->user()->id,
+            'country' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'zipcode' => 'required|integer',
+        ]);
+
         $newAddress = new Address;
         $newAddress->address = $request->input('address');
         $newAddress->country = $request->input('country');
@@ -127,6 +134,7 @@ class UserController extends Controller
         $newAddress->save();
 
         return redirect()->route('profile.address')->with('mensaje', 'Address added successfully');
+
     }
 
     public function deleteAddress($id)
@@ -140,10 +148,10 @@ class UserController extends Controller
     {
         // Validar los datos del formulario
         $request->validate([
-            'address' => 'required|string|max:255',
+            'address' => 'required|string|max:255|unique:addresses,address,' . $id . ',id,user_id,' . auth()->user()->id,
             'country' => 'required|string|max:255',
             'city' => 'required|string|max:255',
-            'zipCode' => 'required|integer',
+            'zipcode' => 'required|integer',
         ]);
 
         // Obtener el usuario autenticado
@@ -153,7 +161,7 @@ class UserController extends Controller
         $addressUpdate->address = $request->address;
         $addressUpdate->country = $request->country;
         $addressUpdate->city = $request->city;
-        $addressUpdate->zipCode = $request->zipCode;
+        $addressUpdate->zipCode = $request->zipcode;
         $addressUpdate->user_id = auth()->user()->id;
         $addressUpdate->save();
 
