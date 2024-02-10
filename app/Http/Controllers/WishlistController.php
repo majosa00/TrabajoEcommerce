@@ -12,21 +12,22 @@ class WishlistController extends Controller
     public function addToWishlist($productId)
     {
         $userId = Auth::id(); // Obtiene el ID del usuario autenticado
-
-        // Verifica si el producto ya está en la lista de deseos
-        $exists = Wishlist::where('user_id', $userId)->where('product_id', $productId)->exists();
-
-        if (!$exists) {
-            // Agrega el producto a la lista de deseos si no existe
+    
+        // Busca un registro existente en la lista de deseos
+        $wishlistItem = Wishlist::where('user_id', $userId)->where('product_id', $productId)->first();
+    
+        if ($wishlistItem) {
+            // Si el producto ya está en la lista de deseos, lo elimina
+            $wishlistItem->delete();
+            return back()->with('success', 'Product removed from the wishlist.');
+        } else {
+            // Si el producto no está en la lista de deseos, lo agrega
             Wishlist::create([
                 'user_id' => $userId,
                 'product_id' => $productId,
             ]);
-
             return back()->with('success', 'Product added to the wishlist.');
         }
-
-        return back()->with('error', 'The product is already in your wishlist.');
     }
 
     public function removeFromWishlist($wishlistId)
