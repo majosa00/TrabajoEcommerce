@@ -54,7 +54,15 @@ class Product extends Model
     }
 
     //Relación 0 a 1
-    public function brand () {
+    public function brand()
+    {
         return $this->hasOne(Brand::class);
     }
+    // En Product.php
+
+    public function wishlists()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
 }
