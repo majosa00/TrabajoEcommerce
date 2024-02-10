@@ -1,4 +1,4 @@
-@extends('layaouts.app')
+@extends('layouts.app')
 
 @section('content')
     <div class="container mt-4">
@@ -33,5 +33,6 @@
                 </div>
             @endforeach
         </div>
+       
     </div>
 @endsection

@@ -60,7 +60,6 @@ class CartController extends Controller
             $products = collect();
         }
 
-
         return view('products.cart', compact('products'));
     }
 

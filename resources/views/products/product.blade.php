@@ -1,4 +1,4 @@
-@extends('layaouts.app2')
+@extends('layouts.app2')
 
 @section('content')
     <div class="container p-5">
@@ -186,7 +186,7 @@
                 @endpush
             </tbody>
         </table>
-
+        {{ $products->links() }}
         <!-- Modal editar producto -->
         @foreach ($products as $product)
             <div class="modal fade" id="updateProductModal{{ $product->id }}" tabindex="-1"
@@ -328,6 +328,8 @@
                                     </tr>
                                 </tbody>
                             </table>
+                                
+                         
                         </div>
                     </div>
                 </div>

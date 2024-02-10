@@ -1,4 +1,4 @@
-@extends('layaouts.app')
+@extends('layouts.app')
 
 @section('content')
     <div class="container p-5">
@@ -17,9 +17,7 @@
                             <form action="{{ route('wishlist.remove', $wishlist->id) }}" method="POST"
                                 class="d-flex justify-content-end">
                                 @csrf
-                                @method('DELETE')
-                                <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i>
-                                    {{ __('messages.remove_from_wishlist') }}</button>
+                                
                                 <!-- Traducción para "Eliminar de la Lista de Deseos" -->
                             </form>
                         </div>
@@ -29,6 +27,7 @@
                 <p>{{ __('messages.no_items_in_wishlist') }}</p>
             @endforelse
         </div>
+        {{ $wishlists->links() }}
     </div>
     <div id="main-container"></div>
 @endsection
