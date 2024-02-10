@@ -58,6 +58,9 @@ Route::group([
     Route::get('admin/edit_brand/{id}', [ProductController::class, 'editBrand'])->name('brands.editBrand');
     Route::put('admin/edit_brand/{id}', [ProductController::class, 'updateBrand'])->name('brands.updateBrand');
     Route::delete('admin/delete_brand/{id}', [ProductController::class, 'deleteBrand'])->name('brands.deleteBrand');
+    //Wishlist
+    Route::get('admin/wishlist', [WishlistController::class, 'showTopWishlist'])->name('admin.wishlist');
+    Route::get('admin/wishlist', [ProductController::class, 'showTopFavorites'])->name('admin.topFavorites');
 })->middleware(['auth', 'verified']);
 
 //Ruta carrito
@@ -88,9 +91,6 @@ Route::post('wishlist/add/{productId}', [WishlistController::class, 'addToWishli
 Route::delete('wishlist/remove/{wishlistId}', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
 // Mostrar la Lista de Deseos
 Route::get('wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.show');
-
-Route::get('/admin/wishlist', [WishlistController::class, 'showTopWishlist'])->name('admin.wishlist');
-Route::get('/admin/wishlist', [ProductController::class, 'showTopFavorites'])->name('admin.topFavorites');
 
 
 
