@@ -16,14 +16,14 @@ return new class extends Migration {
             $table->string('city', 255);
             $table->integer('zipCode');
             $table->string('country', 255);
-            $table->unsignedBigInteger('user_id')->unique();
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users');
             });
-            
+
     }
 
     /**

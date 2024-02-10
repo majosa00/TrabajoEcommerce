@@ -66,7 +66,7 @@ class User extends Authenticatable implements MustVerifyEmail
 }
 
     //Relación uno a muchos
-    public function address ()
+    public function addresses ()
     {
         return $this->hasMany(Address::class);
     }
