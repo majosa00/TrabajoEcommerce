@@ -11,8 +11,8 @@ class ProductController extends Controller
     public function products()
     {
         // Ordena los productos por fecha de creación de manera descendente
-        $products = Product::orderBy('created_at', 'desc')->get();
-        return view('products.product')->with('products', $products);
+        $products = Product::orderBy('created_at', 'desc')->simplePaginate(5);
+        return view('products.product', compact('products'));        
     }
 
 
@@ -106,9 +106,9 @@ class ProductController extends Controller
 
     public function brands()
     {
-        // Ordena las marcas por fecha de creación de manera descendente
-        $brands = Brand::orderBy('created_at', 'desc')->get();
-        return view('brands.brand')->with('brands', $brands);
+        // Ordena las marcas por fecha de creación de manera descendente y las pagina
+        $brands = Brand::orderBy('created_at', 'desc')->simplePaginate(5); // Ajusta el número según la cantidad deseada por página
+        return view('brands.brand', compact('brands'));
     }
 
 
