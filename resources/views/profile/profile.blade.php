@@ -43,6 +43,7 @@
                 </div>
             </div>
 
+
             <div class="col-lg-6">
                 <div class="form-group">
                     <label for="email" class="form-label">Email</label>
@@ -51,6 +52,48 @@
                 </div>
                 <button class="btn btn-warning btn-block mt-2" type="submit">Save</button>
             </div>
+
+        <!-- Cambiar datos user -->
+        <h3>About you</h3>
+        @auth
+            <form action="{{ route('user.update', Auth::id()) }}" method="POST">
+                @method('PUT')
+                @csrf
+                {{-- Form --}}
+                <div class="row mb-3">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" id="name" name="name" class="form-control mb-2"
+                                value="{{ old('name', Auth::user()->name) }}" placeholder="Enter your name" autofocus>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="secondname" class="form-label">Last Name</label>
+                            <input type="text" id="secondname" name="secondname" class="form-control mb-2"
+                                value="{{ old('secondname', Auth::user()->secondname) }}" placeholder="Enter your last name">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" name="email" class="form-control mb-2"
+                                value="{{ old('email', Auth::user()->email) }}" placeholder="Enter your email">
+                        </div>
+                        <button class="btn btn-warning btn-block mt-2" type="submit">Save</button>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="birthday" class="form-label">Date of Birth</label>
+                            <input type="date" id="birthday" name="birthday" class="form-control mb-2"
+                                value="{{ old('birthday', Auth::user()->birthday) }}" placeholder="Enter your date of birth">
+                        </div>
+                    </div>
+
 
             <div class="col-lg-3">
                 <div class="form-group">
@@ -162,9 +205,28 @@
                                 <input type="text" name="address" class="form-control" placeholder="Enter address"
                                     autofocus>
                             </div>
+
                             <div class="mb-2">
                                 <label for="country" class="form-label">Country:</label>
                                 <input type="text" name="country" class="form-control" placeholder="Enter country">
+
+                            <div class="modal-body">
+                                <form action="{{ route('profile.updateAddress', $address->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <!-- Formulario -->
+                                    <input type="text" name="address" placeholder="Address"class="form-control mb-2"
+                                        value="{{ $address->address }}" autofocus>
+                                    <input type="text" name="country" placeholder="Country" class="form-control mb-2"
+                                        value="{{ $address->country }}">
+                                    <input type="text" name="city" placeholder="City" class="form-control mb-2"
+                                        value="{{ $address->city }}">
+                                    <input type="text" name="zipcode" placeholder="Zip Code"
+                                        class="form-control mb-2" value="{{ $address->zipCode }}">
+
+                                    <button class="btn btn-warning btn-block mt-2" type="submit">Save</button>
+                                </form>
+
                             </div>
                             <div class="mb-2">
                                 <label for="city" class="form-label">City:</label>
@@ -249,6 +311,7 @@
     <label for="language" class="form-label">Language:</label>
     <select class="form-select form-control" id="language" name="select">
         <option value="English">English</option>
+      
         <option value="Español">Español</option>
     </select>
 </div> --}}

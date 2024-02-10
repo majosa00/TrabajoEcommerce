@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -17,16 +16,20 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('flavor');
-            $table->string('brand');
             $table->float('price');
             $table->float('dimension');
             $table->integer('udpack');
             $table->float('weight');
             $table->integer('stock');
             $table->float('iva');
+            $table->unsignedBigInteger('brand_id');
+            $table->timestamps();
 
-            $table->timestamps(); 
+            $table->foreign('brand_id')
+                ->references('id')
+                ->on('brands');
         });
+
     }
 
     /**

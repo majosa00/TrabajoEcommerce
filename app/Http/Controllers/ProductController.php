@@ -106,8 +106,7 @@ class ProductController extends Controller
 
     public function brands()
     {
-        // Ordena las marcas por fecha de creación de manera descendente y las pagina
-        $brands = Brand::orderBy('created_at', 'desc')->simplePaginate(5); // Ajusta el número según la cantidad deseada por página
+        $brands = Brand::orderBy('created_at', 'desc')->simplePaginate(5); // Asegúrate de usar simplePaginate o paginate
         return view('brands.brand', compact('brands'));
     }
 
@@ -172,5 +171,11 @@ class ProductController extends Controller
     return view('wishlistadmin', compact('topProducts'));
 }
 
+
+    public function showProductsByBrand($brandId)
+{
+    $brand = Brand::with('products')->findOrFail($brandId);
+    return view('brands.products', compact('brand'));
+}
 
 }
