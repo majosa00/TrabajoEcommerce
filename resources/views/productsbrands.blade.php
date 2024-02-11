@@ -1,24 +1,32 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-4">
-    <h2>Productos de la marca: {{ $brand->name }}</h2>
-    @if($brand->products->isEmpty())
-        <p>No hay productos disponibles para esta marca.</p>
-    @else
-        <div class="row">
-            @foreach ($brand->products as $product)
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $product->name }}</h5>
-                            <p class="card-text">{{ $product->description }}</p>
-                            <!-- Más información del producto -->
+    <div class="container mt-4">
+        @if (session('mensaje'))
+            <div class="alert alert-success">
+                {{ session('mensaje') }}
+            </div>
+        @endif
+
+        <h1 class="mb-3">BRANDS</h1>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach ($brands as $brand)
+                <div class="col">
+                    <!-- Asegúrate de actualizar el href con la ruta correcta -->
+                    <a href="{{ route('brand.products', $brand->id) }}" class="text-decoration-none text-dark">
+                        <div class="card h-100 text-white bg-dark">
+                            <!-- Suponiendo que tienes una manera de obtener la imagen de la marca -->
+                            <img src="{{ $brand->image_path ?? 'path/to/default/image' }}" class="card-img-top" alt="{{ $brand->name }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $brand->name }}</h5>
+                                <!-- Opcional: aquí podrías poner un botón o enlace para editar o eliminar marcas -->
+                            </div>
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
-    @endif
-</div>
+
+    </div>
+    <div id="main-container"></div>
 @endsection

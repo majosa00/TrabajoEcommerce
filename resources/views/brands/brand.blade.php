@@ -24,7 +24,7 @@
         </a>
 
         <!-- Modal nueva marca -->
-        <div class="modal fade" id="newBrandModal" tabindex="-1" aria-labelledby="newBrandModalLabel" aria-hidden="true">
+        <div class="modal fade" id="newBrandModal" tabindex="-1" aria-labelledby="newBrandModal" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -32,13 +32,16 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('brands.createBrand') }}" method="post" class="needs-validation" novalidate>
+                        <form class="needs-validation" novalidate method="POST" action="{{ route('brands.createBrand') }}">
                             @csrf
-                            <div class="form-group">
-                                <label for="name">Name:</label>
-                                <input type="text" class="form-control" name="name" id="name" required>
-                                <div class="invalid-feedback">
-                                    Please enter the brand name.
+                            <div class="row g-3">
+                                <div class="col-sm-12">
+                                    <label for="name" class="form-label">Name:</label>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder=""
+                                        required>
+                                    <div class="invalid-feedback">
+                                        Please enter the brand name.
+                                    </div>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-warning mt-4">Add Brand</button>
@@ -85,20 +88,21 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{ route('brands.updateBrand', $brand->id) }}" method="POST">
+                                    <form class="needs-validation" novalidate method="POST"
+                                        action="{{ route('brands.updateBrand', $brand->id) }}">
                                         @method('PUT')
                                         @csrf
-
-                                        {{-- Validación errores --}}
-                                        @error('name')
-                                            <div class="alert alert-danger">The name is required</div>
-                                        @enderror
-
-                                        {{-- Formulario --}}
-                                        <input type="text" name="name" class="form-control mb-2"
-                                            value="{{ $brand->name }}" placeholder="Brand Name" autofocus>
-
-                                        <button class="btn btn-warning btn-block mt-2" type="submit">Save Changes</button>
+                                        <div class="row g-3">
+                                            <div class="col-sm-12">
+                                                <label for="name" class="form-label">Name:</label>
+                                                <input type="text" class="form-control" id="name" name="name"
+                                                    placeholder="" value="{{ $brand->name }}" required>
+                                                <div class="invalid-feedback">
+                                                    Please enter the brand name.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-warning mt-4">Save</button>
                                     </form>
                                 </div>
                             </div>

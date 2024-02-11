@@ -71,7 +71,6 @@ class ProductController extends Controller
             'name' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
             'description' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
             'flavor' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
-            'brand' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
             'price' => 'required|numeric|min:0.1',
             'dimension' => 'required|numeric|min:0.1',
             'udpack' => 'required|integer|min:1',
@@ -85,7 +84,6 @@ class ProductController extends Controller
         $productUpdate->name = $request->name;
         $productUpdate->description = $request->description;
         $productUpdate->flavor = $request->flavor;
-        $productUpdate->brand = $request->brand;
         $productUpdate->price = $request->price;
         $productUpdate->dimension = $request->dimension;
         $productUpdate->udpack = $request->udpack;

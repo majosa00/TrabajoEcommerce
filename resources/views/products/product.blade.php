@@ -37,7 +37,6 @@
                     <div class="modal-body">
                         <form action="{{ route('products.create') }}" method="post" class="needs-validation" novalidate>
                             @csrf
-                            <!-- Formulario de nuevo producto -->
                             <div class="form-group">
                                 <label for="name">Name:</label>
                                 <input type="text" class="form-control" name="name" id="name" required>
@@ -154,6 +153,8 @@
                 <tr>
                     <th>Name</th>
                     <th>Description</th>
+                    <th>Brand ID</th>
+                    <th>Price</th>
                     <th>Details</th>
                     <th>Edit</th>
                     <th>Delete</th>
@@ -164,32 +165,32 @@
                     <tr>
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->description }}</td>
+                        <td>{{ $product->brand_id }}</td>
+                        <td>{{ $product->price }}</td>
                         <td>
                             <a href="#" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#detailProductModal{{ $product->id }}">
-                                <i class="fas fa-eye"></i> Details
+                                <i class="fas fa-eye"></i>
                             </a>
                         </td>
                         <td>
                             <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#updateProductModal{{ $product->id }}">
-                                <i class="fas fa-edit"></i> Edit
+                                <i class="fas fa-edit"></i>
                             </a>
                         </td>
                         <td>
                             <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#deleteProductModal{{ $product->id }}">
-                                <i class="fas fa-trash-alt"></i> Delete
+                                <i class="fas fa-trash-alt"></i>
                             </a>
                         </td>
                     </tr>
                 @endforeach
-                @push('scripts')
-                    <script src="{{ asset('js/validacion.js') }}"></script>
-                @endpush
             </tbody>
         </table>
         {{ $products->links() }}
+
         <!-- Modal editar producto -->
         @foreach ($products as $product)
             <div class="modal fade" id="updateProductModal{{ $product->id }}" tabindex="-1"
@@ -202,67 +203,121 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="{{ route('products.update', $product->id) }}" method="POST">
+                            <form class="needs-validation" novalidate method="POST"
+                                action="{{ route('products.update', $product->id) }}">
                                 @method('PUT')
                                 @csrf
 
-                                {{-- Validación errores --}}
-                                @error('name')
-                                    <div class="alert alert-danger"> The name is required </div>
-                                @enderror
-                                @error('description')
-                                    <div class="alert alert-danger"> The description is required </div>
-                                @enderror
-                                @error('flavor')
-                                    <div class="alert alert-danger"> The flavor is required </div>
-                                @enderror
-                                @error('price')
-                                    <div class="alert alert-danger"> The price is required and must be numeric </div>
-                                @enderror
-                                @error('dimension')
-                                    <div class="alert alert-danger"> The dimension is required and must be numeric </div>
-                                @enderror
-                                @error('udpack')
-                                    <div class="alert alert-danger"> The udpack is required and must be an integer </div>
-                                @enderror
-                                @error('weight')
-                                    <div class="alert alert-danger"> The weight is required and must be numeric </div>
-                                @enderror
-                                @error('stock')
-                                    <div class="alert alert-danger"> The stock is required and must be an integer </div>
-                                @enderror
-                                @error('brand_id')
-                                    <div class="alert alert-danger"> The Brand_ID is required and must be numeric </div>
-                                @enderror
-                                @error('iva')
-                                    <div class="alert alert-danger"> The VAT is required and must be numeric </div>
-                                @enderror
-
-                                {{-- Formulario --}}
-                                <div class="modal-body">
-                                    <input type="text" name="name" class="form-control mb-2"
-                                        value="{{ $product->name }}" placeholder="Product Name" autofocus>
-                                    <input type="text" name="description" placeholder="Product Description"
-                                        class="form-control mb-2" value="{{ $product->description }}">
-                                    <input type="text" name="flavor" placeholder="Product Flavor"
-                                        class="form-control mb-2" value="{{ $product->flavor }}">
-                                    <input type="text" name="price" placeholder="Product Price"
-                                        class="form-control mb-2" value="{{ $product->price }}">
-                                    <input type="text" name="dimension" placeholder="Product Dimension"
-                                        class="form-control mb-2" value="{{ $product->dimension }}">
-                                    <input type="text" name="udpack" placeholder="Product UDPack"
-                                        class="form-control mb-2" value="{{ $product->udpack }}">
-                                    <input type="text" name="weight" placeholder="Product Weight"
-                                        class="form-control mb-2" value="{{ $product->weight }}">
-                                    <input type="text" name="stock" placeholder="Product Stock"
-                                        class="form-control mb-2" value="{{ $product->stock }}">
-                                    <input type="number" name="brand_id" placeholder="Brand ID"
-                                        class="form-control mb-2" value="{{ $product->brand_id }}">
-                                    <input type="text" name="iva" placeholder="Product VAT"
-                                        class="form-control mb-2" value="{{ $product->iva }}">
+                                <div class="form-group">
+                                    <label for="name">Name:</label>
+                                    <input type="text" class="form-control" value="{{ $product->name }}"
+                                        name="name" id="name" required>
+                                    <div class="invalid-feedback">
+                                        Please enter the product name.
+                                    </div>
                                 </div>
 
-                                <button class="btn btn-warning btn-block mt-2" type="submit">Save Changes</button>
+                                <div class="form-group">
+                                    <label for="description">Description:</label>
+                                    <textarea class="form-control" name="description" id="description" rows="3" required></textarea>
+                                    <div class="invalid-feedback">
+                                        Please enter a product description.
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <label for="flavor">Flavor:</label>
+                                        <input type="text" class="form-control" name="flavor"
+                                            value="{{ $product->flavor }}" id="flavor" required>
+                                        <div class="invalid-feedback">
+                                            Please enter the product flavor.
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="brand_id">Brand ID:</label>
+                                            <input type="number" class="form-control" value="{{ $product->brand_id }}"
+                                                name="brand_id" id="brand_id" required>
+                                            <div class="invalid-feedback">
+                                                Please enter the brand ID.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="price">Price:</label>
+                                            <input type="number" class="form-control" value="{{ $product->price }}"
+                                                step="0.01" name="price" id="price" required>
+                                            <div class="invalid-feedback">
+                                                Please enter the product price.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="dimension">Dimensions:</label>
+                                            <input type="number" class="form-control" value="{{ $product->dimension }}"
+                                                step="0.01" name="dimension" id="dimension" required>
+                                            <div class="invalid-feedback">
+                                                Please enter the product dimensions.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="udpack">Units per package:</label>
+                                            <input type="number" class="form-control" name="udpack"
+                                                value="{{ $product->udpack }}" id="udpack" required>
+                                            <div class="invalid-feedback">
+                                                Please enter the units per package.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="weight">Weight:</label>
+                                            <input type="number" class="form-control" value="{{ $product->weight }}"
+                                                step="0.01" name="weight" id="weight" required>
+                                            <div class="invalid-feedback">
+                                                Please enter the product weight.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="stock">Stock:</label>
+                                            <input type="number" class="form-control" value="{{ $product->stock }}"
+                                                name="stock" id="stock" required>
+                                            <div class="invalid-feedback">
+                                                Please enter the product stock.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="iva">IVA:</label>
+                                            <input type="number" class="form-control" value="{{ $product->iva }}"
+                                                step="0.01" name="iva" id="iva" required>
+                                            <div class="invalid-feedback">
+                                                Please enter the applicable IVA.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-warning mt-4">Add Product</button>
                             </form>
                         </div>
                     </div>

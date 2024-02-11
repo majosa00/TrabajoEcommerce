@@ -22,10 +22,9 @@
         <!-- Cambiar datos user -->
         <h3>About you</h3>
         @auth
-            <form action="{{ route('user.update', Auth::id()) }}" method="POST">
+            <form action="{{ route('user.update', Auth::id()) }}" method="POST" class="needs-validation" novalidate>
                 @method('PUT')
                 @csrf
-                {{-- Form --}}
                 <div class="row mb-3">
                     <div class="col-lg-6">
                         <div class="form-group">
@@ -121,19 +120,42 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('profile.updateAddress', $address->id) }}" method="POST">
+                                <form action="{{ route('profile.updateAddress', $address->id) }}" method="POST"
+                                    class="needs-validation" novalidate>
                                     @csrf
                                     @method('PUT')
-                                    <!-- Formulario -->
-                                    <input type="text" name="address" placeholder="Address"class="form-control mb-2"
-                                        value="{{ $address->address }}" autofocus>
-                                    <input type="text" name="country" placeholder="Country" class="form-control mb-2"
-                                        value="{{ $address->country }}">
-                                    <input type="text" name="city" placeholder="City" class="form-control mb-2"
-                                        value="{{ $address->city }}">
-                                    <input type="text" name="zipCode" placeholder="Zip Code"
-                                        class="form-control mb-2" value="{{ $address->zipCode }}">
-
+                                    <div class="form-group">
+                                        <label for="address">Address:</label>
+                                        <input type="text" class="form-control" name="address" id="address"
+                                            value="{{ $address->address }}" required>
+                                        <div class="invalid-feedback">
+                                            Please enter the address.
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="country">Country:</label>
+                                        <input type="text" class="form-control" value="{{ $address->country }}"
+                                            name="country" id="country" required>
+                                        <div class="invalid-feedback">
+                                            Please enter the country.
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="city">City:</label>
+                                        <input type="text" class="form-control" name="city" id="city"
+                                            required value="{{ $address->city }}">
+                                        <div class="invalid-feedback">
+                                            Please enter the city.
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="zipCode">ZIP Code:</label>
+                                        <input type="text" class="form-control" name="zipCode" id="zipCode"
+                                            value="{{ $address->zipCode }}" required>
+                                        <div class="invalid-feedback">
+                                            Please enter the ZIP Code.
+                                        </div>
+                                    </div>
                                     <button class="btn btn-warning btn-block mt-2" type="submit">Save</button>
                                 </form>
                             </div>
@@ -156,7 +178,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('profile.create-new-address') }}" method="POST">
+                        <form action="{{ route('profile.create-new-address') }}" method="POST" class="needs-validation"
+                            novalidate>
                             @csrf
                             <div class="modal-body">
                                 <div class="mb-2">
