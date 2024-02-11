@@ -14,9 +14,10 @@ class Brand extends Model
     ];
 
     //Relación uno a muchos 
-    public function products()
-    {
-        return $this->hasMany(Product::class);
-    }
+// En el modelo Brand
+public function products()
+{
+    return $this->hasMany(Product::class);
+}
 
 }

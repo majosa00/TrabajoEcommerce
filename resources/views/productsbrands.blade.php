@@ -16,13 +16,14 @@
                     <a href="{{ route('brand.products', $brand->id) }}" class="text-decoration-none text-dark">
                         <div class="card h-100 text-white bg-dark">
                             <!-- Suponiendo que tienes una manera de obtener la imagen de la marca -->
-                            <img src="{{ $brand->image_path ?? 'path/to/default/image' }}" class="card-img-top" alt="{{ $brand->name }}">
+                            <img src="{{ $brand->image_path ?? 'path/to/default/image' }}" class="card-img-top"
+                                alt="{{ $brand->name }}">
                             <div class="card-body">
                                 <h5 class="card-title">{{ $brand->name }}</h5>
                                 <!-- Opcional: aquí podrías poner un botón o enlace para editar o eliminar marcas -->
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             @endforeach
         </div>

@@ -96,7 +96,5 @@ Route::delete('wishlist/remove/{wishlistId}', [WishlistController::class, 'remov
 Route::get('wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.show');
 
 
-
 Route::get('/brands/{brandId}/products', [ProductController::class, 'showProductsByBrand'])->name('brand.products');
-
 //nombre de la ruta - controller - nombre función dentro del controlador - nombre es para renombrar la ruta porque est´dentro de un formulario y queremos que tenga ese name

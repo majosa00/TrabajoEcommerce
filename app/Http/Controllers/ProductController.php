@@ -171,11 +171,15 @@ class ProductController extends Controller
         return view('wishlistadmin', compact('topProducts'));
     }
 
-
-    public function showProductsByBrand($brandId)
-        {
-            $brand = Brand::with('products')->findOrFail($brandId);
-            // Asegúrate de que el nombre de la vista sea 'productsbrands'
+    public function showProductsByBrand($id)
+    {
+        $brand = Brand::with('products')->findOrFail($id); // Carga la marca y sus productos relacionados
+    
+        // Pasa solo la marca a la vista, ya que los productos pueden ser accedidos a través de $brand->products
         return view('productsbrands', compact('brand'));
-        }
+    }
+
+    
+
+
 }
