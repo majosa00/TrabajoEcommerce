@@ -124,9 +124,9 @@ class CartController extends Controller
 
         // Enviar correo electrónico (comentado mientras practicamos para no tener 21701293 correos)
         // Mail::to($user->email)->send(new OrderConfirmation($order));
-        Mail::to($user->email)->send(new TicketEmail($order));
-        $pdf = PDF::loadView('emails.ticket', compact('order'));
-        $pdf->save(storage_path('app/public/tickets/ticket_' . $order->id . '.pdf'));
+        // Mail::to($user->email)->send(new TicketEmail($order));
+        // $pdf = PDF::loadView('emails.ticket', compact('order'));
+        // $pdf->save(storage_path('app/public/tickets/ticket_' . $order->id . '.pdf'));
 
         // Puedes limpiar el carrito después de realizar el pedido si es necesario
         $cart->products()->detach();
@@ -174,7 +174,7 @@ class CartController extends Controller
 
         if ($pivotRecord) {
             // Disminuir la cantidad en 1, evitando que sea menor a 0
-            $pivotRecord->pivot->update(['amount' => max($pivotRecord->pivot->amount - 1, 0)]);
+            $pivotRecord->pivot->update(['amount' => max($pivotRecord->pivot->amount - 1, 1)]);
         }
 
 
