@@ -11,25 +11,34 @@ use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
     public function create(array $input)
     {
-        $user = new User();
-        $user->name = $input['name'];
-        $user->email = $input['email'];
-        $user->password = Hash::make($input['password']);
-        $user->rol_id = 1;
-        $user->save();
-
-        $cart = new Cart();
-        $cart->user_id = $user->id;
-        $cart->save();
-
-        return $user;
+        // Inicia una transacción de base de datos
+        DB::beginTransaction();
+    
+        try {
+            $user = new User();
+            $user->name = $input['name'];
+            $user->email = $input['email'];
+            $user->password = Hash::make($input['password']);
+            $user->rol_id = 1;
+            $user->save(); // Guarda el usuario en la base de datos
+    
+            $cart = new Cart();
+            $cart->user_id = $user->id; // Asigna el ID del usuario recién creado
+            $cart->save(); // Guarda el carro en la base de datos
+    
+            DB::commit(); // Confirma la transacción
+            return $user;
+        } catch (\Exception $e) {
+            DB::rollBack(); // Si algo sale mal, revierte todas las operaciones
+            throw $e; // Lanza la excepción para manejarla más arriba o mostrar el error
+        }
     }
-
     public function products()
     {
         $products = Product::all();
@@ -49,15 +58,18 @@ class UserController extends Controller
     }
 
     public function update(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255|regex:/^[A-Za-z]+$/',
-            'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
-            'secondname' => 'nullable|string|max:255|regex:/^[^\d]+$/',
-            'birthday' => 'nullable|date',
-            'phone' => 'nullable|integer',
-        ]);
+{
+    $request->validate([
+        'name' => 'required|string|max:255|regex:/^[A-Za-z]+$/',
+        'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
+        'secondname' => 'nullable|string|max:255|regex:/^[^\d]+$/',
+        'birthday' => 'nullable|date',
+        'phone' => 'nullable|integer',
+    ]);
 
+    DB::beginTransaction();
+
+    try {
         // Obtener el usuario autenticado
         $user = Auth::user();
 
@@ -79,12 +91,23 @@ class UserController extends Controller
 
         $user->save();
 
+        DB::commit(); // Confirma los cambios si todo ha ido bien
+
         return redirect()->route('profile')->with('mensaje', 'Profile updated successfully!');
+    } catch (\Exception $e) {
+        DB::rollBack(); // Revierte los cambios en caso de error
+
+        // Aquí deberías redirigir al usuario a una página de error o devolver una respuesta indicando el fallo
+        return redirect()->back()->withErrors(['error' => 'There was a problem updating the profile.']);
     }
+}
 
 
-    public function changePassword(Request $request)
-    {
+public function changePassword(Request $request)
+{
+    DB::beginTransaction();
+
+    try {
         $user = Auth::user();
 
         // Comprobar que la contraseña actual coincide
@@ -97,15 +120,23 @@ class UserController extends Controller
                 $user->password = Hash::make($request->input('new_password'));
                 $user->save();
 
+                DB::commit(); // Confirma los cambios
+
                 return redirect()->route('profile')->with('mensaje', 'Password changed successfully!');
             } else {
+                DB::rollBack(); // Opcional, ya que no hay múltiples operaciones
                 return redirect()->route('profile')->withErrors(['new_password_confirmation' => 'New password and confirmation do not match.']);
             }
         } else {
+            DB::rollBack(); // Opcional, ya que no hay múltiples operaciones
             return redirect()->route('profile')->withErrors(['password' => 'Current password is incorrect.']);
         }
+    } catch (\Exception $e) {
+        DB::rollBack(); // Revierte los cambios en caso de error
+        // Manejo del error
+        return redirect()->route('profile')->withErrors(['error' => 'There was an unexpected error.']);
     }
-
+}
     public function address()
     {
         $user = Auth::user();
@@ -123,24 +154,46 @@ class UserController extends Controller
             'city' => 'required|string|max:255|regex:/^[^\d]+$/',
             'zipcode' => 'required|numeric',
         ]);
-
-        $newAddress = new Address;
-        $newAddress->address = $request->input('address');
-        $newAddress->country = $request->input('country');
-        $newAddress->city = $request->input('city');
-        $newAddress->zipCode = $request->input('zipcode');
-        $newAddress->user_id = auth()->user()->id;
-        $newAddress->save();
-
-        return redirect()->route('profile.address')->with('mensaje', 'Address added successfully');
-
+    
+        DB::beginTransaction();
+    
+        try {
+            $newAddress = new Address;
+            $newAddress->address = $request->input('address');
+            $newAddress->country = $request->input('country');
+            $newAddress->city = $request->input('city');
+            $newAddress->zipCode = $request->input('zipcode');
+            $newAddress->user_id = auth()->user()->id;
+            
+            $newAddress->save();
+    
+            DB::commit(); // Confirma los cambios si todo ha ido bien
+    
+            return redirect()->route('profile.address')->with('mensaje', 'Address added successfully');
+        } catch (\Exception $e) {
+            DB::rollBack(); // Revierte los cambios en caso de error
+    
+            // Aquí deberías redirigir al usuario a una página de error o devolver una respuesta indicando el fallo
+            return redirect()->route('profile.address')->withErrors(['error' => 'There was a problem adding the address.']);
+        }
     }
-
     public function deleteAddress($id)
     {
-        $addressDelete = Address::findOrFail($id);
-        $addressDelete->delete();
-        return back()->with('mensaje', 'Product removed');
+        DB::beginTransaction();
+    
+        try {
+            $addressDelete = Address::findOrFail($id);
+            $addressDelete->delete();
+    
+            DB::commit(); // Confirma los cambios si la eliminación fue exitosa
+    
+            return back()->with('mensaje', 'Address removed successfully');
+        } catch (\Exception $e) {
+            DB::rollBack(); // Revierte los cambios en caso de error
+    
+            // Maneja el error, por ejemplo, redirigiendo al usuario con un mensaje de error
+            return back()->withErrors(['error' => 'There was a problem removing the address.']);
+        }
     }
 
     public function updateAddress(Request $request, $id)
@@ -152,19 +205,29 @@ class UserController extends Controller
             'city' => 'required|string|max:255|regex:/^[^\d]+$/',
             'zipCode' => 'required|numeric',
         ]);
-
-        // Obtener el usuario autenticado
-        $user = Auth::user();
-
-        $addressUpdate = Address::findOrFail($id);
-        $addressUpdate->address = $request->address;
-        $addressUpdate->country = $request->country;
-        $addressUpdate->city = $request->city;
-        $addressUpdate->zipCode = $request->zipCode;
-        $addressUpdate->user_id = auth()->user()->id;
-        $addressUpdate->save();
-
-        return back()->with('mensaje', 'Address updated');
+    
+        DB::beginTransaction();
+    
+        try {
+            // Obtener el usuario autenticado
+            $user = Auth::user();
+    
+            $addressUpdate = Address::findOrFail($id);
+            $addressUpdate->address = $request->input('address');
+            $addressUpdate->country = $request->input('country');
+            $addressUpdate->city = $request->input('city');
+            $addressUpdate->zipCode = $request->input('zipCode');
+            $addressUpdate->user_id = $user->id;
+            $addressUpdate->save();
+    
+            DB::commit(); // Confirma los cambios si todo ha ido bien
+    
+            return back()->with('mensaje', 'Address updated successfully');
+        } catch (\Exception $e) {
+            DB::rollBack(); // Revierte los cambios en caso de error
+    
+            // Redirige al usuario con un mensaje de error
+            return back()->withErrors(['error' => 'There was a problem updating the address.']);
+        }
     }
-
 }

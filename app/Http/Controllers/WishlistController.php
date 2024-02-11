@@ -6,11 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use App\Models\Wishlist;
+use Illuminate\Support\Facades\DB;
 
 class WishlistController extends Controller
 {
     public function addToWishlist($productId)
-    {
+{
+    DB::beginTransaction();
+
+    try {
         $userId = Auth::id(); // Obtiene el ID del usuario autenticado
 
         // Busca un registro existente en la lista de deseos
@@ -19,28 +23,28 @@ class WishlistController extends Controller
         if ($wishlistItem) {
             // Si el producto ya está en la lista de deseos, lo elimina
             $wishlistItem->delete();
-            return back()->with('success', 'Product removed from the wishlist.');
+            $message = 'Product removed from the wishlist.';
         } else {
             // Si el producto no está en la lista de deseos, lo agrega
             Wishlist::create([
                 'user_id' => $userId,
                 'product_id' => $productId,
             ]);
-            return back()->with('success', 'Product added to the wishlist.');
-        }
-    }
-
-    public function removeFromWishlist($wishlistId)
-    {
-        $wishlist = Wishlist::where('id', $wishlistId)->where('user_id', Auth::id())->first();
-
-        if ($wishlist) {
-            $wishlist->delete();
-            return back()->with('success', 'Product removed from the wishlist.');
+            $message = 'Product added to the wishlist.';
         }
 
-        return back()->with('error', 'Unable to remove the product from the wishlist.');
+        DB::commit(); // Confirma los cambios si todo ha ido bien
+
+        return back()->with('success', $message);
+    } catch (\Exception $e) {
+        DB::rollBack(); // Revierte los cambios en caso de error
+
+        // Redirige al usuario con un mensaje de error
+        return back()->withErrors(['error' => 'There was a problem updating your wishlist.']);
     }
+}
+
+   
 
     public function showWishlist()
     {

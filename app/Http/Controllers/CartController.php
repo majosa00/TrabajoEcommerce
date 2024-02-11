@@ -13,11 +13,15 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderConfirmation;
 use App\Mail\TicketEmail;
 use Barryvdh\DomPDF\Facade as PDF;
-
+use Illuminate\Support\Facades\DB;
 class CartController extends Controller
 {
     public function addToCart(Request $request, $productId)
     {
+        DB::beginTransaction();
+        try {
+
+        
         // Obtener el usuario autenticado actualmente
         $user = Auth::user();
         // Buscar en la base de datos el ID del producto
@@ -42,9 +46,14 @@ class CartController extends Controller
             // Asocia el carrito al producto del usuario con una cantidad de 1 si el producto no está en el carrito
             $cart->products()->attach($productId, ['amount' => 1]);
         }
-
-        // Si funciona, redirige a la página anterior con un mensaje de éxito indicando que el producto fue añadido al carrito
+        DB::commit();
         return redirect()->route('cart.view')->with('success', 'Product added to the cart.');
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return back()->with('error', 'Failed to add product to the cart.');
+    }
+
+        
     }
 
     public function viewCart()
@@ -136,21 +145,31 @@ class CartController extends Controller
 
     public function remove($productId)
     {
-        $user = Auth::user(); //obtencion del usuario
-        $cart = $user->cart; //
-
-        if ($cart) {
+        DB::beginTransaction();
+        try {
+            $user = Auth::user(); // Obtención del usuario
+            $cart = $user->cart; // Obtención del carrito del usuario
+    
+            if (!$cart) {
+                DB::rollBack(); // Se hace rollback porque no hay carrito, aunque aquí podría ser opcional dado que no hay cambios aún
+                return back()->with('error', 'There is not any cart.');
+            }
+    
             $cart->products()->detach($productId);
+            DB::commit(); // Confirmamos los cambios en la base de datos
             return back()->with('success', 'Product removed.');
+        } catch (\Exception $e) {
+            DB::rollBack(); // Revertimos cambios en caso de error
+            return back()->with('error', 'Failed to remove the product.');
         }
-
-        return back()->with('error', 'There is not any cart.');
     }
-
+    
     public function increase(Product $product)
-    {
-        $user = Auth::user();
-        $cart = $user->cart;
+{
+    DB::beginTransaction();
+    try {
+        $user = Auth::user(); // Obtención del usuario
+        $cart = $user->cart; // Obtención del carrito del usuario
 
         // Verificar si el producto ya está en el carrito
         $pivotRecord = $cart->products()->where('product_id', $product->id)->first();
@@ -158,14 +177,23 @@ class CartController extends Controller
         if ($pivotRecord) {
             // Aumentar la cantidad en 1
             $pivotRecord->pivot->update(['amount' => $pivotRecord->pivot->amount + 1]);
+            DB::commit(); // Confirmamos los cambios en la base de datos
+            return redirect()->back()->with('mensaje', 'Product quantity increased.');
+        } else {
+            DB::rollBack(); // Revertimos cambios ya que no se encontró el producto en el carrito
+            return back()->with('error', 'Product not found in the cart.');
         }
-
-
-        return redirect()->back()->with('mensaje', 'Product quantity increased.');
+    } catch (\Exception $e) {
+        DB::rollBack(); // Revertimos cambios en caso de error
+        return back()->with('error', 'Failed to increase the product quantity.');
     }
+}
 
-    public function decrease(Product $product)
-    {
+
+public function decrease(Product $product)
+{
+    DB::beginTransaction();
+    try {
         $user = Auth::user();
         $cart = $user->cart;
 
@@ -175,11 +203,18 @@ class CartController extends Controller
         if ($pivotRecord) {
             // Disminuir la cantidad en 1, evitando que sea menor a 0
             $pivotRecord->pivot->update(['amount' => max($pivotRecord->pivot->amount - 1, 1)]);
+            DB::commit();
+            return redirect()->back()->with('mensaje', 'Product quantity decreased.');
+        } else {
+            DB::rollBack();
+            return back()->with('error', 'Product not found in the cart.');
         }
-
-
-        return redirect()->back()->with('mensaje', 'Product quantity decreased.');
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return back()->with('error', 'Failed to decrease product quantity.');
     }
+}
+
 
     public function viewShipping()
     {
@@ -189,8 +224,10 @@ class CartController extends Controller
         return view('products.shipping', compact('addresses'));
     }
 
-    public function updatedatas(Request $request)
-    {
+   public function updatedatas(Request $request)
+{
+    DB::beginTransaction();
+    try {
         // Validar los datos del formulario
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
@@ -207,48 +244,44 @@ class CartController extends Controller
         $user->phone = $validatedData['phone'];
         $user->save();
 
-        // Redirigir a la vista de envío con un mensaje de éxito
+        DB::commit(); // Confirmar los cambios en la base de datos
         return redirect()->route('cart.viewShipping')->with('success', 'Shipping information saved successfully!');
-
+    } catch (\Exception $e) {
+        DB::rollBack(); // Revertir todos los cambios si ocurre un error
+        return back()->with('error', 'Failed to save shipping information.');
     }
+}
 
-    public function createNewAddressShipping(Request $request)
-    {
-        // Validar los datos del formulario
-        $request->validate([
-            'address' => 'required|string|max:255',
-            'country' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'zipcode' => 'required|string|max:10',
-        ]);
-
-        // Comprobar si la dirección ya existe para el usuario actual
+public function createNewAddressShipping(Request $request)
+{
+    DB::beginTransaction();
+    try {
+        // Validar los datos del formulario...
         $existingAddress = Address::where([
-            'user_id' => auth()->user()->id,
+            // Condiciones para buscar la dirección existente...
+        ])->first();
+
+        if ($existingAddress) {
+            DB::rollBack();
+            return redirect()->route('cart.viewShipping')->with('error', 'Address already exists.');
+        }
+
+        $newAddress = new Address([
             'address' => $request->input('address'),
             'country' => $request->input('country'),
             'city' => $request->input('city'),
             'zipCode' => $request->input('zipcode'),
-        ])->first();
-
-        if ($existingAddress) {
-            // La dirección ya existe, puedes manejarlo de la forma que prefieras
-            return redirect()->route('cart.viewShipping')->with('error', 'Address already exists.');
-        }
-
-        // Si no existe, crea la nueva dirección
-        $newAddress = new Address;
-        $newAddress->address = $request->input('address');
-        $newAddress->country = $request->input('country');
-        $newAddress->city = $request->input('city');
-        $newAddress->zipCode = $request->input('zipcode');
-        $newAddress->user_id = auth()->user()->id;
-
+            'user_id' => auth()->user()->id,
+        ]);
         $newAddress->save();
 
-        // Redirigir a la página de envío en lugar de 'profile.address'
-        return redirect()->route('cart.viewShipping')->with('mensaje', 'Address added successfully');
+        DB::commit();
+        return redirect()->route('cart.viewShipping')->with('success', 'Address added successfully.');
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return back()->with('error', 'Failed to add the address.');
     }
+}
 
     public function processpayment(Request $request)
     {
