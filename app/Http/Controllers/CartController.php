@@ -124,9 +124,9 @@ class CartController extends Controller
 
         // Enviar correo electrónico (comentado mientras practicamos para no tener 21701293 correos)
         // Mail::to($user->email)->send(new OrderConfirmation($order));
-        Mail::to($user->email)->send(new TicketEmail($order));
-        $pdf = PDF::loadView('emails.ticket', compact('order'));
-        $pdf->save(storage_path('app/public/tickets/ticket_' . $order->id . '.pdf'));
+        // Mail::to($user->email)->send(new TicketEmail($order));
+        // $pdf = PDF::loadView('emails.ticket', compact('order'));
+        // $pdf->save(storage_path('app/public/tickets/ticket_' . $order->id . '.pdf'));
 
         // Puedes limpiar el carrito después de realizar el pedido si es necesario
         $cart->products()->detach();
@@ -174,7 +174,7 @@ class CartController extends Controller
 
         if ($pivotRecord) {
             // Disminuir la cantidad en 1, evitando que sea menor a 0
-            $pivotRecord->pivot->update(['amount' => max($pivotRecord->pivot->amount - 1, 0)]);
+            $pivotRecord->pivot->update(['amount' => max($pivotRecord->pivot->amount - 1, 1)]);
         }
 
 
@@ -187,6 +187,29 @@ class CartController extends Controller
         $addresses = $user->addresses;
 
         return view('products.shipping', compact('addresses'));
+    }
+
+    public function updatedatas(Request $request)
+    {
+        // Validar los datos del formulario
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'secondname' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:20',
+        ]);
+
+        // Actualizar los datos del usuario con la información del formulario
+        $user = Auth::user();
+        $user->name = $validatedData['name'];
+        $user->secondname = $validatedData['secondname'];
+        $user->email = $validatedData['email'];
+        $user->phone = $validatedData['phone'];
+        $user->save();
+
+        // Redirigir a la vista de envío con un mensaje de éxito
+        return redirect()->route('cart.viewShipping')->with('success', 'Shipping information saved successfully!');
+
     }
 
     public function createNewAddressShipping(Request $request)
@@ -224,6 +247,18 @@ class CartController extends Controller
         $newAddress->save();
 
         // Redirigir a la página de envío en lugar de 'profile.address'
+        return redirect()->route('cart.viewShipping')->with('mensaje', 'Address added successfully');
+    }
+
+    public function processpayment(Request $request)
+    {
+        $request->validate([
+            'cc-name' => 'required|string|regex:/^[a-zA-Z\s]+$/',
+            'cc-number' => 'required|numeric',
+            'cc-expiration' => 'required|date_format:m/y',
+            'cc-cvv' => 'required|numeric',
+        ]);
+
         return redirect()->route('cart.viewShipping')->with('mensaje', 'Address added successfully');
     }
 

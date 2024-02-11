@@ -71,6 +71,8 @@ Route::post('cart/add-to-cart/{productId}', [CartController::class, 'addToCart']
 Route::post('cart/pay', [CartController::class, 'pay'])->name('cart.pay');
 //Shipping
 Route::match(['get', 'post'], 'cart/view-shipping', [CartController::class, 'viewShipping'])->name('cart.viewShipping');
+Route::match(['get', 'post'], 'cart/update-datas', [CartController::class, 'updatedatas'])->name('cart.updatedatas');
+Route::post('cart/process-payment', [CartController::class, 'processpayment'])->name('cart.ticket');
 Route::post('/cart/increase/{product}', [CartController::class, 'increase'])->name('cart.increase');
 Route::post('/cart/decrease/{product}', [CartController::class, 'decrease'])->name('cart.decrease');
 //Eliminar producto del carrito

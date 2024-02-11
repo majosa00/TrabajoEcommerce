@@ -50,11 +50,10 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
-        // Validar los datos del formulario
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|regex:/^[A-Za-z]+$/',
             'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
-            'secondname' => 'nullable|string|max:255',
+            'secondname' => 'nullable|string|max:255|regex:/^[^\d]+$/',
             'birthday' => 'nullable|date',
             'phone' => 'nullable|integer',
         ]);
@@ -111,7 +110,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $addresses = $user->addresses;
-        
+
         return view('profile.profile', compact('addresses'));
     }
 
@@ -120,9 +119,9 @@ class UserController extends Controller
     {
         $request->validate([
             'address' => 'required|string|max:255|unique:addresses,address,NULL,id,user_id,' . auth()->user()->id,
-            'country' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'zipcode' => 'required|integer',
+            'country' => 'required|string|max:255|regex:/^[^\d]+$/',
+            'city' => 'required|string|max:255|regex:/^[^\d]+$/',
+            'zipcode' => 'required|numeric',
         ]);
 
         $newAddress = new Address;
@@ -149,9 +148,9 @@ class UserController extends Controller
         // Validar los datos del formulario
         $request->validate([
             'address' => 'required|string|max:255|unique:addresses,address,' . $id . ',id,user_id,' . auth()->user()->id,
-            'country' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'zipcode' => 'required|integer',
+            'country' => 'required|string|max:255|regex:/^[^\d]+$/',
+            'city' => 'required|string|max:255|regex:/^[^\d]+$/',
+            'zipCode' => 'required|numeric',
         ]);
 
         // Obtener el usuario autenticado
@@ -161,7 +160,7 @@ class UserController extends Controller
         $addressUpdate->address = $request->address;
         $addressUpdate->country = $request->country;
         $addressUpdate->city = $request->city;
-        $addressUpdate->zipCode = $request->zipcode;
+        $addressUpdate->zipCode = $request->zipCode;
         $addressUpdate->user_id = auth()->user()->id;
         $addressUpdate->save();
 

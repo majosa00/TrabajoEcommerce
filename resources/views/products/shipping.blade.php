@@ -19,7 +19,7 @@
             </div>
         @endif
 
-        <form class="needs-validation" novalidate method="POST" action="{{ route('cart.viewShipping') }}">
+        <form class="needs-validation" novalidate method="POST" action="{{ route('cart.updatedatas') }}">
             @csrf
             <div class="row g-3">
                 <div class="col-sm-6">
@@ -47,7 +47,7 @@
                     <div class="invalid-feedback">
                         Please enter a valid email address for shipping updates.
                     </div>
-                    <button class="btn btn-warning btn-block mt-2" type="submit">Save</button>
+                    <button class="btn btn-warning btn-block mt-4" type="submit">Save</button>
                 </div>
 
                 <div class="col-sm-6">
@@ -118,52 +118,62 @@
             </div>
         </div>
 
-
         <hr>
 
-        <h4 class="mb-3">Payment</h4>
-
-        <div class="my-3">
-            <div class="form-check">
-                <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
-                <label class="form-check-label" for="credit">Credit card</label>
-            </div>
-        </div>
-
-        <div class="row gy-3">
-            <div class="col-md-6">
-                <label for="cc-name" class="form-label">Name on card</label>
-                <input type="text" class="form-control" id="cc-name" placeholder="" required>
-                <small class="text-body-secondary">Full name as displayed on card</small>
-                <div class="invalid-feedback">
-                    Name on card is required
+        <section id="payment">
+            <h4 class="mb-3">Payment</h4>
+            <form action="{{ route('cart.processpayment') }}" method="post" id="payment-form" class="needs-validation"
+                novalidate>
+                @csrf
+                <div class="my-3">
+                    <div class="form-check">
+                        <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked
+                            required>
+                        <label class="form-check-label" for="credit">Credit card</label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-md-6">
-                <label for="cc-number" class="form-label">Credit card number</label>
-                <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                <div class="invalid-feedback">
-                    Credit card number is required
-                </div>
-            </div>
+                <div class="row gy-3">
+                    <div class="col-md-6">
+                        <label for="cc-name" class="form-label">Name on card</label>
+                        <input type="text" class="form-control" id="cc-name" name="cc-name" placeholder=""
+                            required>
+                        <small class="text-body-secondary">Full name as displayed on card</small>
+                        <div class="invalid-feedback">
+                            Name on card is required
+                        </div>
+                    </div>
 
-            <div class="col-md-3">
-                <label for="cc-expiration" class="form-label">Expiration</label>
-                <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-                <div class="invalid-feedback">
-                    Expiration date required
-                </div>
-            </div>
+                    <div class="col-md-6">
+                        <label for="cc-number" class="form-label">Credit card number</label>
+                        <input type="text" class="form-control" id="cc-number" name="cc-number" placeholder=""
+                            required>
+                        <div class="invalid-feedback">
+                            Credit card number is required
+                        </div>
+                    </div>
 
-            <div class="col-md-3">
-                <label for="cc-cvv" class="form-label">CVV</label>
-                <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-                <div class="invalid-feedback">
-                    Security code required
+                    <div class="col-md-3">
+                        <label for="cc-expiration" class="form-label">Expiration</label>
+                        <input type="text" class="form-control" id="cc-expiration" name="cc-expiration"
+                            placeholder="" required>
+                        <div class="invalid-feedback">
+                            Expiration date required
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="cc-cvv" class="form-label">CVV</label>
+                        <input type="text" class="form-control" id="cc-cvv" name="cc-cvv" placeholder=""
+                            required>
+                        <div class="invalid-feedback">
+                            Security code required
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+                <button type="submit" class="btn btn-warning mt-4">Save </button>
+            </form>
+        </section>
 
         <hr class="my-4">
 
