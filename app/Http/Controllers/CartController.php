@@ -189,6 +189,29 @@ class CartController extends Controller
         return view('products.shipping', compact('addresses'));
     }
 
+    public function updatedatas(Request $request)
+    {
+        // Validar los datos del formulario
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'secondname' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:20',
+        ]);
+
+        // Actualizar los datos del usuario con la información del formulario
+        $user = Auth::user();
+        $user->name = $validatedData['name'];
+        $user->secondname = $validatedData['secondname'];
+        $user->email = $validatedData['email'];
+        $user->phone = $validatedData['phone'];
+        $user->save();
+
+        // Redirigir a la vista de envío con un mensaje de éxito
+        return redirect()->route('cart.viewShipping')->with('success', 'Shipping information saved successfully!');
+
+    }
+
     public function createNewAddressShipping(Request $request)
     {
         // Validar los datos del formulario
@@ -224,6 +247,18 @@ class CartController extends Controller
         $newAddress->save();
 
         // Redirigir a la página de envío en lugar de 'profile.address'
+        return redirect()->route('cart.viewShipping')->with('mensaje', 'Address added successfully');
+    }
+
+    public function processpayment(Request $request)
+    {
+        $request->validate([
+            'cc-name' => 'required|string|regex:/^[a-zA-Z\s]+$/',
+            'cc-number' => 'required|numeric',
+            'cc-expiration' => 'required|date_format:m/y',
+            'cc-cvv' => 'required|numeric',
+        ]);
+
         return redirect()->route('cart.viewShipping')->with('mensaje', 'Address added successfully');
     }
 

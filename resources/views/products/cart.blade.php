@@ -71,7 +71,9 @@
             <div class="col-lg-3 col-md-3">
                 <form action="{{ route('cart.viewShipping') }}" method="POST" class="mt-3">
                     @csrf
-                    <button class="btn btn-warning btn-sm" type="submit">Payment</button>
+                    <button class="btn btn-warning btn-sm" type="submit" {{ $products->isEmpty() ? 'disabled' : '' }}>
+                        Payment
+                    </button>
                 </form>
             </div>
             <div class="col-lg-3 col-md-3">
@@ -83,10 +85,8 @@
                     {{ $products->sum(function ($product) {
                         return $product->price * $product->pivot->amount;
                     }) }}
-
                 </h4>
             </div>
         </div>
     </div>
-    
 @endsection
