@@ -222,7 +222,5 @@ public function deleteBrand($id)
     // Pasa la marca a la vista
     return view('viewbrands', compact('brand'));
 }
-    
-
 
 }

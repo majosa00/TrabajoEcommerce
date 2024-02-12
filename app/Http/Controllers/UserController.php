@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Error;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Brand;
@@ -15,30 +16,31 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    public function create(array $input)
-    {
-        // Inicia una transacción de base de datos
-        DB::beginTransaction();
+    // public function create(array $input)
+    // {
+    //     // Inicia una transacción de base de datos
+    //     DB::beginTransaction();
     
-        try {
-            $user = new User();
-            $user->name = $input['name'];
-            $user->email = $input['email'];
-            $user->password = Hash::make($input['password']);
-            $user->rol_id = 1;
-            $user->save(); // Guarda el usuario en la base de datos
+    //     try {
+    //         $user = new User();
+    //         $user->name = $input['name'];
+    //         $user->email = $input['email'];
+    //         $user->password = Hash::make($input['password']);
+    //         $user->rol_id = 1;
+    //         $user->save(); // Guarda el usuario en la base de datos
     
-            $cart = new Cart();
-            $cart->user_id = $user->id; // Asigna el ID del usuario recién creado
-            $cart->save(); // Guarda el carro en la base de datos
+    //         $cart = new Cart();
+    //         $cart->user_id = $user->id; // Asigna el ID del usuario recién creado
+    //         $cart->save(); // Guarda el carro en la base de datos
     
-            DB::commit(); // Confirma la transacción
-            return $user;
-        } catch (\Exception $e) {
-            DB::rollBack(); // Si algo sale mal, revierte todas las operaciones
-            throw $e; // Lanza la excepción para manejarla más arriba o mostrar el error
-        }
-    }
+    //         DB::commit(); // Confirma la transacción
+    //         return $user;
+    //     } catch (\Exception $e) {
+    //         DB::rollBack(); // Si algo sale mal, revierte todas las operaciones
+    //         throw $e; // Lanza la excepción para manejarla más arriba o mostrar el error
+    //     }
+    // }
+    
     public function products()
     {
         $products = Product::all();
