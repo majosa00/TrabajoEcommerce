@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Error;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Brand;
@@ -16,6 +17,7 @@ class UserController extends Controller
 {
     public function create(array $input)
     {
+        try{
         $user = new User();
         $user->name = $input['name'];
         $user->email = $input['email'];
@@ -26,8 +28,12 @@ class UserController extends Controller
         $cart = new Cart();
         $cart->user_id = $user->id;
         $cart->save();
-
         return $user;
+        }catch(Error $e){
+            return $e->getMessage();
+        }
+
+
     }
 
     public function products()

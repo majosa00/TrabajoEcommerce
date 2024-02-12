@@ -175,7 +175,7 @@ class ProductController extends Controller
     public function showProductsByBrand($brandId)
     {
         $brand = Brand::with('products')->findOrFail($brandId);
-        return view('brands.products', compact('brand'));
+        return view('productsbrands', compact('brand'));
     }
 
 }

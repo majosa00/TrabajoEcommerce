@@ -29,7 +29,10 @@
                                     <form action="{{ route('wishlist.add', $product->id) }}" method="POST"
                                         class="d-flex justify-content-end">
                                         @csrf
-                                        <button class="btn btn-danger" type="submit"><i class="fas fa-heart"></i></button>
+                                        <button id="wishlistBtn{{ $product->id }}" class="wishlistBtn"
+                                            onclick="toggleWishlist({{ $product->id }})">
+                                            <span id="heartIcon{{ $product->id }}" class="heartIcon far fa-heart"></span>
+                                        </button>
                                     </form>
                                 </div>
                             </div>
@@ -37,6 +40,5 @@
                     </div>
                 @endforeach
             </div>
-
     </div>
 @endsection
