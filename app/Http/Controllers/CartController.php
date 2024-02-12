@@ -208,8 +208,7 @@ class CartController extends Controller
 
         // Redirigir a la vista de envío con un mensaje de éxito
         return redirect()->route('cart.viewShipping')->with('success', 'Shipping information saved successfully!');
-
-    }
+    } // Este es el cierre de llave que falta
 
     public function createNewAddressShipping(Request $request)
     {
@@ -247,6 +246,17 @@ class CartController extends Controller
 
         // Redirigir a la página de envío en lugar de 'profile.address'
         return redirect()->route('cart.viewShipping')->with('mensaje', 'Address added successfully');
+    }
+
+    public function getCartItemCount()
+    {
+        $user = Auth::user();
+        if ($user && $user->cart) {
+            $count = $user->cart->products->sum('pivot.amount');
+            \Log::info("Cart item count: " . $count);
+            return $count;
+        }
+        return 0;
     }
 
 }
