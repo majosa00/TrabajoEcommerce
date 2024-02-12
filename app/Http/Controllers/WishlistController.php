@@ -46,6 +46,7 @@ class WishlistController extends Controller
 
    
 
+
     public function showWishlist()
     {
         $userId = Auth::id();
@@ -54,14 +55,19 @@ class WishlistController extends Controller
 
         return view('products.wishlist', compact('wishlists'));
     }
-    // Dentro de WishlistController.php
+
 
     public function showTopWishlist()
     {
-        $topProducts = Product::withCount('wishlists')
+        // Recuperar todos los productos que han sido añadidos a la lista de deseos, luego filtrar manualmente
+        $allProducts = Product::withCount('wishlists')
             ->orderBy('wishlists_count', 'desc')
-            ->take(5)
             ->get();
+
+        // Filtrar productos con wishlists_count mayor a 0
+        $topProducts = $allProducts->filter(function ($product) {
+            return $product->wishlists_count > 0;
+        })->take(5);
 
         return view('admin.wishlist', compact('topProducts'));
     }
