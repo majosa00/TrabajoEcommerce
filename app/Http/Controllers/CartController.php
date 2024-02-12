@@ -85,29 +85,28 @@ class CartController extends Controller
         });
         $order->totalPrice = $totalPrice;
 
-        // if ($request->filled('address')) {
-        //     $selectedAddressId = $request->input('address');
-        //     $selectedAddress = Address::find($selectedAddressId);
+        if ($request->filled('address')) {
+            $selectedAddressId = $request->input('address');
+            $selectedAddress = Address::find($selectedAddressId);
 
-        //     if ($selectedAddress) {
-        //         // Crear un array con los detalles de la dirección seleccionada
-        //         $addressDetails = [
-        //             'address' => $selectedAddress->address,
-        //             'city' => $selectedAddress->city,
-        //             'country' => $selectedAddress->country,
-        //             'zipcode' => $selectedAddress->zipCode,
-        //         ];
+            if ($selectedAddress) {
+                // Crear un array con los detalles de la dirección seleccionada
+                $addressDetails = [
+                    'address' => $selectedAddress->address,
+                    'city' => $selectedAddress->city,
+                    'country' => $selectedAddress->country,
+                    'zipcode' => $selectedAddress->zipCode,
+                ];
 
-        //         // Convertir los detalles de la dirección en una cadena
-        //         $formattedAddress = implode(', ', $addressDetails);
-        //         // Guardar la dirección en la base de datos o realizar acciones adicionales según tus necesidades
-        //         $order->address = $formattedAddress;
+                // Convertir los detalles de la dirección en una cadena
+                $formattedAddress = implode(', ', $addressDetails);
 
-        //         return back()->with('success', 'Address saved successfully!');
-        //     } else {
-        //         return back()->with('error', 'Selected address not found.');
-        //     }
-        // }
+                // Guardar la dirección en la base de datos
+                $order->address = $formattedAddress;
+            } else {
+                return back()->with('error', 'Selected address not found.');
+            }
+        }
 
         $order->save();
 
@@ -247,18 +246,6 @@ class CartController extends Controller
         $newAddress->save();
 
         // Redirigir a la página de envío en lugar de 'profile.address'
-        return redirect()->route('cart.viewShipping')->with('mensaje', 'Address added successfully');
-    }
-
-    public function processpayment(Request $request)
-    {
-        $request->validate([
-            'cc-name' => 'required|string|regex:/^[a-zA-Z\s]+$/',
-            'cc-number' => 'required|numeric',
-            'cc-expiration' => 'required|date_format:m/y',
-            'cc-cvv' => 'required|numeric',
-        ]);
-
         return redirect()->route('cart.viewShipping')->with('mensaje', 'Address added successfully');
     }
 

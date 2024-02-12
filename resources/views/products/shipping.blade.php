@@ -68,9 +68,12 @@
         <div class="row">
             @foreach ($addresses as $address)
                 <div class="col-md-3 mb-3">
-                    <a href="#" class="address-link" data-address="{{ $address->id }}">
-                        {{ $address->address }} - {{ $address->city }}, {{ $address->country }}
-                    </a>
+                    <div class="form-check">
+                        <input id="selected_address" name="selected_address" type="radio" class="form-check-input" checked
+                            required>
+                        <label class="form-check-label" for="selected_address" value="{{ $address->id }}">
+                            {{ $address->address }} - {{ $address->city }}, {{ $address->country }}</label>
+                    </div>
                 </div>
             @endforeach
             <div class="col-md-3">
@@ -122,8 +125,7 @@
 
         <section id="payment">
             <h4 class="mb-3">Payment</h4>
-            <form action="{{ route('cart.processpayment') }}" method="post" id="payment-form" class="needs-validation"
-                novalidate>
+            <form action="" method="post" id="payment-form" class="needs-validation" novalidate>
                 @csrf
                 <div class="my-3">
                     <div class="form-check">
