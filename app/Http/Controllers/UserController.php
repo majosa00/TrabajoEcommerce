@@ -15,26 +15,21 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function create(array $input)
-    {
-        try{
-        $user = new User();
-        $user->name = $input['name'];
-        $user->email = $input['email'];
-        $user->password = Hash::make($input['password']);
-        $user->rol_id = 1;
-        $user->save();
+    // public function create(array $input)
+    // {
+    //     $user = new User();
+    //     $user->name = $input['name'];
+    //     $user->email = $input['email'];
+    //     $user->password = Hash::make($input['password']);
+    //     $user->rol_id = 1;
+    //     $user->save();
 
-        $cart = new Cart();
-        $cart->user_id = $user->id;
-        $cart->save();
-        return $user;
-        }catch(Error $e){
-            return $e->getMessage();
-        }
+    //     $cart = new Cart();
+    //     $cart->user_id = $user->id;
+    //     $cart->save();
 
-
-    }
+    //    return $user;
+    // }
 
     public function products()
     {

@@ -4,6 +4,7 @@ namespace App\Actions\Fortify;
 
 use App\Http\Controllers\UserController;
 use App\Models\User;
+use App\Models\Cart;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -32,7 +33,17 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
         ])->validate();
 
-        $userController = new UserController();
-        return $userController->create($input);
+        $user = new User();
+        $user->name = $input['name'];
+        $user->email = $input['email'];
+        $user->password = Hash::make($input['password']);
+        $user->rol_id = 1;
+        $user->save();
+
+        $cart = new Cart();
+        $cart->user_id = $user->id;
+        $cart->save();
+
+        return $user;
     }
 }
