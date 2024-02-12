@@ -24,7 +24,7 @@
                     </div>
                 </div>
             @empty
-                <p>{{ __('messages.no_items_in_wishlist') }}</p>
+                <p>{{ __('No items') }}</p>
             @endforelse
         </div>
         {{ $wishlists->links() }}

@@ -14,6 +14,7 @@ Route::get('/', function () {
 
 Route::get('products', [UserController::class, 'products']);
 Route::get('orders', [OrderController::class, 'showOrders'])->name('orders');
+Route::get('orders/{order}', [OrderController::class, 'showTicket'])->name('order.showticket');
 Route::get('new_order', [OrderController::class, 'createOrder']);
 Route::get('productsbrands', [UserController::class, 'brands']);
 //Editar perfil
@@ -81,7 +82,6 @@ Route::delete('cart/remove/{productId}', [CartController::class, 'remove'])->nam
 //Actualizar cantidades en el carrito
 Route::put('cart/updateAmount/{productId}', [CartController::class, 'updateAmount'])->name('cart.updateAmount');
 Route::post('cart/new-address-shipping', [CartController::class, 'createNewAddressShipping'])->name('cart.create-new-address-shipping');
-Route::get('cart/generate-ticket/{order}', [CartController::class, 'pay'])->name('cart.generateTicket');
 
 Route::get('/language/{locale}', function ($locale) {
     if (in_array($locale, ['en', 'es'])) {
