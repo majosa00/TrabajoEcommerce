@@ -8,11 +8,12 @@
                 No products in wishlist yet.
             </div>
         @else
+
             <div class="table-responsive">
                 <table class="table table-hover stylish-table">
                     <thead class="thead-dark">
                         <tr>
-                            <th scope="col">#</th>
+                            <th scope="col">Top</th>
                             <th scope="col">Product Name</th>
                             <th scope="col">Price</th>
                             <th scope="col">Wishlist Count</th>
@@ -29,7 +30,6 @@
                                 </tr>
                             @endif
                         @endforeach
-
                     </tbody>
                 </table>
             </div>

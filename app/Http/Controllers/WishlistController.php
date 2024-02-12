@@ -42,6 +42,7 @@ class WishlistController extends Controller
         return back()->with('error', 'Unable to remove the product from the wishlist.');
     }
 
+
     public function showWishlist()
     {
         $userId = Auth::id();
@@ -59,7 +60,7 @@ class WishlistController extends Controller
             ->orderBy('wishlists_count', 'desc')
             ->get();
 
-        // Filtrar productos con wishlists_count mayor que 0
+        // Filtrar productos con wishlists_count mayor a 0
         $topProducts = $allProducts->filter(function ($product) {
             return $product->wishlists_count > 0;
         })->take(5);
