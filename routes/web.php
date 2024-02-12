@@ -27,6 +27,7 @@ Route::get('profile/edit-address/{id}', [UserController::class, 'editAddress'])-
 Route::put('profile/update-address/{id}', [UserController::class, 'updateAddress'])->name('profile.updateAddress');
 Route::delete('profile/delete-address/{id}', [UserController::class, 'deleteAddress'])->name('profile.deleteAddress');
 
+
 //Pedir que el correo sea verificado
 Route::get('home', function () {
     if (Auth::user()->rol_id == 2) {

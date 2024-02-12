@@ -65,23 +65,24 @@
 
         <!-- Direcciones -->
         <h3>Choose your address</h3>
-        <div class="row">
-            @foreach ($addresses as $address)
-                <div class="col-md-3 mb-3">
-                    <div class="form-check">
-                        <input id="selected_address" name="selected_address" type="radio" class="form-check-input" checked
-                            required>
-                        <label class="form-check-label" for="selected_address" value="{{ $address->id }}">
-                            {{ $address->address }} - {{ $address->city }}, {{ $address->country }}</label>
-                    </div>
+        <form action="" method="POST">
+            <div class="row justify-content-center align-items-center gap-2">
+                <div class="col-md-3">
+                    <a href="addressModal" class="btn btn-primary mb-4" data-bs-toggle="modal"
+                        data-bs-target="#addressModal">
+                        <i class="fas fa-plus"></i> New Address
+                    </a>
                 </div>
-            @endforeach
-            <div class="col-md-3">
-                <a href="addressModal" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#addressModal">
-                    <i class="fas fa-plus"></i> New Address
-                </a>
+                @foreach ($addresses as $address)
+                    <div class="col-12 col-xl-2 border p-3 rounded">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="respuesta" id="" />
+                            <label class="form-check-label" for=""> {{ $address->address }} </label>
+                        </div>
+                    </div>
+                @endforeach
             </div>
-        </div>
+        </form>
 
         <!-- Modal para nueva dirección -->
         <div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="addressModal"

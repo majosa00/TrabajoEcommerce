@@ -85,27 +85,9 @@ class CartController extends Controller
         });
         $order->totalPrice = $totalPrice;
 
-        if ($request->filled('address')) {
-            $selectedAddressId = $request->input('address');
-            $selectedAddress = Address::find($selectedAddressId);
-
-            if ($selectedAddress) {
-                // Crear un array con los detalles de la dirección seleccionada
-                $addressDetails = [
-                    'address' => $selectedAddress->address,
-                    'city' => $selectedAddress->city,
-                    'country' => $selectedAddress->country,
-                    'zipcode' => $selectedAddress->zipCode,
-                ];
-
-                // Convertir los detalles de la dirección en una cadena
-                $formattedAddress = implode(', ', $addressDetails);
-
-                // Guardar la dirección en la base de datos
-                $order->address = $formattedAddress;
-            } else {
-                return back()->with('error', 'Selected address not found.');
-            }
+        if ($request->filled('formatted_address')) {
+            $formattedAddress = $request->input('formatted_address');
+            $order->address = $formattedAddress;
         }
 
         $order->save();
@@ -220,9 +202,18 @@ class CartController extends Controller
             'zipcode' => 'required|string|max:10',
         ]);
 
+        // Obtener el usuario actual
+        $user = Auth::user();
+
+        // Comprobar si el usuario ya tiene el máximo permitido de direcciones
+        $maxAddresses = 4;
+        if ($user->addresses()->count() >= $maxAddresses) {
+            return redirect()->route('cart.viewShipping')->with('mensaje', 'Maximum addresses limit reached.');
+        }
+
         // Comprobar si la dirección ya existe para el usuario actual
         $existingAddress = Address::where([
-            'user_id' => auth()->user()->id,
+            'user_id' => $user->id,
             'address' => $request->input('address'),
             'country' => $request->input('country'),
             'city' => $request->input('city'),
@@ -230,21 +221,19 @@ class CartController extends Controller
         ])->first();
 
         if ($existingAddress) {
-            // La dirección ya existe, puedes manejarlo de la forma que prefieras
             return redirect()->route('cart.viewShipping')->with('error', 'Address already exists.');
         }
 
-        // Si no existe, crea la nueva dirección
+        // Si no existe y el límite no se ha alcanzado, crea la nueva dirección
         $newAddress = new Address;
         $newAddress->address = $request->input('address');
         $newAddress->country = $request->input('country');
         $newAddress->city = $request->input('city');
         $newAddress->zipCode = $request->input('zipcode');
-        $newAddress->user_id = auth()->user()->id;
+        $newAddress->user_id = $user->id;
 
         $newAddress->save();
 
-        // Redirigir a la página de envío en lugar de 'profile.address'
         return redirect()->route('cart.viewShipping')->with('mensaje', 'Address added successfully');
     }
 
