@@ -13,6 +13,8 @@
                     <th>Order Date</th>
                     <th>Total Price</th>
                     <th>State</th>
+                    <th>Ticket</th>
+                    <th>Generate Invoice</th>
                 </tr>
             </thead>
             @foreach ($orders as $order)
@@ -36,6 +38,8 @@
                     <td>{{ $order->orderDate }}</td>
                     <td>{{ $order->totalPrice }} $</td>
                     <td>{{ $order->state }}</td>
+                    <td><a href="{{ route('order.showticket', $order->id) }}" class="text-dark">Ticket</td>
+                    <td><a href="" class="text-decoration-none text-dark"></td>
                 </tr>
             @endforeach
         </table>

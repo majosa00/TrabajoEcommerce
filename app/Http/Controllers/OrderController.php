@@ -34,4 +34,9 @@ class OrderController extends Controller
         return view('order', ['orders' => $orders]);
     }
 
+    public function showticket(Order $order)
+    {
+        return view('products.ticket', compact('order'));
+    }
+
 }

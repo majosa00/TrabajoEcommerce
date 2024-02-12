@@ -14,6 +14,7 @@ Route::get('/', function () {
 
 Route::get('products', [UserController::class, 'products']);
 Route::get('orders', [OrderController::class, 'showOrders'])->name('orders');
+Route::get('orders/{order}', [OrderController::class, 'showTicket'])->name('order.showticket');
 Route::get('new_order', [OrderController::class, 'createOrder']);
 Route::get('productsbrands', [UserController::class, 'brands']);
 //Editar perfil
@@ -26,6 +27,7 @@ Route::post('profile/new-address', [UserController::class, 'createNewAddress'])-
 Route::get('profile/edit-address/{id}', [UserController::class, 'editAddress'])->name('profile.editAddress');
 Route::put('profile/update-address/{id}', [UserController::class, 'updateAddress'])->name('profile.updateAddress');
 Route::delete('profile/delete-address/{id}', [UserController::class, 'deleteAddress'])->name('profile.deleteAddress');
+
 
 //Pedir que el correo sea verificado
 Route::get('home', function () {
@@ -80,7 +82,6 @@ Route::delete('cart/remove/{productId}', [CartController::class, 'remove'])->nam
 //Actualizar cantidades en el carrito
 Route::put('cart/updateAmount/{productId}', [CartController::class, 'updateAmount'])->name('cart.updateAmount');
 Route::post('cart/new-address-shipping', [CartController::class, 'createNewAddressShipping'])->name('cart.create-new-address-shipping');
-Route::get('cart/generate-ticket/{order}', [CartController::class, 'pay'])->name('cart.generateTicket');
 
 Route::get('/language/{locale}', function ($locale) {
     if (in_array($locale, ['en', 'es'])) {
