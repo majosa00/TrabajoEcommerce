@@ -215,13 +215,13 @@ public function deleteBrand($id)
     }
 
     public function showProductsByBrand($id)
-    {
-        $brand = Brand::with('products')->findOrFail($id); // Carga la marca y sus productos relacionados
+{
+    // Carga la marca y sus productos relacionados
+    $brand = Brand::with('products')->findOrFail($id); 
     
-        // Pasa solo la marca a la vista, ya que los productos pueden ser accedidos a través de $brand->products
-        return view('productsbrands', compact('brand'));
-    }
-
+    // Pasa la marca a la vista
+    return view('viewbrands', compact('brand'));
+}
     
 
 
