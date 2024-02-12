@@ -51,6 +51,7 @@ class WishlistController extends Controller
         return view('products.wishlist', compact('wishlists'));
     }
 
+
     public function showTopWishlist()
     {
         // Recuperar todos los productos que han sido añadidos a la lista de deseos, luego filtrar manualmente

@@ -58,7 +58,6 @@ class Product extends Model
         return $this->hasMany(Wishlist::class);
     }
 
-
     //Relación uno a muchos (inversa)
     public function brand()
     {
