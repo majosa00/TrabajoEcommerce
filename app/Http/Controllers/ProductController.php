@@ -38,9 +38,9 @@ class ProductController extends Controller
             'iva' => 'required|numeric|min:0.1',
             'brand_id' => 'required|integer|min:1'
         ]);
-    
+
         DB::beginTransaction();
-    
+
         try {
             $newProduct = new Product;
             $newProduct->name = $request->name;
@@ -53,9 +53,9 @@ class ProductController extends Controller
             $newProduct->stock = $request->stock;
             $newProduct->iva = $request->iva;
             $newProduct->brand_id = $request->brand_id;
-    
+
             $newProduct->save();
-    
+
             DB::commit();
             return redirect()->route('products.create')->with('mensaje', 'Product added successfully');
         } catch (\Exception $e) {
@@ -92,27 +92,27 @@ class ProductController extends Controller
 
         DB::beginTransaction();
 
-    try {
-        $productUpdate = Product::findOrFail($id);
-        $productUpdate->name = $request->name;
-        $productUpdate->description = $request->description;
-        $productUpdate->flavor = $request->flavor;
-        $productUpdate->price = $request->price;
-        $productUpdate->dimension = $request->dimension;
-        $productUpdate->udpack = $request->udpack;
-        $productUpdate->weight = $request->weight;
-        $productUpdate->stock = $request->stock;
-        $productUpdate->iva = $request->iva;
-        $productUpdate->brand_id = $request->brand_id;
-        $productUpdate->save();
+        try {
+            $productUpdate = Product::findOrFail($id);
+            $productUpdate->name = $request->name;
+            $productUpdate->description = $request->description;
+            $productUpdate->flavor = $request->flavor;
+            $productUpdate->price = $request->price;
+            $productUpdate->dimension = $request->dimension;
+            $productUpdate->udpack = $request->udpack;
+            $productUpdate->weight = $request->weight;
+            $productUpdate->stock = $request->stock;
+            $productUpdate->iva = $request->iva;
+            $productUpdate->brand_id = $request->brand_id;
+            $productUpdate->save();
 
-        DB::commit();
-        return back()->with('mensaje', 'Product updated successfully.');
-    } catch (\Exception $e) {
-        DB::rollBack();
-        return back()->with('error', 'Error updating the product.');
+            DB::commit();
+            return back()->with('mensaje', 'Product updated successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Error updating the product.');
+        }
     }
-}
 
 
     public function delete($id)
@@ -140,14 +140,14 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|unique:brands,name|max:255',
         ]);
-    
+
         DB::beginTransaction();
-    
+
         try {
             $newBrand = new Brand;
             $newBrand->name = $request->input('name');
             $newBrand->save();
-    
+
             DB::commit();
             return redirect()->route('brands.createBrand')->with('mensaje', 'Brand added successfully');
         } catch (\Exception $e) {
@@ -168,41 +168,41 @@ class ProductController extends Controller
     }
 
     public function updateBrand(Request $request, $id)
-{
-    $request->validate([
-        'name' => 'required|unique:brands,name,' . $id . '|max:255',
-    ]);
+    {
+        $request->validate([
+            'name' => 'required|unique:brands,name,' . $id . '|max:255',
+        ]);
 
-    DB::beginTransaction();
+        DB::beginTransaction();
 
-    try {
-        $brandUpdate = Brand::findOrFail($id);
-        $brandUpdate->update($request->all());
+        try {
+            $brandUpdate = Brand::findOrFail($id);
+            $brandUpdate->update($request->all());
 
-        DB::commit();
-        return back()->with('mensaje', 'Brand updated');
-    } catch (\Exception $e) {
-        DB::rollBack();
-        return back()->with('error', 'Error updating the brand');
+            DB::commit();
+            return back()->with('mensaje', 'Brand updated');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Error updating the brand');
+        }
     }
-}
 
 
-public function deleteBrand($id)
-{
-    DB::beginTransaction();
+    public function deleteBrand($id)
+    {
+        DB::beginTransaction();
 
-    try {
-        $brandDelete = Brand::findOrFail($id);
-        $brandDelete->delete();
+        try {
+            $brandDelete = Brand::findOrFail($id);
+            $brandDelete->delete();
 
-        DB::commit();
-        return back()->with('mensaje', 'Brand removed');
-    } catch (\Exception $e) {
-        DB::rollBack();
-        return back()->with('error', 'Error removing the brand');
+            DB::commit();
+            return back()->with('mensaje', 'Brand removed');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Error removing the brand');
+        }
     }
-}
     public function showTopFavorites()
     {
         $topProducts = Product::withCount('wishlists')
@@ -215,12 +215,12 @@ public function deleteBrand($id)
     }
 
     public function showProductsByBrand($id)
-{
-    // Carga la marca y sus productos relacionados
-    $brand = Brand::with('products')->findOrFail($id); 
-    
-    // Pasa la marca a la vista
-    return view('viewbrands', compact('brand'));
-}
+    {
+        // Carga la marca y sus productos relacionados
+        $brand = Brand::with('products')->findOrFail($id);
+
+        // Pasa la marca a la vista
+        return view('viewbrands', compact('brand'));
+    }
 
 }
