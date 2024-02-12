@@ -65,4 +65,6 @@ class WishlistController extends Controller
 
         return view('admin.wishlist', compact('topProducts'));
     }
+
 }
+
