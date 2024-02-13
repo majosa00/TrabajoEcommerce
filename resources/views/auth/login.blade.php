@@ -3,6 +3,7 @@
 @section('content')
     <section id="loggin">
         <div class="container px-4 py-5 mx-auto">
+            <h1 class="text-center p-3">LOGIN</h1>
             <div class="card card0">
                 <div class="d-flex flex-lg-row flex-column-reverse">
                     <div class="card card1">
@@ -12,7 +13,7 @@
                                     <img src="{{ asset('images/logoticket.png') }}" alt="Logo"
                                         class="footer-logo company-logo">
                                 </div>
-                                <h6 class="msg-info">Please login to your account</h6>
+                                <h6 class="msg-info text-center p-2">Please login to your account</h6>
 
                                 <!-- Nuevo formulario de inicio de sesión -->
                                 <form method="POST" action="{{ route('login') }}" class="mb-3">
@@ -44,12 +45,18 @@
                         </div>
                     </div>
                     <div class="card card2">
-                        <div class="my-auto mx-md-5 px-md-5 right">
-                            <h3 class="text-white">We are more than just a company</h3>
-                            <small class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                quis
-                                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</small>
+                        <div class="my-auto mx-md-5 px-md-5 right justificar">
+                            <h3 class="text-white">Elevate Your Energy</h3>
+                            <p class="text-white">
+                                Energetic Wave is more than just a beverage company. We are dedicated to providing
+                                high-quality and energizing drinks that fuel your active lifestyle.
+                            </p>
+                            <p class="text-white">
+                                Our carefully crafted beverages are designed to boost your energy levels and enhance
+                                your overall well-being. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            </p>
                         </div>
                     </div>
                 </div>
