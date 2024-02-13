@@ -51,18 +51,24 @@
                                             <button class="btn btn-warning sm" type="submit">Register</button>
                                         </div>
                                     </form>
-                                    <!-- Fin del nuevo formulario de registro -->
-
                                 </div>
                             </div>
                         </div>
                         <div class="card card2">
-                            <div class="my-auto mx-md-5 px-md-5 right">
-                                <h3 class="text-white">We are more than just a company</h3>
-                                <small class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                            <div class="my-auto mx-md-5 px-md-5 right justificar">
+                                <h3 class="text-dark">Elevate Your Energy</h3>
+                                <p class="text-dark">
+                                    Energetic Wave is more than just a beverage company. We are dedicated to providing
+                                    high-quality and energizing drinks that fuel your active lifestyle.
+                                </p>
+                                <p class="text-dark">
+                                    Our carefully crafted beverages are designed to boost your energy levels and enhance
+                                    your overall well-being. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                                    do
                                     eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                                     quis
-                                    nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</small>
+                                    nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                </p>
                             </div>
                         </div>
                     </div>
