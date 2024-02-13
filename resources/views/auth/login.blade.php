@@ -20,9 +20,9 @@
                                     @csrf
 
                                     <div class="form-group">
-                                        <label class="form-control-label text-muted">Username</label>
+                                        <label class="form-control-label text-muted">Email</label>
                                         <input type="text" id="email" name="email"
-                                            placeholder="Phone no or email id" class="form-control">
+                                            placeholder="Email" class="form-control">
                                     </div>
 
                                     <div class="form-group">
@@ -46,12 +46,12 @@
                     </div>
                     <div class="card card2">
                         <div class="my-auto mx-md-5 px-md-5 right justificar">
-                            <h3 class="text-white">Elevate Your Energy</h3>
-                            <p class="text-white">
+                            <h3 class="text-dark">Elevate Your Energy</h3>
+                            <p class="text-dark">
                                 Energetic Wave is more than just a beverage company. We are dedicated to providing
                                 high-quality and energizing drinks that fuel your active lifestyle.
                             </p>
-                            <p class="text-white">
+                            <p class="text-dark">
                                 Our carefully crafted beverages are designed to boost your energy levels and enhance
                                 your overall well-being. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
                                 eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
