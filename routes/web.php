@@ -99,3 +99,12 @@ Route::get('wishlist', [WishlistController::class, 'showWishlist'])->name('wishl
 
 Route::get('/brands/{brandId}/products', [ProductController::class, 'showProductsByBrand'])->name('brand.products');
 //nombre de la ruta - controller - nombre función dentro del controlador - nombre es para renombrar la ruta porque est´dentro de un formulario y queremos que tenga ese name
+
+
+// Ruta para ocultar un producto
+Route::post('/products/hide/{id}', [ProductController::class, 'hide'])->name('products.hide');
+
+// Ruta para mostrar un producto
+Route::post('/products/show/{id}', [ProductController::class, 'show'])->name('products.show');
+
+Route::get('/products', [App\Http\Controllers\ProductController::class, 'index']);
