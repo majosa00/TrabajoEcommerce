@@ -70,10 +70,14 @@
                             </a>
                         </td>
                         <td>
-                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteBrandModal{{ $brand->id }}">
-                                <i class="fas fa-trash-alt"></i> Delete
-                            </a>
+                            <!-- Formulario para eliminar marca -->
+                            <form action="{{ route('brands.deleteBrand', $brand->id) }}" method="POST" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">
+                                    <i class="fas fa-trash-alt"></i> Delete
+                                </button>
+                            </form>
                         </td>
                     </tr>
 

@@ -190,19 +190,19 @@ class ProductController extends Controller
 
     public function deleteBrand($id)
     {
-        DB::beginTransaction();
-
+        // Asumiendo que ya tienes la lógica para encontrar y eliminar la marca
+        // Aquí solo incluyo la redirección con un mensaje de sesión
         try {
-            $brandDelete = Brand::findOrFail($id);
-            $brandDelete->delete();
+            $brand = Brand::findOrFail($id);
+            // Aquí agregarías cualquier lógica necesaria para desvincular productos, si es necesario
+            $brand->delete();
 
-            DB::commit();
-            return back()->with('mensaje', 'Brand removed');
+            return redirect()->route('ruta_a_tu_vista_de_marcas')->with('mensaje', 'Brand deleted successfully.');
         } catch (\Exception $e) {
-            DB::rollBack();
-            return back()->with('error', 'Error removing the brand');
+            return back()->with('error', 'Error removing the brand.');
         }
     }
+
     public function showTopFavorites()
     {
         $topProducts = Product::withCount('wishlists')
