@@ -11,7 +11,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
     <!-- JS -->
     <script src="{{ asset('js/checkout.js') }}" defer></script>
-    <script src="{{ asset('js/fav.js') }}" defer></script>
 </head>
 
 <body>
