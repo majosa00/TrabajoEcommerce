@@ -246,6 +246,4 @@ class ProductController extends Controller
         $products = Product::where('is_hidden', false)->get();
         return view('logged', compact('products'));
     }
-
-
 }
