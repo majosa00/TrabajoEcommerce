@@ -15,6 +15,6 @@ class ModifyIsHiddenInProductsTable extends Migration
 
     public function down()
     {
-        // Ajusta según el estado deseado para rollback
+
     }
 }
