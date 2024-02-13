@@ -87,46 +87,31 @@ class CartController extends Controller
             $user = Auth::user();
             $cart = $user->cart;
 
-            if (!$cart || $cart->products->isEmpty()) {
-                return back()->with('error', 'Your cart is empty.');
+            // Verificar si el usuario ha proporcionado los datos necesarios
+            if (!$user->name || !$user->secondname || !$user->email || !$user->phone) {
+                return back()->with('mensaje', 'Please complete your user profile before placing an order.');
             }
 
             $order = new Order();
             $order->user_id = $user->id;
-            $order->state = 'Pending'; // Los pedidos estarán en pendiente de inicio
+            $order->state = 'Pending';
             $order->orderDate = now();
 
             $totalPrice = $cart->products->sum(function ($product) {
                 return $product->price * $product->pivot->amount;
             });
             $order->totalPrice = $totalPrice;
+            $order->user = "{$user->name} {$user->secondname}, {$user->email}, {$user->phone}";
 
-            // if ($request->filled('address')) {
-            //     $selectedAddressId = $request->input('address');
-            //     $selectedAddress = Address::find($selectedAddressId);
-
-
-            //     if ($selectedAddress) {
-            //         // Crear un array con los detalles de la dirección seleccionada
-            //         $addressDetails = [
-            //             'address' => $selectedAddress->address,
-            //             'city' => $selectedAddress->city,
-            //             'country' => $selectedAddress->country,
-            //             'zipcode' => $selectedAddress->zipCode,
-            //         ];
-
-
-            //         // Convertir los detalles de la dirección en una cadena
-            //         $formattedAddress = implode(', ', $addressDetails);
-            //         // Guardar la dirección en la base de datos o realizar acciones adicionales según tus necesidades
-            //         $order->address = $formattedAddress;
-
-
-            //         return back()->with('success', 'Address saved successfully!');
-            //     } else {
-            //         return back()->with('error', 'Selected address not found.');
-            //     }
-            // }
+            // Obtén el ID de la dirección seleccionada desde el formulario
+            $selectedAddressId = $request->input('selected_address');
+            // Obtén los detalles de la dirección seleccionada
+            if ($selectedAddressId) {
+                $selectedAddress = Address::find($selectedAddressId);
+                $order->address = "{$selectedAddress->address}, {$selectedAddress->country}, {$selectedAddress->city}, {$selectedAddress->zipCode}";
+            } else {
+                return back()->with('mensaje', 'Please select an address before placing an order.');
+            }
 
             $order->save();
 
@@ -151,7 +136,6 @@ class CartController extends Controller
             return back()->with('error', 'An error occurred during the payment process.');
         }
     }
-
 
     public function remove($productId)
     {

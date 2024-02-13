@@ -17,8 +17,9 @@ return new class extends Migration {
             $table->enum('state', ['pending', 'processing', 'completed']);
             $table->date('orderDate');
             $table->float('totalPrice');
-            $table->string('address')->nullable();
-            
+            $table->string('address');
+            $table->string('user');
+
             $table->timestamps();
         });
     }

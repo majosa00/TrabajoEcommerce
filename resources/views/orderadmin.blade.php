@@ -7,6 +7,8 @@
             <thead>
                 <tr>
                     <th>ID User</th>
+                    <th>Usuario</th>
+                    <th>Address</th>
                     <th>ID Order</th>
                     <th>Order Date</th>
                     <th>Total Price</th>
@@ -16,6 +18,8 @@
             @foreach ($orders as $order)
                 <tr>
                     <td>{{ $order->user_id }}</td>
+                    <td>{{ $order->user }}</td>
+                    <td>{{ $order->address }}</td>
                     <td>{{ $order->id }}</td>
                     <td>{{ $order->orderDate }}</td>
                     <td>{{ $order->totalPrice }} $</td>
