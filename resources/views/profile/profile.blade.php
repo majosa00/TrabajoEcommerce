@@ -79,7 +79,7 @@
             </a>
         </div>
 
-        @if (!empty($addresses))
+        @if (isset($addresses))
             @foreach ($addresses as $address)
                 <div class="row">
                     <div class="col-lg-6">
@@ -165,7 +165,7 @@
                 <hr>
             @endforeach
         @else
-            <p>No addresses found.</p>
+
         @endif
 
         <!-- Modal nueva dirección -->
