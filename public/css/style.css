@@ -325,6 +325,45 @@ button:focus {
     border: 1px solid #000000 !important
 }
 
+.cardproducts {
+    background-color: #343a40; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(241, 209, 0, 0.992); 
+    overflow: hidden; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.cardproducts:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 4px 8px rgba(241, 209, 0, 0.992); 
+}
+
+.card-img-top {
+    width: 100%; 
+    height: auto; 
+    object-fit: cover; 
+}
+
+.cardproducts-body {
+    padding: 15px; 
+    color: #ffffff; 
+}
+
+.cardproducts-text {
+    margin-bottom: 15px; /* Espaciado entre párrafos */
+}
+
+.card-title {
+    margin-bottom: 15px; /* Espaciado después del título */
+    font-weight: bold; /* Texto en negrita para el título */
+}
+
+
+
+
+
+
+
 
 @media screen and (max-width: 992px) {
     .card1 {
