@@ -187,19 +187,22 @@ class ProductController extends Controller
         }
     }
 
-
     public function deleteBrand($id)
     {
-        // Asumiendo que ya tienes la lógica para encontrar y eliminar la marca
-        // Aquí solo incluyo la redirección con un mensaje de sesión
+        DB::beginTransaction();
+
         try {
+            // Primero, establecer brand_id a null para todos los productos asociados a esta marca
+            Product::where('brand_id', $id)->update(['brand_id' => null]);
+            
             $brand = Brand::findOrFail($id);
-            // Aquí agregarías cualquier lógica necesaria para desvincular productos, si es necesario
             $brand->delete();
 
-            return redirect()->route('ruta_a_tu_vista_de_marcas')->with('mensaje', 'Brand deleted successfully.');
+            DB::commit();
+            return redirect()->route('ruta_lista_marcas')->with('mensaje', 'Brand deleted successfully and all associated products have been unlinked.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Error removing the brand.');
+            DB::rollBack();
+            return back()->with('error', 'Error removing the brand: ' . $e->getMessage());
         }
     }
 
