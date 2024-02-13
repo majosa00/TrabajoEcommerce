@@ -180,10 +180,17 @@
                             </a>
                         </td>
                         <td>
-                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteProductModal{{ $product->id }}">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
+                            @if(!$product->is_hidden)
+                                <form action="{{ route('products.hide', $product->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    <button type="submit" class="btn btn-secondary btn-sm">Ocultar</button>
+                                </form>
+                            @else
+                                <form action="{{ route('products.show', $product->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success btn-sm">Mostrar</button>
+                                </form>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
