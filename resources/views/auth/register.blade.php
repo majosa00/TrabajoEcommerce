@@ -7,6 +7,7 @@
     @section('content')
         <section id="loggin">
             <div class="container px-4 py-5 mx-auto">
+                <h1 class="text-center p-3">REGISTER</h1>
                 <div class="card card0">
                     <div class="d-flex flex-lg-row flex-column-reverse">
                         <div class="card card1">
