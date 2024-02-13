@@ -244,6 +244,13 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::where('is_hidden', false)->get();
-        return view('logged', compact('products'));
+
+        // Consulta para obtener los 3 productos más vendidos
+        $topSellingProducts = Product::withCount('orders as orders_count')
+            ->orderByDesc('orders_count')
+            ->take(3) //Si no hay nada comprado muestra 3 igualmente, publicidad engañosa :), sino te los ordena.
+            ->get();
+
+        return view('logged', compact('products', 'topSellingProducts'));
     }
 }
