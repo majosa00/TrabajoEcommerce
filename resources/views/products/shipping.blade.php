@@ -63,66 +63,7 @@
 
         <hr class="my-4">
 
-        <!-- Direcciones -->
-        <h3>Choose your address</h3>
-        <form action="" method="POST">
-            <div class="row justify-content-center align-items-center gap-2">
-                <div class="col-md-3">
-                    <a href="addressModal" class="btn btn-primary mb-4" data-bs-toggle="modal"
-                        data-bs-target="#addressModal">
-                        <i class="fas fa-plus"></i> New Address
-                    </a>
-                </div>
-                @foreach ($addresses as $address)
-                    <div class="col-12 col-xl-2 border p-3 rounded">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="respuesta" id="" />
-                            <label class="form-check-label" for=""> {{ $address->address }} </label>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </form>
 
-        <!-- Modal para nueva dirección -->
-        <div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="addressModal"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="newAddressModalLabel">Add New Address</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('cart.create-new-address-shipping') }}" method="POST">
-                            @csrf
-                            <div class="mb-2">
-                                <label for="address" class="form-label">New Address:</label>
-                                <input type="text" name="address" class="form-control" placeholder="Enter new address"
-                                    autofocus>
-                            </div>
-                            <div class="mb-2">
-                                <label for="country" class="form-label">Country:</label>
-                                <input type="text" name="country" class="form-control" placeholder="Enter country">
-                            </div>
-                            <div class="mb-2">
-                                <label for="city" class="form-label">City:</label>
-                                <input type="text" name="city" class="form-control" placeholder="Enter city">
-                            </div>
-                            <div class="mb-2">
-                                <label for="zipcode" class="form-label">ZIP Code:</label>
-                                <input type="text" name="zipcode" class="form-control" placeholder="Enter ZIP code">
-                            </div>
-                            <button type="submit" class="btn btn-warning">Add Address</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <hr>
 
         <section id="payment">
             <h4 class="mb-3">Payment</h4>
@@ -130,8 +71,7 @@
                 @csrf
                 <div class="my-3">
                     <div class="form-check">
-                        <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked
-                            required>
+                        <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
                         <label class="form-check-label" for="credit">Credit card</label>
                     </div>
                 </div>
@@ -139,8 +79,7 @@
                 <div class="row gy-3">
                     <div class="col-md-6">
                         <label for="cc-name" class="form-label">Name on card</label>
-                        <input type="text" class="form-control" id="cc-name" name="cc-name" placeholder=""
-                            required>
+                        <input type="text" class="form-control" id="cc-name" name="cc-name" placeholder="" required>
                         <small class="text-body-secondary">Full name as displayed on card</small>
                         <div class="invalid-feedback">
                             Name on card is required
@@ -149,8 +88,7 @@
 
                     <div class="col-md-6">
                         <label for="cc-number" class="form-label">Credit card number</label>
-                        <input type="text" class="form-control" id="cc-number" name="cc-number" placeholder=""
-                            required>
+                        <input type="text" class="form-control" id="cc-number" name="cc-number" placeholder="" required>
                         <div class="invalid-feedback">
                             Credit card number is required
                         </div>
@@ -158,8 +96,8 @@
 
                     <div class="col-md-3">
                         <label for="cc-expiration" class="form-label">Expiration</label>
-                        <input type="text" class="form-control" id="cc-expiration" name="cc-expiration"
-                            placeholder="" required>
+                        <input type="text" class="form-control" id="cc-expiration" name="cc-expiration" placeholder=""
+                            required>
                         <div class="invalid-feedback">
                             Expiration date required
                         </div>
@@ -167,8 +105,7 @@
 
                     <div class="col-md-3">
                         <label for="cc-cvv" class="form-label">CVV</label>
-                        <input type="text" class="form-control" id="cc-cvv" name="cc-cvv" placeholder=""
-                            required>
+                        <input type="text" class="form-control" id="cc-cvv" name="cc-cvv" placeholder="" required>
                         <div class="invalid-feedback">
                             Security code required
                         </div>
@@ -182,7 +119,64 @@
 
         <form action="{{ route('cart.pay') }}" method="POST" class="mt-3">
             @csrf
-            <button class="w-100 btn btn-warning btn-lg" type="submit">Continue to checkout</button>
+            <!-- Direcciones -->
+            <h3 class="p-2">Choose your address</h3>
+            <div class="row justify-content-center align-items-center gap-3">
+                <div class="col-md-3">
+                    <a href="addressModal" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#addressModal">
+                        <i class="fas fa-plus"></i> New Address
+                    </a>
+                </div>
+                @foreach ($addresses as $address)
+                    <div class="col-12 col-xl-2 border p-3 rounded">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="selected_address" id="selected_address"
+                                value="{{ $address->id }}" />
+                            <label class="form-check-label" for=""> {{ $address->address }} </label>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <button class="w-100 btn btn-warning btn-lg mt-4" type="submit">Continue to checkout</button>
         </form>
+    </div>
+
+    <!-- Modal para nueva dirección -->
+    <div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="addressModal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newAddressModalLabel">Add New Address</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('cart.create-new-address-shipping') }}" method="POST">
+                        @csrf
+                        <div class="mb-2">
+                            <label for="address" class="form-label">New Address:</label>
+                            <input type="text" name="address" class="form-control" placeholder="Enter new address"
+                                autofocus>
+                        </div>
+                        <div class="mb-2">
+                            <label for="country" class="form-label">Country:</label>
+                            <input type="text" name="country" class="form-control" placeholder="Enter country">
+                        </div>
+                        <div class="mb-2">
+                            <label for="city" class="form-label">City:</label>
+                            <input type="text" name="city" class="form-control" placeholder="Enter city">
+                        </div>
+                        <div class="mb-2">
+                            <label for="zipcode" class="form-label">ZIP Code:</label>
+                            <input type="text" name="zipcode" class="form-control" placeholder="Enter ZIP code">
+                        </div>
+                        <button type="submit" class="btn btn-warning">Add Address</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
