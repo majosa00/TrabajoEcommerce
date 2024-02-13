@@ -223,4 +223,29 @@ class ProductController extends Controller
         return view('viewbrands', compact('brand'));
     }
 
+    public function hide($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->is_hidden = true;
+        $product->save();
+
+        return back()->with('mensaje', 'Producto ocultado correctamente.');
+    }
+
+    public function show($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->is_hidden = false;
+        $product->save();
+
+        return back()->with('mensaje', 'Producto mostrado correctamente.');
+    }
+
+    public function index()
+    {
+        $products = Product::where('is_hidden', false)->get();
+        return view('logged', compact('products'));
+    }
+
+
 }

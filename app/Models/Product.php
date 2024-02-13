@@ -10,44 +10,35 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'description',
-        'flavor',
-        'brand',
-        'price',
-        'dimension',
-        'udpack',
-        'weigth',
-        'stock',
-        'iva',
+        'name', 'description', 'flavor', 'brand_id', 'price', 'dimension', 'udpack', 'weight', 'stock', 'iva', 'is_hidden',
     ];
 
-    //Relación uno a uno
+
+    // Relación uno a uno
     public function discount()
     {
         return $this->hasOne(Discount::class);
     }
 
-    //Relación uno a muchos
+    // Relación uno a muchos
     public function image()
     {
         return $this->hasMany(Image::class);
     }
 
-    //Relación muchos a muchos
+    // Relación muchos a muchos
     public function orders()
     {
         return $this->belongsToMany(Order::class)->withPivot('amount');
     }
 
-
-    //Relación muchos a muchos
+    // Relación muchos a muchos
     public function carts()
     {
         return $this->belongsToMany(Cart::class)->withPivot('amount');
     }
 
-    //Relación muchos a muchos
+    // Relación muchos a muchos
     public function ingredient()
     {
         return $this->belongsToMany(Ingredient::class);
@@ -58,11 +49,27 @@ class Product extends Model
         return $this->hasMany(Wishlist::class);
     }
 
-    //Relación uno a muchos (inversa).
+    // Relación uno a muchos (inversa).
     public function brand()
     {
         return $this->belongsTo(Brand::class);
     }
 
-}
+    /**
+     * Oculta el producto estableciendo 'is_hidden' en true.
+     */
+    public function hide()
+    {
+        $this->is_hidden = true;
+        $this->save();
+    }
 
+    /**
+     * Muestra el producto estableciendo 'is_hidden' en false.
+     */
+    public function show()
+    {
+        $this->is_hidden = false;
+        $this->save();
+    }
+}
