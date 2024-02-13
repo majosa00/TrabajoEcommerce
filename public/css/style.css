@@ -241,12 +241,12 @@ body footer a:hover::before {
 /*Loggin*/
 #loggin input,
 textarea {
-    background-color: #F3E5F5;
+    background-color: #f6f6f6;
     padding: 12px 15px 12px 15px !important;
     width: 100%;
     box-sizing: border-box;
     border: none !important;
-    border: 1px solid #F3E5F5 !important;
+    border: 1px solid #f6f6f6 !important;
     font-size: 16px !important;
     color: #000 !important;
     font-weight: 400
@@ -277,17 +277,16 @@ button:focus {
 
 .card1 {
     width: 50%;
-    padding: 40px 30px 10px 30px,
+    padding: 40px 30px 10px 30px;
+}
+
+.card3 {
+    width: 50%;
 }
 
 .card2 {
     width: 50%;
     background-color: #f3cb09;
-}
-
-#logo {
-    width: 70px;
-    height: 60px
 }
 
 .heading {
@@ -317,16 +316,6 @@ button:focus {
     margin-bottom: 30px;
 }
 
-.btn-color {
-    border-radius: 50px;
-    color: #fff;
-    background-image: linear-gradient(to right, #FFD54F, #D500F9);
-    padding: 15px;
-    cursor: pointer;
-    border: none !important;
-    margin-top: 40px
-}
-
 .btn-white {
     border-radius: 50px;
     color: #000000;
@@ -336,27 +325,6 @@ button:focus {
     border: 1px solid #000000 !important
 }
 
-.btn-white:hover {
-    color: #fff;
-    background-image: linear-gradient(to right, #FFD54F, #D500F9)
-}
-
-a {
-    color: #000
-}
-
-a:hover {
-    color: #000
-}
-
-.bottom {
-    width: 100%;
-    margin-top: 50px !important
-}
-
-.sm-text {
-    font-size: 15px
-}
 
 @media screen and (max-width: 992px) {
     .card1 {
@@ -387,4 +355,8 @@ a:hover {
         margin-top: 50px !important;
         margin-bottom: 50px !important
     }
+}
+
+.justificar {
+    text-align: justify;
 }
