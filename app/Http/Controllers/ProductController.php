@@ -187,22 +187,25 @@ class ProductController extends Controller
         }
     }
 
-
     public function deleteBrand($id)
     {
         DB::beginTransaction();
 
         try {
-            $brandDelete = Brand::findOrFail($id);
-            $brandDelete->delete();
+            // Primero, establecer brand_id a null para todos los productos asociados a esta marca
+            Product::where('brand_id', $id)->update(['brand_id' => null]);
+            
+            $brand = Brand::findOrFail($id);
+            $brand->delete();
 
             DB::commit();
-            return back()->with('mensaje', 'Brand removed');
+            return redirect()->route('ruta_lista_marcas')->with('mensaje', 'Brand deleted successfully and all associated products have been unlinked.');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Error removing the brand');
+            return back()->with('error', 'Error removing the brand: ' . $e->getMessage());
         }
     }
+
     public function showTopFavorites()
     {
         $topProducts = Product::withCount('wishlists')

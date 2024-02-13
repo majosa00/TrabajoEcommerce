@@ -22,7 +22,8 @@ return new class extends Migration {
             $table->float('weight');
             $table->integer('stock');
             $table->float('iva');
-            $table->unsignedBigInteger('brand_id');
+            $table->unsignedBigInteger('brand_id')->nullable();
+
             $table->timestamps();
 
             $table->foreign('brand_id')

@@ -108,3 +108,6 @@ Route::post('/products/hide/{id}', [ProductController::class, 'hide'])->name('pr
 Route::post('/products/show/{id}', [ProductController::class, 'show'])->name('products.show');
 
 Route::get('/products', [App\Http\Controllers\ProductController::class, 'index']);
+
+Route::delete('admin/delete_brand/{id}', [ProductController::class, 'deleteBrand'])->name('brands.deleteBrand');
+
