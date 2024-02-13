@@ -20,7 +20,7 @@ class UserController extends Controller
     // {
     //     // Inicia una transacción de base de datos
     //     DB::beginTransaction();
-    
+
     //     try {
     //         $user = new User();
     //         $user->name = $input['name'];
@@ -28,11 +28,11 @@ class UserController extends Controller
     //         $user->password = Hash::make($input['password']);
     //         $user->rol_id = 1;
     //         $user->save(); // Guarda el usuario en la base de datos
-    
+
     //         $cart = new Cart();
     //         $cart->user_id = $user->id; // Asigna el ID del usuario recién creado
     //         $cart->save(); // Guarda el carro en la base de datos
-    
+
     //         DB::commit(); // Confirma la transacción
     //         return $user;
     //     } catch (\Exception $e) {
@@ -40,7 +40,7 @@ class UserController extends Controller
     //         throw $e; // Lanza la excepción para manejarla más arriba o mostrar el error
     //     }
     // }
-    
+
     public function products()
     {
         $products = Product::all();
@@ -56,7 +56,8 @@ class UserController extends Controller
     public function profile()
     {
         $user = Auth::user();
-        return view('profile.profile', compact('user'));
+        $addresses = $user->addresses;
+        return view('profile.profile', compact('user', 'addresses'));
     }
 
     public function update(Request $request)
@@ -156,9 +157,9 @@ public function changePassword(Request $request)
             'city' => 'required|string|max:255|regex:/^[^\d]+$/',
             'zipcode' => 'required|numeric',
         ]);
-    
+
         DB::beginTransaction();
-    
+
         try {
             $newAddress = new Address;
             $newAddress->address = $request->input('address');
@@ -166,15 +167,15 @@ public function changePassword(Request $request)
             $newAddress->city = $request->input('city');
             $newAddress->zipCode = $request->input('zipcode');
             $newAddress->user_id = auth()->user()->id;
-            
+
             $newAddress->save();
-    
+
             DB::commit(); // Confirma los cambios si todo ha ido bien
-    
+
             return redirect()->route('profile.address')->with('mensaje', 'Address added successfully');
         } catch (\Exception $e) {
             DB::rollBack(); // Revierte los cambios en caso de error
-    
+
             // Aquí deberías redirigir al usuario a una página de error o devolver una respuesta indicando el fallo
             return redirect()->route('profile.address')->withErrors(['error' => 'There was a problem adding the address.']);
         }
@@ -182,17 +183,17 @@ public function changePassword(Request $request)
     public function deleteAddress($id)
     {
         DB::beginTransaction();
-    
+
         try {
             $addressDelete = Address::findOrFail($id);
             $addressDelete->delete();
-    
+
             DB::commit(); // Confirma los cambios si la eliminación fue exitosa
-    
+
             return back()->with('mensaje', 'Address removed successfully');
         } catch (\Exception $e) {
             DB::rollBack(); // Revierte los cambios en caso de error
-    
+
             // Maneja el error, por ejemplo, redirigiendo al usuario con un mensaje de error
             return back()->withErrors(['error' => 'There was a problem removing the address.']);
         }
@@ -207,13 +208,13 @@ public function changePassword(Request $request)
             'city' => 'required|string|max:255|regex:/^[^\d]+$/',
             'zipCode' => 'required|numeric',
         ]);
-    
+
         DB::beginTransaction();
-    
+
         try {
             // Obtener el usuario autenticado
             $user = Auth::user();
-    
+
             $addressUpdate = Address::findOrFail($id);
             $addressUpdate->address = $request->input('address');
             $addressUpdate->country = $request->input('country');
@@ -221,13 +222,13 @@ public function changePassword(Request $request)
             $addressUpdate->zipCode = $request->input('zipCode');
             $addressUpdate->user_id = $user->id;
             $addressUpdate->save();
-    
+
             DB::commit(); // Confirma los cambios si todo ha ido bien
-    
+
             return back()->with('mensaje', 'Address updated successfully');
         } catch (\Exception $e) {
             DB::rollBack(); // Revierte los cambios en caso de error
-    
+
             // Redirige al usuario con un mensaje de error
             return back()->withErrors(['error' => 'There was a problem updating the address.']);
         }
