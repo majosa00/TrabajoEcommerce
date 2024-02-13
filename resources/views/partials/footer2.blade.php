@@ -5,29 +5,29 @@
             <div class="col-lg-4 col-md-6 mb-4 mb-md-0 d-flex justify-content-center">
                 <div class="text-center text-lg-start">
                     <img src="{{ asset('images/energeticwave-logo.png') }}" alt="Logo" class="footer-logo">
-                    <p class="slogan">Your daily energy in every sip.</p>
+                    <p class="slogan">{{ __('footermessage.slogan') }}</p>
                 </div>
             </div>
 
             <!-- Contact Column -->
             <div class="col-lg-4 col-md-6 mb-4 mb-md-0 d-flex justify-content-center">
                 <div class="text-center text-lg-start">
-                    <h5 class="text-uppercase">Contact</h5>
-                    <p>Innovation Avenue, Building 2</p>
-                    <p>Seville 41020</p>
-                    <p>info@energeticwave.com</p>
+                    <h5 class="text-uppercase">{{ __('footermessage.contact') }}</h5>
+                    <p>{{ __('footermessage.contact_address') }}</p>
+                    <p>{{ __('footermessage.cod_postal') }}</p>
+                    <p>{{ __('footermessage.contact_email') }}</p>
                 </div>
             </div>
 
             <!-- Quick Link Column -->
             <div class="col-lg-4 col-md-6 mb-4 mb-md-0 d-flex justify-content-center">
                 <div class="text-center text-lg-start">
-                    <h5 class="text-uppercase">Quick Links</h5>
+                    <h5 class="text-uppercase">{{ __('footermessage.quick_links') }}</h5>
                     <ul class="list-unstyled">
-                        <li><a href="/products">Product</a></li>
-                        <li><a href="/orders">Orders</a></li>
-                        <li><a href="/wishlist">Wishlist</a></li>
-                        <li><a href="/cart">Cart</a></li>
+                        <li><a href="/products">{{ __('footermessage.product') }}</a></li>
+                        <li><a href="/orders">{{ __('footermessage.orders') }}</a></li>
+                        <li><a href="/wishlist">{{ __('footermessage.wishlist') }}</a></li>
+                        <li><a href="/cart">{{ __('footermessage.cart') }}</a></li>
                     </ul>
                 </div>
             </div>
@@ -39,9 +39,9 @@
         &copy;
         <script>
             document.write(new Date().getFullYear())
-        </script> EnergeticWave - All rights reserved.
+        </script> EnergeticWave - {{ __('footermessage.all_rights_reserved') }}
         <br>
-        <a href="#!">Privacy Policy</a> |
-        <a href="#!">Terms & Conditions</a>
+        <a href="#!">{{ __('footermessage.privacy_policy') }}</a> |
+        <a href="#!">{{ __('footermessage.terms_conditions') }}</a>
     </div>
 </footer>
