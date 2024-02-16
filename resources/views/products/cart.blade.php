@@ -18,13 +18,15 @@
             <div class="col-lg-3 col-md-3">
                 <h4>Cart</h4>
             </div>
-            <div class="col-lg-3 col-md-3">
+            <div class="col-lg-4 col-md-4">
             </div>
-            <div class="col-lg-3 col-md-3">
+            <div class="col-lg-2 col-md-2">
                 <h4>Price</h4>
             </div>
-            <div class="col-lg-3 col-md-3">
+            <div class="col-lg-2 col-md-2">
                 <h4>Amount</h4>
+            </div>
+            <div class="col-lg-1 col-md-1">
             </div>
         </div>
         <hr>
@@ -34,19 +36,14 @@
                 <div class="col-lg-3 col-md-3">
                     <img src="{{ asset('images/redbull.jpg') }}" class="card-img-top" alt="{{ $product->name }}">
                 </div>
-                <div class="col-lg-3 col-md-3">
+                <div class="col-lg-4 col-md-4">
                     <h3>{{ $product->name }}</h3>
                     <p>{{ $product->description }}</p>
-                    <form action="{{ route('cart.remove', $product->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-link text-decoration-none">Remove</button>
-                    </form>
                 </div>
-                <div class="col-lg-3 col-md-3">
+                <div class="col-lg-2 col-md-2">
                     <p>{{ $product->price }} $</p>
                 </div>
-                <div class="col-lg-3 col-md-3">
+                <div class="col-lg-2 col-md-2">
                     <div class="d-flex align-items-center">
                         <form action="{{ route('cart.decrease', $product->id) }}" method="post">
                             @csrf
@@ -62,6 +59,14 @@
                             </button>
                         </form>
                     </div>
+                </div>
+                <div class="col-lg-1 col-md-1">
+                    <form action="{{ route('cart.remove', $product->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-link text-decoration-none"><i class="fas fa-trash"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
             <hr>
