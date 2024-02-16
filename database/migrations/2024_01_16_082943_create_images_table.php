@@ -22,7 +22,7 @@ return new class extends Migration
                     ->on('products')
                     //Si se elimina el producto, se eliminan las fotos
                     ->onUpdate('cascade'); //Si el producto cambia el id, se cambia el id de estas fotos
-            
+
             $table->timestamps();
         });
     }
