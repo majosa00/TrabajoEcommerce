@@ -380,6 +380,12 @@ button:focus {
     margin-bottom: 50px;
 }
 
+@media screen and (max-width: 768px) {
+    .section-products {
+        padding: 10%;
+    }
+}
+
 .section-products .header h3 {
     font-size: 1rem;
     color: #fe302f;
