@@ -14,7 +14,8 @@
                 @foreach ($order->products as $product)
                     <li class="product-item">
                         <span class="product-name">{{ $product->name }}</span>
-                        <span class="product-amount">Amount: {{ $product->pivot->amount }}</span>
+                        <span class="product-price">{{ $product->price }} $</span>
+                        <span class="product-amount">x {{ $product->pivot->amount }}</span>
                     </li>
                 @endforeach
             </ul>
@@ -27,5 +28,6 @@
     </div>
     <div id="main-container"></div>
 @endsection
+
 
 <!-- TO DO: Poner precio por producto y cambiar amount a x -->
