@@ -384,6 +384,10 @@ button:focus {
     .section-products {
         padding: 10%;
     }
+
+    #ocultar {
+        visibility: hidden;
+    }
 }
 
 .section-products .header h3 {
