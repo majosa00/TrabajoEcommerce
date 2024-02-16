@@ -211,7 +211,7 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form class="needs-validation" novalidate method="POST"
+                            <form class="needs-validation" novalidate method="POST" enctype="multipart/form-data"
                                 action="{{ route('products.update', $product->id) }}">
                                 @method('PUT')
                                 @csrf
@@ -324,6 +324,10 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <input type="file" name="image_1">
+                                <input type="file" name="image_2">
+                                <input type="file" name="image_3">
 
                                 <button type="submit" class="btn btn-warning mt-4">Add Product</button>
                             </form>

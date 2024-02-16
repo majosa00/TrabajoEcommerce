@@ -9,8 +9,9 @@ class Image extends Model
 {
     use HasFactory;
 
-    //Relación uno a muchos (inversa)
-    public function product ()
+    protected $fillable = ['imagen_1', 'imagen_2', 'imagen_3'];
+
+    public function product()
     {
         return $this->belongsTo(Product::class);
     }

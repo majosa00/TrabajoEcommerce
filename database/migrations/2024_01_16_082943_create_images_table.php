@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
 
-            $table->string('image1', 45);
-
+            $table->string('imagen_1')->nullable(); 
+            $table->string('imagen_2')->nullable(); 
+            $table->string('imagen_3')->nullable(); 
+            
             $table->unsignedBigInteger('product_id')->unique();
             $table->foreign('product_id')
                     ->references('id')
