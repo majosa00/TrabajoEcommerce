@@ -64,7 +64,7 @@
                     <form action="{{ route('cart.remove', $product->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-link text-decoration-none"><i class="fas fa-trash"></i>
+                        <button type="submit" class="btn btn-warning text-decoration-none"><i class="fas fa-trash"></i>
                         </button>
                     </form>
                 </div>
