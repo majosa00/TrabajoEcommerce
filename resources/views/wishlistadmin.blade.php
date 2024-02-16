@@ -35,4 +35,5 @@
             </div>
         @endif
     </div>
+    <div id="main-container"></div>
 @endsection

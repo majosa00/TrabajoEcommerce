@@ -380,6 +380,16 @@ button:focus {
     margin-bottom: 50px;
 }
 
+@media screen and (max-width: 768px) {
+    .section-products {
+        padding: 10%;
+    }
+
+    #ocultar {
+        visibility: hidden;
+    }
+}
+
 .section-products .header h3 {
     font-size: 1rem;
     color: #fe302f;
@@ -488,4 +498,10 @@ button:focus {
     height: 1px;
     background-color: #444444;
     transform: translateY(-50%);
+}
+
+.single-product {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
 }

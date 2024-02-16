@@ -11,19 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('images', function (Blueprint $table) {
+        Schema::create('wishlist_product', function (Blueprint $table) {
             $table->id();
 
-            $table->string('imagen_1')->nullable(); 
-            
-            $table->unsignedBigInteger('product_id')->unique();
+            $table->unsignedBigInteger('wishlist_id');
+            $table->unsignedBigInteger('product_id');
+
+            $table->foreign('wishlist_id')
+                    ->references('id')
+                    ->on('wishlists')
+                   ;
             $table->foreign('product_id')
                     ->references('id')
                     ->on('products')
-                    //Si se elimina el producto, se eliminan las fotos
-                    ->onUpdate('cascade'); //Si el producto cambia el id, se cambia el id de estas fotos
+                   ;
 
             $table->timestamps();
+
         });
     }
 
@@ -32,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('images');
+        //
     }
 };
