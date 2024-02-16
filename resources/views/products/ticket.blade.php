@@ -28,6 +28,3 @@
     </div>
     <div id="main-container"></div>
 @endsection
-
-
-<!-- TO DO: Poner precio por producto y cambiar amount a x -->

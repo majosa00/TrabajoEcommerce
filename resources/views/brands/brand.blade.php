@@ -67,14 +67,14 @@
                             <!-- Botón para abrir el modal de edición -->
                             <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#editBrandModal{{ $brand->id }}">
-                                <i class="fas fa-edit"></i> Edit
+                                <i class="fas fa-edit"></i>
                             </a>
                         </td>
                         <td>
                             <!-- Botón para abrir el modal de confirmación de eliminación -->
                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#deleteBrandModal{{ $brand->id }}">
-                                <i class="fas fa-trash-alt"></i> Delete
+                                <i class="fas fa-trash-alt"></i>
                             </button>
                         </td>
                     </tr>
