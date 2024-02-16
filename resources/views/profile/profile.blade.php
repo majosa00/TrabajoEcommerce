@@ -165,7 +165,6 @@
                 <hr>
             @endforeach
         @else
-
         @endif
 
         <!-- Modal nueva dirección -->
@@ -268,4 +267,5 @@
             </div>
         </div>
     </div>
+    <div id="main-container"></div>
 @endsection
