@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
 
             $table->string('imagen_1')->nullable(); 
-            $table->string('imagen_2')->nullable(); 
-            $table->string('imagen_3')->nullable(); 
             
             $table->unsignedBigInteger('product_id')->unique();
             $table->foreign('product_id')

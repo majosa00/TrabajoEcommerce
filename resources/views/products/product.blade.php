@@ -326,8 +326,6 @@
                                 </div>
 
                                 <input type="file" name="image_1">
-                                <input type="file" name="image_2">
-                                <input type="file" name="image_3">
 
                                 <button type="submit" class="btn btn-warning mt-4">Add Product</button>
                             </form>

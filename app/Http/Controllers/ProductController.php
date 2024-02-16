@@ -136,8 +136,6 @@ class ProductController extends Controller
             // Almacenar las rutas de las imágenes en la base de datos
             $productUpdate->images()->update([
                 'imagen_1' => $imagePaths[0] ?? null,
-                'imagen_2' => $imagePaths[1] ?? null,
-                'imagen_3' => $imagePaths[2] ?? null,
             ]);
 
             $productUpdate->save();

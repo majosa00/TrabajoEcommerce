@@ -57,7 +57,8 @@
                     <!-- Single Product -->
                     @foreach ($products as $product)
                         <div class="col-md-6 col-lg-4 col-xl-3 ">
-                            <div id="product-{{ $product->id }}" class="single-product bg-dark text-white p-4 foto">
+                            <div class="single-product bg-dark text-white p-4"
+                                style="background-image: url('{{ asset('storage/' . $product->images->imagen_1) }}');">
                                 <div class="part-1">
                                     {{-- PARA LOS DESCUENTOS <span class="discount">15% off</span> --}}
                                     <ul>
@@ -81,17 +82,6 @@
                                             </form>
                                         </li>
                                     </ul>
-                                    @foreach ($products as $product)
-                                        @if ($product->images)
-                                            @foreach ($product->images as $image)
-                                                @if ($image->imagen_1)
-                                                    @php $imageUrl = asset($image->imagen_1); @endphp
-                                                    <img src="{{ $imageUrl }}" class="card-img-top"
-                                                        alt="{{ $product->name }}">
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    @endforeach
                                 </div>
                                 <div class="part-2">
                                     <h3 class="product-title">{{ $product->name }}</h3>
