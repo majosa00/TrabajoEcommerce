@@ -58,7 +58,7 @@
                     @foreach ($products as $product)
                         <div class="col-md-6 col-lg-4 col-xl-3 ">
                             <div class="single-product bg-dark text-white p-4"
-                                style="background-image: url('{{ asset('storage/' . $product->images->imagen_1) }}');">
+                                style="background-image: url('{{ optional($product->images)->imagen_1 ? asset('storage/' . $product->images->imagen_1) : '' }}');">
                                 <div class="part-1">
                                     {{-- PARA LOS DESCUENTOS <span class="discount">15% off</span> --}}
                                     <ul>
