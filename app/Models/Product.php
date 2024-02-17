@@ -49,12 +49,6 @@ class Product extends Model
     }
 
     // Relación muchos a muchos
-    public function ingredient()
-    {
-        return $this->belongsToMany(Ingredient::class);
-    }
-
-    // Relación muchos a muchos
     public function wishlist()
     {
         return $this->belongsToMany(Wishlist::class, 'wishlist_product');
