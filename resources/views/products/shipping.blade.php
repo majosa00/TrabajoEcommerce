@@ -38,15 +38,24 @@
                         </li>
                     @endforeach
                     <li class="list-group-item d-flex justify-content-between">
-                        <span>Total (USD)</span>
+                        <span>Subtotal (USD)</span>
                         <strong>${{ $user->cart->products->sum('price') }}</strong>
                     </li>
                     <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
-                        <div class="text-success">
-                            <h6 class="my-0">Promo code</h6>
-                            <small>EXAMPLECODE</small>
-                        </div>
-                        <span class="text-success">−$5</span>
+                        @if (session()->has('discount'))
+                            <div class="text-success">
+                                <h6 class="my-0">Discount {{ session()->get('discount')['name'] ?? '' }}</h6>
+                            </div>
+                            <span
+                                class="text-success">${{ number_format(session()->get('discount')['discount_value'] ?? 0, 2) }}</span>
+                            <form action="{{ route('discount.destroy') }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </form>
+                        @endif
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
                         <span>Total (USD)</span>
@@ -56,7 +65,8 @@
                 <form class="card p-2" action="{{ route('discount.store') }}" method="POST">
                     @csrf
                     <div class="input-group">
-                        <input type="text" class="form-control" name="discount_code" id="discount_code" placeholder="Promo code">
+                        <input type="text" class="form-control" name="discount_code" id="discount_code"
+                            placeholder="Promo code">
                         <button type="submit" class="btn btn-secondary">Apply</button>
                     </div>
                 </form>

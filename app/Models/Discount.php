@@ -13,19 +13,12 @@ class Discount extends Model
         'code',
         'type',
         'value',
-        'percent_of'
+        'percent_of',
+        'valid_until',
+        'max_users',
+        'category_id', //Para la categoría
+        'product_id', //Para el producto
+        'product_discount', //Para el descuento específico del producto
     ];
-
-    public function discount ($total) {
-
-        //Si el cupón es fijo
-        if ($this->type == "fixed") {
-            return $this->value;
-        } elseif ($this->type == "percent") {
-            return ($this->percent_of/100) * $total;
-        } else {
-            return 0;
-        }
-    }
 
 }
