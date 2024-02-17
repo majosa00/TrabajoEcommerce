@@ -223,7 +223,7 @@ class CartController extends Controller
     {
         // Validar los datos del formulario
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
             'secondname' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|string|min:9|max:9',
