@@ -226,7 +226,7 @@ class CartController extends Controller
             'name' => 'required|string|max:255',
             'secondname' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'phone' => 'required|string|max:20',
+            'phone' => 'required|string|min:9|max:9',
         ]);
 
         // Actualizar los datos del usuario con la información del formulario
