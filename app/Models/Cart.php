@@ -25,4 +25,11 @@ class Cart extends Model
     {
         return $this->belongsToMany(Product::class)->withPivot('amount');
     }
+
+    public function subtotal()
+    {
+        return $this->products->sum(function ($product) {
+            return $product->price * $product->pivot->amount;
+        });
+    }
 }

@@ -16,7 +16,7 @@ class DiscountSeeder extends Seeder
         Discount::create([
             "code" => "ENER25",
             "type" => "fixed",
-            "percent_of" => 25,
+            "percent_of" => 2500,
         ]);
     }
 }
