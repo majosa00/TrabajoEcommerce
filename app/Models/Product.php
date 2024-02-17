@@ -57,7 +57,7 @@ class Product extends Model
     // Relación muchos a muchos
     public function wishlist()
     {
-        return $this->belongsToMany(Wishlist::class);
+        return $this->belongsToMany(Wishlist::class, 'wishlist_product');
     }
 
     // Relación uno a muchos (inversa).
