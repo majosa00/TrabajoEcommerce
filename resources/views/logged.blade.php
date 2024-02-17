@@ -30,9 +30,9 @@
                                     <form action="{{ route('wishlist.add', $product->id) }}" method="POST"
                                         class="d-flex justify-content-end">
                                         @csrf
-                                        <button id="wishlistBtn{{ $product->id }}" class="wishlistBtn"
-                                            onclick="toggleWishlist({{ $product->id }})">
-                                            <span id="heartIcon{{ $product->id }}" class="heartIcon far fa-heart"></span>
+                                        <button id="wishlistBtn{{ $product->id }}" class="wishlistBtn">
+                                            <span id="heartIcon{{ $product->id }}"
+                                                class="heartIcon {{ $product->wishlist->isEmpty() ? 'far' : 'fas' }} fa-heart"></span>
                                         </button>
                                     </form>
                                 </div>
@@ -75,9 +75,9 @@
                                             <form action="{{ route('wishlist.add', $product->id) }}" method="POST"
                                                 class="d-flex justify-content-end">
                                                 @csrf
-                                                <button id="wishlistBtn{{ $product->id }}" class="btn btn-warning"
-                                                    onclick="toggleWishlist({{ $product->id }})">
-                                                    <span id="heartIcon{{ $product->id }}" class="far fa-heart"></span>
+                                                <button id="wishlistBtn{{ $product->id }}" class="btn btn-warning">
+                                                    <span id="heartIcon{{ $product->id }}"
+                                                        class="heartIcon {{ $product->wishlist->isEmpty() ? 'far' : 'fas' }} fa-heart"></span>
                                                 </button>
                                             </form>
                                         </li>

@@ -43,7 +43,7 @@ class UserController extends Controller
 
     public function products()
     {
-        $products = Product::with('images')->get();
+        $products = Product::with(['images', 'wishlist'])->get();
         return view('logged')->with('products', $products);
     }
 
