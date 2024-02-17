@@ -15,9 +15,10 @@ class Wishlist extends Model
     {
         return $this->belongsTo(User::class);
     }
-//
-    public function product()
+
+    //Relación muchos a muchos (inversa)
+    public function products()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsToMany(Product::class, 'wishlist_product');
     }
 }

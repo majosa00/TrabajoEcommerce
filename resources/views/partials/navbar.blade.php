@@ -5,7 +5,7 @@
                 class="d-inline-block align-text-top">
         </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        <button class="navbar-toggler bg-warning" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -31,9 +31,9 @@
                     <a class="nav-link" href="/wishlist"><i class="fas fa-heart"></i></a>
                 </li>
                 <a class="nav-link position-relative" href="/cart" style="min-width: 40px;">
-                    <i class="fas fa-shopping-basket"></i>
+                    <i class="fas fa-shopping-cart"></i>
                     <span class="position-absolute badge rounded-circle bg-warning"
-                        style="color: black; top: 0px; right: 0px; width: 18px; height: 18px; font-size: 12px; display: flex; align-items: center; justify-content: center;">
+                        style="color: black; top: 0px; right: 3px; width: 18px; height: 18px; font-size: 12px; display: flex; align-items: center; justify-content: center;">
                         {{ $itemCount }}
                     </span>
                 </a>
@@ -54,33 +54,33 @@
 
                 <!-- Authentication Links -->
                 @guest
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">{{ __('navbarmessage.login') }}</a>
-                </li>
-                @if (Route::has('register'))
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('register') }}">{{ __('navbarmessage.register') }}</a>
-                </li>
-                @endif
-                @else
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-user"></i> {{ Auth::user()->name }}
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/profile">{{ __('navbarmessage.profile') }}</a></li>
-                        <li>
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                {{ __('navbarmessage.logout') }}
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">{{ __('navbarmessage.login') }}</a>
+                    </li>
+                    @if (Route::has('register'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('navbarmessage.register') }}</a>
                         </li>
-                    </ul>
-                </li>
+                    @endif
+                @else
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user"></i> {{ Auth::user()->name }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/profile">{{ __('navbarmessage.profile') }}</a></li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    {{ __('navbarmessage.logout') }}
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
                 @endguest
             </ul>
         </div>

@@ -10,7 +10,17 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'description', 'flavor', 'brand_id', 'price', 'dimension', 'udpack', 'weight', 'stock', 'iva', 'is_hidden',
+        'name',
+        'description',
+        'flavor',
+        'brand_id',
+        'price',
+        'dimension',
+        'udpack',
+        'weight',
+        'stock',
+        'iva',
+        'is_hidden',
     ];
 
 
@@ -20,10 +30,10 @@ class Product extends Model
         return $this->hasOne(Discount::class);
     }
 
-    // Relación uno a muchos
-    public function image()
+    // Relación uno a uno
+    public function images()
     {
-        return $this->hasMany(Image::class);
+        return $this->hasOne(Image::class);
     }
 
     // Relación muchos a muchos
@@ -39,14 +49,9 @@ class Product extends Model
     }
 
     // Relación muchos a muchos
-    public function ingredient()
+    public function wishlist()
     {
-        return $this->belongsToMany(Ingredient::class);
-    }
-
-    public function wishlists()
-    {
-        return $this->hasMany(Wishlist::class);
+        return $this->belongsToMany(Wishlist::class, 'wishlist_product');
     }
 
     // Relación uno a muchos (inversa).

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Product;
+use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 
 class ProductController extends Controller
@@ -104,6 +106,38 @@ class ProductController extends Controller
             $productUpdate->stock = $request->stock;
             $productUpdate->iva = $request->iva;
             $productUpdate->brand_id = $request->brand_id;
+
+            $imagePaths = []; // Para almacenar las rutas de las imágenes
+
+            // Guardar las imágenes
+            for ($i = 1; $i <= 3; $i++) {
+                if ($request->hasFile("image_$i")) {
+                    // Obtener el archivo
+                    $image = $request->file("image_$i");
+
+                    // Generar un nombre único para el archivo
+                    $imageName = uniqid('image_') . '.' . $image->getClientOriginalExtension();
+
+                    // Crear una nueva instancia de Image
+                    $newImage = new Image();
+                    $newImage->{"imagen_$i"} = 'images/' . $imageName;
+
+                    // Guardar la imagen en el almacenamiento (storage)
+                    $image->storeAs('public/images', $imageName);
+
+                    // Almacenar la ruta de la imagen
+                    $imagePaths[] = $newImage->{"imagen_$i"};  // Actualizamos $imagePaths aquí
+
+                    // Vincular la imagen al producto utilizando la relación
+                    $productUpdate->images()->save($newImage);
+                }
+            }
+
+            // Almacenar las rutas de las imágenes en la base de datos
+            $productUpdate->images()->update([
+                'imagen_1' => $imagePaths[0] ?? null,
+            ]);
+
             $productUpdate->save();
 
             DB::commit();
@@ -187,22 +221,25 @@ class ProductController extends Controller
         }
     }
 
-
     public function deleteBrand($id)
     {
         DB::beginTransaction();
 
         try {
-            $brandDelete = Brand::findOrFail($id);
-            $brandDelete->delete();
+            // Primero, establecer brand_id a null para todos los productos asociados a esta marca
+            Product::where('brand_id', $id)->update(['brand_id' => null]);
+
+            $brand = Brand::findOrFail($id);
+            $brand->delete();
 
             DB::commit();
-            return back()->with('mensaje', 'Brand removed');
+            return redirect()->route('ruta_lista_marcas')->with('mensaje', 'Brand deleted successfully and all associated products have been unlinked.');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Error removing the brand');
+            return back()->with('error', 'Error removing the brand: ' . $e->getMessage());
         }
     }
+
     public function showTopFavorites()
     {
         $topProducts = Product::withCount('wishlists')

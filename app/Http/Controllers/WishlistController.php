@@ -11,51 +11,50 @@ use Illuminate\Support\Facades\DB;
 class WishlistController extends Controller
 {
     public function addToWishlist($productId)
-{
-    DB::beginTransaction();
+    {
+        DB::beginTransaction();
 
-    try {
-        $userId = Auth::id(); // Obtiene el ID del usuario autenticado
+        try {
+            $userId = Auth::id(); // Obtiene el ID del usuario autenticado
 
-        // Busca un registro existente en la lista de deseos
-        $wishlistItem = Wishlist::where('user_id', $userId)->where('product_id', $productId)->first();
+            // Busca un registro existente en la lista de deseos
+            $wishlist = Wishlist::where('user_id', $userId)
+                ->where('product_id', $productId)
+                ->first();
 
-        if ($wishlistItem) {
-            // Si el producto ya está en la lista de deseos, lo elimina
-            $wishlistItem->delete();
-            $message = 'Product removed from the wishlist.';
-        } else {
-            // Si el producto no está en la lista de deseos, lo agrega
-            Wishlist::create([
-                'user_id' => $userId,
-                'product_id' => $productId,
-            ]);
-            $message = 'Product added to the wishlist.';
+            if (!$wishlist) {
+                // Si la lista de deseos no existe, crea una nueva
+                $wishlist = new Wishlist();
+                $wishlist->user_id = $userId;
+                $wishlist->product_id = $productId;
+                $wishlist->save();
+                $wishlist->products()->attach($productId);
+                $message = 'Product added to the wishlist.';
+            } else {
+                //Si el producto ya está en la lista de deseos, lo elimina
+                $wishlist->products()->detach($productId);
+                $wishlist->delete();
+                $message = 'Product removed from the wishlist.';
+            }
+
+            DB::commit(); // Confirma los cambios si todo ha ido bien
+
+            return back()->with('success', $message);
+        } catch (\Exception $e) {
+            DB::rollBack(); // Revierte los cambios en caso de error
+
+            // Redirige al usuario con un mensaje de error
+            return back()->withErrors(['error' => 'There was a problem updating your wishlist.']);
         }
-
-        DB::commit(); // Confirma los cambios si todo ha ido bien
-
-        return back()->with('success', $message);
-    } catch (\Exception $e) {
-        DB::rollBack(); // Revierte los cambios en caso de error
-
-        // Redirige al usuario con un mensaje de error
-        return back()->withErrors(['error' => 'There was a problem updating your wishlist.']);
     }
-}
-
-   
-
 
     public function showWishlist()
     {
         $userId = Auth::id();
-        $wishlists = Wishlist::where('user_id', $userId)->with('product')->simplePaginate(5);
-
+        $wishlists = Wishlist::where('user_id', $userId)->with('products')->simplePaginate(5);
 
         return view('products.wishlist', compact('wishlists'));
     }
-
 
     public function showTopWishlist()
     {

@@ -216,7 +216,7 @@ class CartController extends Controller
         $user = Auth::user();
         $addresses = $user->addresses;
 
-        return view('products.shipping', compact('addresses'));
+        return view('products.shipping', compact('user', 'addresses'));
     }
 
     public function updatedatas(Request $request)

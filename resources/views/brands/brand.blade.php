@@ -23,7 +23,7 @@
             <i class="fas fa-plus"></i> New Brand
         </a>
 
-        <!-- Modal nueva marca -->
+        <!-- Modal para añadir nueva marca -->
         <div class="modal fade" id="newBrandModal" tabindex="-1" aria-labelledby="newBrandModal" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -44,7 +44,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-warning mt-4">Add Brand</button>
+                            <button class="btn btn-warning mt-4" type="submit">Add Brand</button>
                         </form>
                     </div>
                 </div>
@@ -64,26 +64,28 @@
                     <tr>
                         <td>{{ $brand->name }}</td>
                         <td>
+                            <!-- Botón para abrir el modal de edición -->
                             <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#updateBrandModal{{ $brand->id }}">
-                                <i class="fas fa-edit"></i> Edit
+                                data-bs-target="#editBrandModal{{ $brand->id }}">
+                                <i class="fas fa-edit"></i>
                             </a>
                         </td>
                         <td>
-                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                            <!-- Botón para abrir el modal de confirmación de eliminación -->
+                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#deleteBrandModal{{ $brand->id }}">
-                                <i class="fas fa-trash-alt"></i> Delete
-                            </a>
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
                         </td>
                     </tr>
 
-                    <!-- Modal edición marca -->
-                    <div class="modal fade" id="updateBrandModal{{ $brand->id }}" tabindex="-1"
-                        aria-labelledby="updateBrandModalLabel{{ $brand->id }}" aria-hidden="true">
+                    <!-- Modal para editar marca -->
+                    <div class="modal fade" id="editBrandModal{{ $brand->id }}" tabindex="-1"
+                        aria-labelledby="editBrandModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h2 class="modal-title">Edit Brand: {{ $brand->name }}</h2>
+                                    <h5 class="modal-title" id="editBrandModalLabel">Edit Brand: {{ $brand->name }}</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
@@ -92,17 +94,41 @@
                                         action="{{ route('brands.updateBrand', $brand->id) }}">
                                         @method('PUT')
                                         @csrf
-                                        <div class="row g-3">
-                                            <div class="col-sm-12">
-                                                <label for="name" class="form-label">Name:</label>
-                                                <input type="text" class="form-control" id="name" name="name"
-                                                    placeholder="" value="{{ $brand->name }}" required>
-                                                <div class="invalid-feedback">
-                                                    Please enter the brand name.
-                                                </div>
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Name:</label>
+                                            <input type="text" class="form-control" id="name" name="name"
+                                                value="{{ $brand->name }}" required>
+                                            <div class="invalid-feedback">
+                                                Please enter the brand name.
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn-warning mt-4">Save</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal de confirmación de eliminación -->
+                    <div class="modal fade" id="deleteBrandModal{{ $brand->id }}" tabindex="-1"
+                        aria-labelledby="deleteBrandModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteBrandModalLabel">Confirm Delete</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete this brand: "{{ $brand->name }}"?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <form action="{{ route('brands.deleteBrand', $brand->id) }}" method="POST"
+                                        style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Delete</button>
                                     </form>
                                 </div>
                             </div>
@@ -113,8 +139,5 @@
         </table>
         {{ $brands->links() }}
     </div>
-
-
-
-
+    <div id="main-container"></div>
 @endsection

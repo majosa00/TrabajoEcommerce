@@ -43,8 +43,8 @@ class UserController extends Controller
 
     public function products()
     {
-        $products = Product::all();
-        return view('/logged')->with('products', $products);
+        $products = Product::with(['images', 'wishlist'])->get();
+        return view('logged')->with('products', $products);
     }
 
     public function brands()
@@ -61,85 +61,85 @@ class UserController extends Controller
     }
 
     public function update(Request $request)
-{
-    $request->validate([
-        'name' => 'required|string|max:255|regex:/^[A-Za-z]+$/',
-        'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
-        'secondname' => 'nullable|string|max:255|regex:/^[^\d]+$/',
-        'birthday' => 'nullable|date',
-        'phone' => 'nullable|integer',
-    ]);
+    {
+        $request->validate([
+            'name' => 'required|string|max:255|regex:/^[A-Za-z]+$/',
+            'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
+            'secondname' => 'nullable|string|max:255|regex:/^[^\d]+$/',
+            'birthday' => 'nullable|date',
+            'phone' => 'nullable|integer',
+        ]);
 
-    DB::beginTransaction();
+        DB::beginTransaction();
 
-    try {
-        // Obtener el usuario autenticado
-        $user = Auth::user();
+        try {
+            // Obtener el usuario autenticado
+            $user = Auth::user();
 
-        // Actualizar solo los campos que se han proporcionado en la solicitud
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
+            // Actualizar solo los campos que se han proporcionado en la solicitud
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
 
-        if ($request->filled('secondname')) {
-            $user->secondname = $request->input('secondname');
+            if ($request->filled('secondname')) {
+                $user->secondname = $request->input('secondname');
+            }
+
+            if ($request->filled('birthday')) {
+                $user->birthday = $request->input('birthday');
+            }
+
+            if ($request->filled('phone')) {
+                $user->phone = $request->input('phone');
+            }
+
+            $user->save();
+
+            DB::commit(); // Confirma los cambios si todo ha ido bien
+
+            return redirect()->route('profile')->with('mensaje', 'Profile updated successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack(); // Revierte los cambios en caso de error
+
+            // Aquí deberías redirigir al usuario a una página de error o devolver una respuesta indicando el fallo
+            return redirect()->back()->withErrors(['error' => 'There was a problem updating the profile.']);
         }
-
-        if ($request->filled('birthday')) {
-            $user->birthday = $request->input('birthday');
-        }
-
-        if ($request->filled('phone')) {
-            $user->phone = $request->input('phone');
-        }
-
-        $user->save();
-
-        DB::commit(); // Confirma los cambios si todo ha ido bien
-
-        return redirect()->route('profile')->with('mensaje', 'Profile updated successfully!');
-    } catch (\Exception $e) {
-        DB::rollBack(); // Revierte los cambios en caso de error
-
-        // Aquí deberías redirigir al usuario a una página de error o devolver una respuesta indicando el fallo
-        return redirect()->back()->withErrors(['error' => 'There was a problem updating the profile.']);
     }
-}
 
 
-public function changePassword(Request $request)
-{
-    DB::beginTransaction();
+    public function changePassword(Request $request)
+    {
+        DB::beginTransaction();
 
-    try {
-        $user = Auth::user();
+        try {
+            $user = Auth::user();
 
-        // Comprobar que la contraseña actual coincide
-        if (Hash::check($request->input('password'), $user->password)) {
+            // Comprobar que la contraseña actual coincide
+            if (Hash::check($request->input('password'), $user->password)) {
 
-            // Comprobar que la nueva contraseña y la confirmación coinciden
-            if ($request->input('new_password') === $request->input('new_password_confirmation')) {
+                // Comprobar que la nueva contraseña y la confirmación coinciden
+                if ($request->input('new_password') === $request->input('new_password_confirmation')) {
 
-                // Cambiar la contraseña
-                $user->password = Hash::make($request->input('new_password'));
-                $user->save();
+                    // Cambiar la contraseña
+                    $user->password = Hash::make($request->input('new_password'));
+                    $user->save();
 
-                DB::commit(); // Confirma los cambios
+                    DB::commit(); // Confirma los cambios
 
-                return redirect()->route('profile')->with('mensaje', 'Password changed successfully!');
+                    return redirect()->route('profile')->with('mensaje', 'Password changed successfully!');
+                } else {
+                    DB::rollBack(); // Opcional, ya que no hay múltiples operaciones
+                    return redirect()->route('profile')->withErrors(['new_password_confirmation' => 'New password and confirmation do not match.']);
+                }
             } else {
                 DB::rollBack(); // Opcional, ya que no hay múltiples operaciones
-                return redirect()->route('profile')->withErrors(['new_password_confirmation' => 'New password and confirmation do not match.']);
+                return redirect()->route('profile')->withErrors(['password' => 'Current password is incorrect.']);
             }
-        } else {
-            DB::rollBack(); // Opcional, ya que no hay múltiples operaciones
-            return redirect()->route('profile')->withErrors(['password' => 'Current password is incorrect.']);
+        } catch (\Exception $e) {
+            DB::rollBack(); // Revierte los cambios en caso de error
+            // Manejo del error
+            return redirect()->route('profile')->withErrors(['error' => 'There was an unexpected error.']);
         }
-    } catch (\Exception $e) {
-        DB::rollBack(); // Revierte los cambios en caso de error
-        // Manejo del error
-        return redirect()->route('profile')->withErrors(['error' => 'There was an unexpected error.']);
     }
-}
     public function address()
     {
         $user = Auth::user();

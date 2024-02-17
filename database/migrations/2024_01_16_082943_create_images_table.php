@@ -14,15 +14,15 @@ return new class extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
 
-            $table->string('image1', 45);
-
+            $table->string('imagen_1')->nullable(); 
+            
             $table->unsignedBigInteger('product_id')->unique();
             $table->foreign('product_id')
                     ->references('id')
                     ->on('products')
                     //Si se elimina el producto, se eliminan las fotos
                     ->onUpdate('cascade'); //Si el producto cambia el id, se cambia el id de estas fotos
-            
+
             $table->timestamps();
         });
     }

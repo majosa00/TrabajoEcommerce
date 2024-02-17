@@ -20,7 +20,6 @@
             </div>
         @endif
 
-
         <a href="#" class="btn btn-warning mb-4" data-bs-toggle="modal" data-bs-target="#newProductModal">
             <i class="fas fa-plus"></i> New Product
         </a>
@@ -180,13 +179,15 @@
                             </a>
                         </td>
                         <td>
-                            @if(!$product->is_hidden)
-                                <form action="{{ route('products.hide', $product->id) }}" method="POST" style="display:inline;">
+                            @if (!$product->is_hidden)
+                                <form action="{{ route('products.hide', $product->id) }}" method="POST"
+                                    style="display:inline;">
                                     @csrf
                                     <button type="submit" class="btn btn-secondary btn-sm">Ocultar</button>
                                 </form>
                             @else
-                                <form action="{{ route('products.show', $product->id) }}" method="POST" style="display:inline;">
+                                <form action="{{ route('products.show', $product->id) }}" method="POST"
+                                    style="display:inline;">
                                     @csrf
                                     <button type="submit" class="btn btn-success btn-sm">Mostrar</button>
                                 </form>
@@ -210,7 +211,7 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form class="needs-validation" novalidate method="POST"
+                            <form class="needs-validation" novalidate method="POST" enctype="multipart/form-data"
                                 action="{{ route('products.update', $product->id) }}">
                                 @method('PUT')
                                 @csrf
@@ -324,6 +325,8 @@
                                     </div>
                                 </div>
 
+                                <input type="file" name="image_1">
+
                                 <button type="submit" class="btn btn-warning mt-4">Add Product</button>
                             </form>
                         </div>
@@ -401,4 +404,5 @@
         @endforeach
 
     </div>
+    <div id="main-container"></div>
 @endsection

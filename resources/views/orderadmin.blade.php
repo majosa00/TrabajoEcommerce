@@ -28,4 +28,5 @@
             @endforeach
         </table>
     </div>
+    <div id="main-container"></div>
 @endsection
