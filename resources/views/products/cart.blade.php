@@ -3,14 +3,16 @@
 @section('content')
     <div class="container p-5">
         @if (session('success'))
-            <div class="alert alert-success">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
 
         @if (session('mensaje'))
-            <div class="alert alert-info">
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
                 {{ session('mensaje') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
 
@@ -47,7 +49,7 @@
                     <div class="d-flex align-items-center">
                         <form action="{{ route('cart.decrease', $product->id) }}" method="post">
                             @csrf
-                            <button type="submit" class="btn btn-sm border border-dark">
+                            <button type="submit" class="btn btn-sm border border-dark"{{ $product->pivot->amount <= 1 ? ' disabled' : '' }}> {{-- si la cantidad de producto es menor a 1 de desabilitara el boton  --}}
                                 <i class="fas fa-minus"></i>
                             </button>
                         </form>

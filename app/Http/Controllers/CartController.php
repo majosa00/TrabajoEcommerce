@@ -82,27 +82,27 @@ class CartController extends Controller
     public function pay(Request $request)
     {
         DB::beginTransaction();
-
+    
         try {
             $user = Auth::user();
             $cart = $user->cart;
-
+    
             // Verificar si el usuario ha proporcionado los datos necesarios
             if (!$user->name || !$user->secondname || !$user->email || !$user->phone) {
                 return back()->with('mensaje', 'Please complete your user profile before placing an order.');
             }
-
+    
             $order = new Order();
             $order->user_id = $user->id;
             $order->state = 'Pending';
             $order->orderDate = now();
-
+    
             $totalPrice = $cart->products->sum(function ($product) {
                 return $product->price * $product->pivot->amount;
             });
             $order->totalPrice = $totalPrice;
             $order->user = "{$user->name} {$user->secondname}, {$user->email}, {$user->phone}";
-
+    
             // Obtén el ID de la dirección seleccionada desde el formulario
             $selectedAddressId = $request->input('selected_address');
             // Obtén los detalles de la dirección seleccionada
@@ -112,22 +112,22 @@ class CartController extends Controller
             } else {
                 return back()->with('mensaje', 'Please select an address before placing an order.');
             }
-
+    
             $order->save();
-
+    
             foreach ($cart->products as $product) {
                 $order->products()->attach($product->id, ['amount' => $product->pivot->amount]);
             }
-
+    
             // Enviar correo electrónico (comentado mientras practicamos para no tener 21701293 correos)
             // Mail::to($user->email)->send(new OrderConfirmation($order));
             // Mail::to($user->email)->send(new TicketEmail($order));
             // $pdf = PDF::loadView('emails.ticket', compact('order'));
             // $pdf->save(storage_path('app/public/tickets/ticket_' . $order->id . '.pdf'));
-
+    
             // Puedes limpiar el carrito después de realizar el pedido si es necesario
             $cart->products()->detach(); // Limpiar el carrito
-
+    
             DB::commit();
             return redirect()->route('orders')->with('success', 'Payment successful!');
         } catch (\Exception $e) {
@@ -135,8 +135,12 @@ class CartController extends Controller
             // Log the error or handle it as necessary
             return back()->with('error', 'An error occurred during the payment process.');
         }
+    
+        
     }
-
+    
+    
+    
     public function remove($productId)
     {
         $user = Auth::user(); //obtencion del usuario
@@ -224,8 +228,8 @@ class CartController extends Controller
         // Validar los datos del formulario
         $validatedData = $request->validate([
             'name' => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
-            'secondname' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'secondname' => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
+            'email' => 'required|regex:/^\S+@\S+\.\S+$/|max:250',
             'phone' => 'required|string|min:9|max:9',
         ]);
 
@@ -245,9 +249,9 @@ class CartController extends Controller
     {
         // Validar los datos del formulario
         $request->validate([
-            'address' => 'required|string|max:255',
-            'country' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
+            'address' => 'required|string|max:255|min:0',
+            'country' => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
+            'city' => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
             'zipcode' => 'required|string|max:10',
         ]);
 
