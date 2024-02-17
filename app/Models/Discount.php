@@ -9,9 +9,23 @@ class Discount extends Model
 {
     use HasFactory;
 
-    //Relación uno a uno 
-    public function product ()
-    {
-        return $this->belongsTo(Product::class);
+    protected $fillable = [
+        'code',
+        'type',
+        'value',
+        'percent_of'
+    ];
+
+    public function discount ($total) {
+
+        //Si el cupón es fijo
+        if ($this->type == "fixed") {
+            return $this->value;
+        } elseif ($this->type == "percent") {
+            return ($this->percent_of/100) * $total;
+        } else {
+            return 0;
+        }
     }
+
 }
