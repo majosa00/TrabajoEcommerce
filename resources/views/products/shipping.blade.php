@@ -53,10 +53,11 @@
                         <strong>$20</strong>
                     </li>
                 </ul>
-                <form class="card p-2">
+                <form class="card p-2" action="{{ route('discount.store') }}" method="POST">
+                    @csrf
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Promo code">
-                        <button type="submit" class="btn btn-secondary">Redeem</button>
+                        <input type="text" class="form-control" name="discount_code" id="discount_code" placeholder="Promo code">
+                        <button type="submit" class="btn btn-secondary">Apply</button>
                     </div>
                 </form>
             </div>

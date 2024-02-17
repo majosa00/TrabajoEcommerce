@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\DiscountController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -83,6 +84,9 @@ Route::delete('cart/remove/{productId}', [CartController::class, 'remove'])->nam
 Route::put('cart/updateAmount/{productId}', [CartController::class, 'updateAmount'])->name('cart.updateAmount');
 Route::post('cart/new-address-shipping', [CartController::class, 'createNewAddressShipping'])->name('cart.create-new-address-shipping');
 
+Route::post("discount", [DiscountController::class, "store"])->name("discount.store");
+Route::delete("discount", [DiscountController::class, "destroy"])->name("discount.destroy");
+
 Route::get('/language/{locale}', function ($locale) {
     if (in_array($locale, ['en', 'es'])) {
         session()->put('locale', $locale);
@@ -96,18 +100,14 @@ Route::delete('wishlist/remove/{wishlistId}', [WishlistController::class, 'remov
 // Mostrar la Lista de Deseos
 Route::get('wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.show');
 
-
 Route::get('/brands/{brandId}/products', [ProductController::class, 'showProductsByBrand'])->name('brand.products');
-//nombre de la ruta - controller - nombre función dentro del controlador - nombre es para renombrar la ruta porque est´dentro de un formulario y queremos que tenga ese name
-
 
 // Ruta para ocultar un producto
 Route::post('/products/hide/{id}', [ProductController::class, 'hide'])->name('products.hide');
-
 // Ruta para mostrar un producto
 Route::post('/products/show/{id}', [ProductController::class, 'show'])->name('products.show');
 
 Route::get('/products', [App\Http\Controllers\ProductController::class, 'index']);
-
 Route::delete('admin/delete_brand/{id}', [ProductController::class, 'deleteBrand'])->name('brands.deleteBrand');
 
+//nombre de la ruta - controller - nombre función dentro del controlador - nombre es para renombrar la ruta porque est´dentro de un formulario y queremos que tenga ese name
