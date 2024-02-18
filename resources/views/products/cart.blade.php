@@ -16,6 +16,8 @@
             </div>
         @endif
 
+  
+
         <div class="row" id="ocultar">
             <div class="col-lg-3 col-md-3 col-sm-2">
                 <h4>Cart</h4>
@@ -76,12 +78,19 @@
 
         <div class="row">
             <div class="col-lg-3 col-md-3">
-                <form action="{{ route('cart.viewShipping') }}" method="POST" class="mt-3">
-                    @csrf
-                    <button class="btn btn-warning btn-sm" type="submit" {{ $products->isEmpty() ? 'disabled' : '' }}>
-                        Payment
-                    </button>
-                </form>
+                @if (!$products->isEmpty())
+                    <form action="{{ route('cart.viewShipping') }}" method="POST" class="mt-3">
+                        @csrf
+                        <button class="btn btn-warning btn-sm" type="submit" >
+                            Payment
+                        </button>
+                    </form>
+                @else
+                    <div class="alert alert-danger mt-3">
+                        No products added to the cart. Please add products before proceeding to payment.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
             </div>
             <div class="col-lg-3 col-md-3">
             </div>

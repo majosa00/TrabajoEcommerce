@@ -88,6 +88,10 @@ class CartController extends Controller
             $user = Auth::user();
             $cart = $user->cart;
 
+
+            if($cart->products->isEmpty()){//comprueba si el carrito esta vacio
+                return back()->with('mensaje', 'No products added to the cart. Please add products before proceeding to payment.');
+            }
             // Verificar si el usuario ha proporcionado los datos necesarios
             if (!$user->name || !$user->secondname || !$user->email || !$user->phone) {
                 return back()->with('mensaje', 'Please complete your user profile before placing an order.');
