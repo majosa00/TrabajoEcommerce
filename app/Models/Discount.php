@@ -14,11 +14,10 @@ class Discount extends Model
         'type',
         'value',
         'percent_of',
-        'valid_until',
+        'user_id',
+        'start_date',
+        'end_date',
         'max_users',
-        'category_id', //Para la categoría
-        'product_id', //Para el producto
-        'product_discount', //Para el descuento específico del producto
     ];
 
 }

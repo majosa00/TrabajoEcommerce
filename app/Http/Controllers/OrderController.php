@@ -31,7 +31,7 @@ class OrderController extends Controller
         // Obtener los pedidos del usuario con productos asociados
         $orders = Order::where('user_id', $userId)->with('products')->get();
 
-        return view('order', ['orders' => $orders]);
+        return view('order', ['cart' => $cart, 'orders' => $orders]);
     }
 
     public function showticket(Order $order)
