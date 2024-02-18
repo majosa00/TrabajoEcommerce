@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,13 +12,21 @@ return new class extends Migration
     {
         Schema::create('discounts', function (Blueprint $table) {
             $table->id();
-            $table->string("code")->unique();
-            $table->string("type");
-            $table->integer("value")->nullable();
-            $table->integer("percent_of")->nullable();
+            $table->string('code')->unique();
+            $table->string('type'); // "simple", "category", "product"
+            $table->integer('value')->nullable(); // Para descuentos fijos
+            $table->integer('percent_of')->nullable(); // Para descuentos porcentuales
+            $table->unsignedBigInteger('user_id')->nullable(); // Para cupones de usuario específico
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
+            $table->integer('max_users')->nullable(); // Número máximo de usuarios (opcional)
+            $table->unsignedBigInteger('category_id')->nullable(); // Para cupones de categoría
+            $table->unsignedBigInteger('product_id')->nullable(); // Para cupones de producto
+            $table->integer('max_products')->nullable(); // Número máximo de productos (opcional)
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.

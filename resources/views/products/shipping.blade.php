@@ -4,22 +4,22 @@
     <div class="container p-5">
         <h4 class="mb-3">Billing address</h4>
         @if (session('mensaje'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('mensaje') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('mensaje') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
-@if ($errors->any())
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
         <div class="row g-5">
             <div class="col-md-5 col-lg-4 order-md-last">
@@ -41,15 +41,15 @@
                     @endforeach
                     <li class="list-group-item d-flex justify-content-between">
                         <span>Subtotal (USD)</span>
-                        <strong>${{ $user->cart->products->sum('price') }}</strong>
+                        <span>${{ $user->cart->products->sum('price') }}</span>
                     </li>
-                    <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
-                        @if (session()->has('discount'))
+                    @if (session()->has('discount'))
+                        <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
+
                             <div class="text-success">
                                 <h6 class="my-0">Discount {{ session()->get('discount')['name'] ?? '' }}</h6>
                             </div>
-                            <span
-                                class="text-success">${{ number_format(session()->get('discount')['discount_value'] ?? 0, 2) }}</span>
+                            <span class="text-success">-${{ session()->get('discount')['discount_value'] ?? 0 }}</span>
                             <form action="{{ route('discount.destroy') }}" method="POST">
                                 @csrf
                                 @method('DELETE')
@@ -57,21 +57,27 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </form>
+                        </li>
+                    @endif
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span><strong>Total (USD)</strong></span>
+                        @if (session()->has('discount'))
+                            <strong>${{ session('totalPrice') }}</strong>
+                        @else
+                            <span><strong>${{ $user->cart->products->sum('price') }}</strong></span>
                         @endif
                     </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Total (USD)</span>
-                        <strong>$20</strong>
-                    </li>
                 </ul>
-                <form class="card p-2" action="{{ route('discount.store') }}" method="POST">
-                    @csrf
-                    <div class="input-group">
-                        <input type="text" class="form-control" name="discount_code" id="discount_code"
-                            placeholder="Promo code">
-                        <button type="submit" class="btn btn-secondary">Apply</button>
-                    </div>
-                </form>
+                @if (!session()->has('discount'))
+                    <form class="card p-2" action="{{ route('discount.store') }}" method="POST">
+                        @csrf
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="discount_code" id="discount_code"
+                                placeholder="Promo code">
+                            <button type="submit" class="btn btn-secondary">Apply</button>
+                        </div>
+                    </form>
+                @endif
             </div>
 
             <div class="col-md-7 col-lg-8">
@@ -127,8 +133,8 @@
                         @csrf
                         <div class="my-3">
                             <div class="form-check">
-                                <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked
-                                    required>
+                                <input id="credit" name="paymentMethod" type="radio" class="form-check-input"
+                                    checked required>
                                 <label class="form-check-label" for="credit">Credit card</label>
                             </div>
                         </div>

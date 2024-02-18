@@ -20,11 +20,25 @@ class DiscountController extends Controller
 
         // Llama al método subtotal en el modelo Cart
         $subtotal = $cart->subtotal();
+        // Inicializa el totalPrice con el subtotal
+        $totalPrice = $subtotal;
 
-        session()->put("discount", [
-            "name" => $discount->code,
-            "discount_value" => $discount->$subtotal,
-        ]);
+        if ($discount) {
+            // Calcula el descuento como porcentaje del subtotal
+            $discountValue = $subtotal * ($discount->value / 100);
+            // Calcula el totalPrice con descuento
+            $totalPrice = $subtotal - $discountValue;
+            // Almacena en la sesión el descuento
+            session()->put("discount", [
+                "name" => $discount->code,
+                "discount_value" => $discountValue,
+            ]);
+            //Almacenar en la sesión el totalprice
+            session()->put('totalPrice', $totalPrice);
+        } else {
+            // No hay descuento, almacena el totalPrice sin descuento en la sesión
+            session()->put('totalPrice', $totalPrice);
+        }
 
         return redirect()->route("cart.viewShipping")->with("mensaje", "Coupon has been applied!");
     }

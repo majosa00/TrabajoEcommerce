@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Address;
+use App\Models\Discount;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -82,27 +83,37 @@ class CartController extends Controller
     public function pay(Request $request)
     {
         DB::beginTransaction();
-    
+
         try {
             $user = Auth::user();
             $cart = $user->cart;
-    
+
             // Verificar si el usuario ha proporcionado los datos necesarios
             if (!$user->name || !$user->secondname || !$user->email || !$user->phone) {
                 return back()->with('mensaje', 'Please complete your user profile before placing an order.');
             }
-    
+
             $order = new Order();
             $order->user_id = $user->id;
             $order->state = 'Pending';
             $order->orderDate = now();
-    
-            $totalPrice = $cart->products->sum(function ($product) {
-                return $product->price * $product->pivot->amount;
-            });
+
+            $totalPrice = $cart->subtotal();
+            //Si hay descuento
+            $discount = session("discount");
+
+            if ($discount) {
+                $totalPrice -= $discount['discount_value'];
+                session()->put('totalPrice', $totalPrice);
+            } else {
+                // No hay descuento, almacena el totalPrice sin descuento en la sesión
+                session()->put('totalPrice', $totalPrice);
+            }
+
             $order->totalPrice = $totalPrice;
+
             $order->user = "{$user->name} {$user->secondname}, {$user->email}, {$user->phone}";
-    
+
             // Obtén el ID de la dirección seleccionada desde el formulario
             $selectedAddressId = $request->input('selected_address');
             // Obtén los detalles de la dirección seleccionada
@@ -112,22 +123,19 @@ class CartController extends Controller
             } else {
                 return back()->with('mensaje', 'Please select an address before placing an order.');
             }
-    
+
             $order->save();
-    
+
             foreach ($cart->products as $product) {
                 $order->products()->attach($product->id, ['amount' => $product->pivot->amount]);
             }
-    
+
             // Enviar correo electrónico (comentado mientras practicamos para no tener 21701293 correos)
             // Mail::to($user->email)->send(new OrderConfirmation($order));
-            // Mail::to($user->email)->send(new TicketEmail($order));
-            // $pdf = PDF::loadView('emails.ticket', compact('order'));
-            // $pdf->save(storage_path('app/public/tickets/ticket_' . $order->id . '.pdf'));
-    
+
             // Puedes limpiar el carrito después de realizar el pedido si es necesario
-            $cart->products()->detach(); // Limpiar el carrito
-    
+            $cart->products()->detach();
+
             DB::commit();
             return redirect()->route('orders')->with('success', 'Payment successful!');
         } catch (\Exception $e) {
@@ -135,12 +143,8 @@ class CartController extends Controller
             // Log the error or handle it as necessary
             return back()->with('error', 'An error occurred during the payment process.');
         }
-    
-        
     }
-    
-    
-    
+
     public function remove($productId)
     {
         $user = Auth::user(); //obtencion del usuario

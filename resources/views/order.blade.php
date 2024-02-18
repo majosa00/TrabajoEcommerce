@@ -36,7 +36,12 @@
                         </ul>
                     </td>
                     <td>{{ $order->orderDate }}</td>
-                    <td>{{ $order->totalPrice }} $</td>
+                    <td class="product-price">
+                        <span style="text-decoration: line-through;">
+                            ${{ $order->totalPrice + session('discount.discount_value') }}
+                        </span>
+                        ${{ $order->totalPrice }}
+                    </td>
                     <td>{{ $order->state }}</td>
                     <td><a href="{{ route('order.showticket', $order->id) }}" class="text-dark">Ticket</td>
                     <td><a href="" class="text-decoration-none text-dark"></td>
