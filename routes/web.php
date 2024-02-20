@@ -12,8 +12,6 @@ use App\Http\Controllers\WelcomeController;
 
 Route::get('/', [WelcomeController::class, 'index']);
 
-
-
 Route::get('products', [UserController::class, 'products']);
 Route::get('orders', [OrderController::class, 'showOrders'])->name('orders');
 Route::get('orders/{order}', [OrderController::class, 'showTicket'])->name('order.showticket');
