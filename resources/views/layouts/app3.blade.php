@@ -26,8 +26,6 @@
 <body>
     @include('partials.navbar3')
     
-    @include('partials.carrousel')
-
     @yield('content')
 
     @include('partials.footer2')
