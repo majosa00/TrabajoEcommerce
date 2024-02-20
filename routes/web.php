@@ -8,10 +8,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\DiscountController;
+use App\Http\Controllers\WelcomeController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [WelcomeController::class, 'index']);
+
+
 
 Route::get('products', [UserController::class, 'products']);
 Route::get('orders', [OrderController::class, 'showOrders'])->name('orders');
