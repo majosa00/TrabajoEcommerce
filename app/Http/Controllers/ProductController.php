@@ -293,8 +293,7 @@ class ProductController extends Controller
 
     public function showProduct($id)
     {
-        $product = Product::findOrFail($id);
-        $product->save();
+        $product = Product::with('wishlist', 'images')->findOrFail($id);
 
         // Pasa la marca a la vista
         return view('products.showProducts', compact('product'));
