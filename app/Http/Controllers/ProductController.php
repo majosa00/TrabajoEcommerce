@@ -290,4 +290,14 @@ class ProductController extends Controller
 
         return view('logged', compact('products', 'topSellingProducts'));
     }
+
+    public function showProduct($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->save();
+
+        // Pasa la marca a la vista
+        return view('products.showProducts', compact('product'));
+    }
+
 }
