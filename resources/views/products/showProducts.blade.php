@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container p-5">
-        <div class="card bg-dark text-white">
+        {{-- <div class="card bg-dark text-white">
             <div class="row g-0">
                 <div class="col-md-4">
                     <img src="{{ optional($product->images)->imagen_1 ? asset('storage/' . $product->images->imagen_1) : '' }}"
@@ -44,7 +44,43 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
+
+        <section id="specificproduct" class="product">
+            <div class="product__photo">
+                <div class="photo-container">
+                    <div class="photo-main">
+                        <div class="controls">
+                            <i class="material-icons">share</i>
+                            <i class="material-icons">favorite_border</i>
+                        </div>
+                        <img src="{{ optional($product->images)->imagen_1 ? asset('storage/' . $product->images->imagen_1) : '' }}"
+                            class="card-img" alt="{{ $product->name }}">
+                    </div>
+                </div>
+            </div>
+            <div class="product__info">
+                <div class="title">
+                    <h1>Delicious Apples</h1>
+                    <span>COD: 45999</span>
+                </div>
+                <div class="price">
+                    $ <span>{{ $product->price }} </span>
+                </div>
+                <div class="description">
+                    <h3>BENEFITS</h3>
+                    <ul>
+                        <li>Apples are nutricious</li>
+                        <li>Apples may be good for weight loss</li>
+                        <li>Apples may be good for bone health</li>
+                        <li>They're linked to a lowest risk of diabetes</li>
+                    </ul>
+                </div>
+                <button class="buy--btn">ADD TO CART</button>
+            </div>
+        </section>
+
+
     </div>
     <div id="main-container"></div>
 @endsection
