@@ -508,7 +508,6 @@ button:focus {
 #specificproduct h3 {
     font-size: 0.7em;
     letter-spacing: 1.2px;
-    color: #f3cb09;
 }
 
 #specificproduct img {
@@ -523,7 +522,8 @@ button:focus {
     margin: auto;
     padding: 2.5em 0;
     min-width: 600px;
-    background-color: white;
+    background-color: black;
+    background: radial-gradient(#191a1a, black);
     border-radius: 5px;
 }
 
@@ -545,19 +545,7 @@ button:focus {
 
 .photo-main {
     border-radius: 6px 6px 0 0;
-    background-color: #f3cb09;
-    background: radial-gradient(#e5f89e, #ebc403);
-}
-
-.photo-main .controls {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.8em;
-    color: #fff;
-}
-
-.photo-main .controlsi {
-    cursor: pointer;
+    background-color: white;
 }
 
 #specificproduct img {
@@ -568,15 +556,6 @@ button:focus {
     filter: saturate(150%) contrast(120%) hue-rotate(10deg) drop-shadow(1px 20px 10px rgba(0, 0, 0, 0.3));
 }
 
-#specificproduct li {
-    float: left;
-    width: 55px;
-    height: 55px;
-    padding: 7px;
-    border: 1px solid black;
-    border-radius: 3px;
-}
-
 /* ----- Informations Section ----- */
 .product__info {
     padding: 0.8em 0;
@@ -584,25 +563,23 @@ button:focus {
 
 .title h1 {
     margin-bottom: 0.1em;
-    color: #f3cb09;
-    font-size: 1.5em;
+    font-size: 1.8em;
     font-weight: 900;
 }
 
 .title span {
-    font-size: 0.7em;
-    color: black;
+    font-size: 0.9em;
 }
 
 .price {
     margin: 1.5em 0;
-    color: red;
+    color: white;
     font-size: 1.2em;
 }
 
 .price span {
     padding-left: 0.15em;
-    font-size: 2.9em;
+    font-size: 2.5em;
 }
 
 li:not(:first-child) {
@@ -630,18 +607,20 @@ li:not(:first-child) {
 }
 
 .buy--btn {
-    padding: 1.5em 3.1em;
+    padding: 1em;
     border: none;
     border-radius: 7px;
     font-size: 0.8em;
     font-weight: 700;
     letter-spacing: 1.3px;
-    color: #fff;
-    background-color: white;
-    box-shadow: 2px 2px 25px -7px #f3cb09;
+    box-shadow: 2px 2px 25px -7px black;
     cursor: pointer;
 }
 
 .buy--btn &:active {
     transform: scale(0.97);
+}
+
+.no-underline {
+    text-decoration: none;
 }

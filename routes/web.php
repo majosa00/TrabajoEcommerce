@@ -107,7 +107,7 @@ Route::post('/products/hide/{id}', [ProductController::class, 'hide'])->name('pr
 // Ruta para mostrar un producto
 Route::post('/products/show/{id}', [ProductController::class, 'show'])->name('products.show');
 
-Route::get('/products', [App\Http\Controllers\ProductController::class, 'index']);
+Route::get('/products', [ProductController::class, 'index']);
 Route::delete('admin/delete_brand/{id}', [ProductController::class, 'deleteBrand'])->name('brands.deleteBrand');
 
 //nombre de la ruta - controller - nombre función dentro del controlador - nombre es para renombrar la ruta porque est´dentro de un formulario y queremos que tenga ese name
