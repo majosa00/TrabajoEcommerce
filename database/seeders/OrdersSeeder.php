@@ -13,16 +13,5 @@ class OrdersSeeder extends Seeder
      */
     public function run(): void
     {
-
-        //Para probar que funciona en borrador
-        /*Order::create( [
-            //'product_id' => 1,
-            'user_id' => 1,
-            'state' => 'Pending',
-            //'payment_id' => 1,
-            'orderDate' => '2024/03/12',
-            '//cartProduct_id_cart' => 1,
-            'totalPrice' => 10
-        ]);*/
     }
 }
