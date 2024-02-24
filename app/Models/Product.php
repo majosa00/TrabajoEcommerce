@@ -77,4 +77,12 @@ class Product extends Model
         $this->is_hidden = false;
         $this->save();
     }
+
+
+    public function product()
+{
+    return $this->belongsTo(Brand::class);
 }
+
+}
+
