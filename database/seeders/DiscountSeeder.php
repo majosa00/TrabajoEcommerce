@@ -32,7 +32,7 @@ class DiscountSeeder extends Seeder
         ]);
         Discount::create([
             'code' => 'CODE2',
-            'type' => 'Category',
+            'type' => 'category',
             'value' => 10,
             'start_date' => now(),
             'end_date' => now()->addDays(30),
