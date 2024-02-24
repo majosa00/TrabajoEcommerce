@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->integer('max_users')->nullable(); // Número máximo de usuarios (opcional)
-            $table->unsignedBigInteger('category_id')->nullable(); // Para cupones de categoría
+            $table->unsignedBigInteger('brand_id')->nullable(); // Para cupones de categoría
             $table->unsignedBigInteger('product_id')->nullable(); // Para cupones de producto
             $table->integer('max_products')->nullable(); // Número máximo de productos (opcional)
             $table->timestamps();

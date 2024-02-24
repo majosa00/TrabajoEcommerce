@@ -19,6 +19,8 @@ class Discount extends Model
         'end_date',
         'max_users',
         'brand_id', 
+        'product_id',
+        'max_products'
     ];
 
     public function products()
