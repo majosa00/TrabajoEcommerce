@@ -18,6 +18,17 @@ class Discount extends Model
         'start_date',
         'end_date',
         'max_users',
+        'brand_id', 
     ];
 
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);//n descuento puede estar asociado con varios productos 
+    }
+
+
+public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
 }
