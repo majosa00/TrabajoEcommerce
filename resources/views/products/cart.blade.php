@@ -1,22 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container p-5">
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
+    <div class="container p-5">
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
-    @if (session('mensaje'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('mensaje') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
+        @if (session('mensaje'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('mensaje') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
-  
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
         <div class="row" id="ocultar">
             <div class="col-lg-3 col-md-3 col-sm-2">
@@ -38,7 +47,8 @@
         @foreach ($products as $product)
             <div class="row">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-6">
-                    <img src="{{ asset('images/redbull.jpg') }}" class="card-img-top" alt="{{ $product->name }}">
+                    <img src="{{ optional($product->images)->imagen_1 ? asset('storage/' . $product->images->imagen_1) : '' }}"
+                        class="card-img-top" alt="{{ $product->name }}">
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-6 col-4">
                     <h3>{{ $product->name }}</h3>
@@ -51,7 +61,9 @@
                     <div class="d-flex align-items-center">
                         <form action="{{ route('cart.decrease', $product->id) }}" method="post">
                             @csrf
-                            <button type="submit" class="btn btn-sm border border-dark"{{ $product->pivot->amount <= 1 ? ' disabled' : '' }}> {{-- si la cantidad de producto es menor a 1 de desabilitara el boton  --}}
+                            <button type="submit"
+                                class="btn btn-sm border border-dark"{{ $product->pivot->amount <= 1 ? ' disabled' : '' }}>
+                                {{-- si la cantidad de producto es menor a 1 de desabilitara el boton  --}}
                                 <i class="fas fa-minus"></i>
                             </button>
                         </form>
@@ -81,14 +93,14 @@
                 @if (!$products->isEmpty())
                     <form action="{{ route('cart.viewShipping') }}" method="POST" class="mt-3">
                         @csrf
-                        <button class="btn btn-warning btn-sm" type="submit" >
+                        <button class="btn btn-warning btn-sm" type="submit">
                             Payment
                         </button>
                     </form>
                 @else
-                    <div class="alert alert-danger mt-3">
-                        No products added to the cart. Please add products before proceeding to payment.
+                    <div class="alert alert-danger mt-3 letrapequeña">
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        No products added to the cart. Please add products before proceeding to payment.
                     </div>
                 @endif
             </div>
@@ -97,11 +109,7 @@
             <div class="col-lg-3 col-md-3">
             </div>
             <div class="col-lg-3 col-md-3">
-                <h4>Total Price:
-                    {{ $products->sum(function ($product) {
-                        return $product->price * $product->pivot->amount;
-                    }) }}
-                </h4>
+                <h4>Total Price: ${{ $cart->subtotal() }}</h4>
             </div>
         </div>
     </div>

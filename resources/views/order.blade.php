@@ -36,8 +36,8 @@
                         </ul>
                     </td>
                     <td>{{ $order->orderDate }}</td>
-                    <td class="product-price">
-                        <span style="text-decoration: line-through;">
+                    <td class="product-price text-rojo">
+                        <span style="text-decoration: line-through; color:black">
                             ${{ $order->totalPrice + session('discount.discount_value') }}
                         </span>
                         ${{ $order->totalPrice }}

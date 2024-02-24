@@ -20,7 +20,7 @@ class ProductsSeeder extends Seeder
             'dimension' => 10,
             'udpack' => 1,
             'weight' => 28,
-            'stock' => 100,
+            'stock' => 0,
             'iva' => 0.21,
             'brand_id' => 3
         ]);
@@ -35,7 +35,7 @@ class ProductsSeeder extends Seeder
             'dimension' => 50,
             'udpack' => 4,
             'weight' => 2.17,
-            'stock' => 50,
+            'stock' => 3,
             'iva' => 0.21,
             'brand_id' => 4
         ]);

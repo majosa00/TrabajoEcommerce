@@ -41,7 +41,7 @@
                     @endforeach
                     <li class="list-group-item d-flex justify-content-between">
                         <span>Subtotal (USD)</span>
-                        <span>${{ $user->cart->products->sum('price') }}</span>
+                        <span>${{ $cart->subtotal() }}</span>
                     </li>
                     @if (session()->has('discount'))
                         <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
@@ -64,7 +64,7 @@
                         @if (session()->has('discount'))
                             <strong>${{ session('totalPrice') }}</strong>
                         @else
-                            <span><strong>${{ $user->cart->products->sum('price') }}</strong></span>
+                            <span><strong>${{ $cart->subtotal() }}</strong></span>
                         @endif
                     </li>
                 </ul>

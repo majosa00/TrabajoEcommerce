@@ -255,9 +255,10 @@ class ProductController extends Controller
     {
         // Carga la marca y sus productos relacionados
         $brand = Brand::with('products')->findOrFail($id);
+        $products = $brand->products; // Obtén los productos relacionados
 
-        // Pasa la marca a la vista
-        return view('viewbrands', compact('brand'));
+        // Pasa la marca y los productos a la vista
+        return view('viewbrands', compact('brand', 'products'));
     }
 
     public function hide($id)

@@ -18,7 +18,7 @@ class Discount extends Model
         'start_date',
         'end_date',
         'max_users',
-        'brand_id', 
+        'brand_id',
         'product_id',
         'max_products'
     ];
@@ -29,7 +29,7 @@ class Discount extends Model
     }
 
 
-public function brand()
+    public function brand()
     {
         return $this->belongsTo(Brand::class);
     }
