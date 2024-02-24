@@ -26,5 +26,7 @@ class DiscountSeeder extends Seeder
             'user_id' => $users->random()->id,
             'max_users' => 10,
         ]);
+
+       
     }
 }

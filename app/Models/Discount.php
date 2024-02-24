@@ -20,4 +20,14 @@ class Discount extends Model
         'max_users',
     ];
 
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
+
+
+public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
 }

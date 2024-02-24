@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Discount;
 use App\Models\Cart;
+use App\Models\Product;
 
 class DiscountController extends Controller
 {
@@ -18,25 +19,32 @@ class DiscountController extends Controller
             return redirect()->route("cart.viewShipping")->withErrors("Invalid coupon code. Please try again.");
         }
 
-        // Llama al método subtotal en el modelo Cart
         $subtotal = $cart->subtotal();
-        // Inicializa el totalPrice con el subtotal
         $totalPrice = $subtotal;
 
+        // Verifica si el descuento está asociado a una marca específica
+        if ($discount->brand_id) {
+            // Filtra los productos en el carrito por la marca asociada al descuento
+            $cartProducts = $cart->products()->whereHas('product', function ($query) use ($discount) {
+                $query->where('brand_id', $discount->brand_id);
+            })->get();
+
+            // Calcula el subtotal solo para los productos de la marca específica
+            $subtotal = $cartProducts->sum(function ($item) {
+                return $item->price * $item->quantity;
+            });
+        }
+
         if ($discount) {
-            // Calcula el descuento como porcentaje del subtotal
             $discountValue = $subtotal * ($discount->value / 100);
-            // Calcula el totalPrice con descuento
             $totalPrice = $subtotal - $discountValue;
-            // Almacena en la sesión el descuento
+
             session()->put("discount", [
                 "name" => $discount->code,
                 "discount_value" => $discountValue,
             ]);
-            //Almacenar en la sesión el totalprice
             session()->put('totalPrice', $totalPrice);
         } else {
-            // No hay descuento, almacena el totalPrice sin descuento en la sesión
             session()->put('totalPrice', $totalPrice);
         }
 
@@ -50,3 +58,5 @@ class DiscountController extends Controller
         return redirect()->route("cart.viewShipping")->with("mensaje", "Coupon has been removed.");
     }
 }
+
+
