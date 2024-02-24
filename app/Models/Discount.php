@@ -23,7 +23,7 @@ class Discount extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class);//n descuento puede estar asociado con varios productos 
     }
 
 
