@@ -15,6 +15,7 @@ return new class extends Migration {
 
             $table->string('name');
             $table->text('description');
+            $table->text('ingredient');
             $table->string('flavor');
             $table->float('price');
             $table->float('dimension');

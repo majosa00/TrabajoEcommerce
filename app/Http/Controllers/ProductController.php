@@ -290,4 +290,13 @@ class ProductController extends Controller
 
         return view('logged', compact('products', 'topSellingProducts'));
     }
+
+    public function showProduct($id)
+    {
+        $product = Product::with('wishlist', 'images')->findOrFail($id);
+
+        // Pasa la marca a la vista
+        return view('products.showProducts', compact('product'));
+    }
+
 }

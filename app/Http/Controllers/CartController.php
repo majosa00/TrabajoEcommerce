@@ -258,7 +258,7 @@ class CartController extends Controller
         // Validar los datos del formulario
         $request->validate([
             'address' => 'required|string|max:255|min:0',
-            'country' => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
+            'country' => 'required|string|max:255|regex:/^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$/',
             'city' => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
             'zipcode' => 'required|string|max:10',
         ]);

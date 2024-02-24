@@ -17,9 +17,6 @@ class DiscountSeeder extends Seeder
         // Obtén los primeros 10 usuarios
         $users = User::where('id', '<=', 10)->get();
 
-       
-        $brand = Brand::inRandomOrder()->first();
-
         Discount::create([
             'code' => 'CODE1',
             'type' => 'simple',
@@ -38,7 +35,7 @@ class DiscountSeeder extends Seeder
             'end_date' => now()->addDays(30),
             'user_id' => $users->random()->id,
             'max_users' => 10,
-            'brand_id' => $brand->id, 
+            'brand_id' => 3, 
         ]);
     }
 }
