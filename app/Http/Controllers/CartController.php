@@ -38,23 +38,27 @@ class CartController extends Controller
             $cart = $user->cart ?? new Cart(['user_id' => $user->id]);
             $cart->save();
 
-            // Verificar si el producto ya está en el carrito
-            if ($cart->products()->where('product_id', $productId)->exists()) {
-                // Obtener el registro pivot para ese producto
-                $pivot = $cart->products()->where('product_id', $productId)->first()->pivot;
-                // Incrementar la cantidad en 1
-                $pivot->amount += 1;
-                $pivot->save();
+            if ($product->stock <= 0) {
+                return back()->withErrors(['error' => 'Product out of stock.']);
             } else {
-                // Asocia el carrito al producto del usuario con una cantidad de 1 si el producto no está en el carrito
-                $cart->products()->attach($productId, ['amount' => 1]);
+                // Verificar si el producto ya está en el carrito
+                if ($cart->products()->where('product_id', $productId)->exists()) {
+                    // Obtener el registro pivot para ese producto
+                    $pivot = $cart->products()->where('product_id', $productId)->first()->pivot;
+                    // Incrementar la cantidad en 1
+                    $pivot->amount += 1;
+                    $pivot->save();
+                } else {
+                    // Asocia el carrito al producto del usuario con una cantidad de 1 si el producto no está en el carrito
+                    $cart->products()->attach($productId, ['amount' => 1]);
+                }
             }
 
             // Confirmar la transacción
             DB::commit();
 
             // Si funciona, redirige a la página anterior con un mensaje de éxito indicando que el producto fue añadido al carrito
-            return redirect()->route('cart.view')->with('success', 'Product added to the cart.');
+            return back()->with('success', 'Product added to the cart.');
         } catch (\Exception $e) {
             // Revertir la transacción en caso de error
             DB::rollBack();
@@ -77,7 +81,7 @@ class CartController extends Controller
             $products = collect();
         }
 
-        return view('products.cart', compact('products'));
+        return view('products.cart', compact('products', 'cart'));
     }
 
     public function pay(Request $request)
@@ -89,7 +93,7 @@ class CartController extends Controller
             $cart = $user->cart;
 
 
-            if($cart->products->isEmpty()){//comprueba si el carrito esta vacio
+            if ($cart->products->isEmpty()) {//comprueba si el carrito esta vacio
                 return back()->with('mensaje', 'No products added to the cart. Please add products before proceeding to payment.');
             }
             // Verificar si el usuario ha proporcionado los datos necesarios
@@ -175,8 +179,17 @@ class CartController extends Controller
             $pivotRecord = $cart->products()->where('product_id', $product->id)->first();
 
             if ($pivotRecord) {
-                // Aumentar la cantidad en 1
-                $pivotRecord->pivot->update(['amount' => $pivotRecord->pivot->amount + 1]);
+                // Verificar si la nueva cantidad supera el stock disponible
+                $newAmount = $pivotRecord->pivot->amount + 1;
+
+                if ($newAmount > $product->stock) {
+                    // Si la nueva cantidad supera el stock, mostrar notificación y abortar la transacción
+                    DB::rollBack();
+                    return back()->withErrors(['error' => 'Product quantity exceeds available stock.']);
+                }
+
+                // Actualizar la cantidad en 1
+                $pivotRecord->pivot->update(['amount' => $newAmount]);
             }
 
             // Confirmar la transacción
@@ -227,8 +240,9 @@ class CartController extends Controller
     {
         $user = Auth::user();
         $addresses = $user->addresses;
+        $cart = $user->cart;  // Asumiendo que la relación exista
 
-        return view('products.shipping', compact('user', 'addresses'));
+        return view('products.shipping', compact('user', 'addresses', 'cart'));
     }
 
     public function updatedatas(Request $request)

@@ -9,6 +9,15 @@
             </div>
         @endif
 
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @foreach ($errors->all() as $error)
+                   {{ $error }}
+                @endforeach
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
         <!-- Sección de Productos Más Vendidos -->
         <div class="row ">
             <section class="section-products">
@@ -24,7 +33,7 @@
                     @foreach ($topSellingProducts as $product)
                         <div class="col-md-6 col-lg-4 col-xl-3 ">
                             <a href="{{ route('products.show', $product->id) }}" class="no-underline">
-                                <div class="single-product bg-dark text-white p-4"
+                                <div class="single-product bg-negro text-white p-4"
                                     style="background-image: url('{{ optional($product->images)->imagen_1 ? asset('storage/' . $product->images->imagen_1) : '' }}');">
                                     <div class="part-1">
                                         {{-- PARA LOS DESCUENTOS <span class="discount">15% off</span> --}}
@@ -78,7 +87,7 @@
                     @foreach ($products as $product)
                         <div class="col-md-6 col-lg-4 col-xl-3 ">
                             <a href="{{ route('products.show', $product->id) }}" class="no-underline">
-                                <div class="single-product bg-dark text-white p-4"
+                                <div class="single-product bg-negro text-white p-4"
                                     style="background-image: url('{{ optional($product->images)->imagen_1 ? asset('storage/' . $product->images->imagen_1) : '' }}');">
                                     <div class="part-1">
                                         {{-- PARA LOS DESCUENTOS <span class="discount">15% off</span> --}}

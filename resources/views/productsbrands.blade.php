@@ -9,12 +9,23 @@
             </div>
         @endif
 
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
         <h1 class="mb-3">BRANDS</h1>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             @foreach ($brands as $brand)
                 <div class="col">
                     <a href="{{ route('brand.products', $brand->id) }}" class="text-decoration-none text-dark">
-                        <div class="card h-100 text-white bg-dark">
+                        <div class="card h-100 text-white bg-negro">
                             <div class="card-body">
                                 <h5 class="card-title">{{ $brand->name }}</h5>
                             </div>

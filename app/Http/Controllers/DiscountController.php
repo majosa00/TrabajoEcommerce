@@ -22,19 +22,8 @@ class DiscountController extends Controller
         $subtotal = $cart->subtotal();
         $totalPrice = $subtotal;
 
-        // Verifica si el descuento está asociado a una marca específica
-        if ($discount->brand_id) {
-            // Filtra los productos en el carrito por la marca asociada al descuento
-            $cartProducts = $cart->products()->where('brand_id', $discount->brand_id)->get();
-
-            // Calcula el subtotal solo para los productos de la marca específica
-            $subtotal = $cartProducts->sum(function ($item) {
-                return $item->price * $item->quantity;
-            });
-        }
-
         // Calcula el descuento y el precio total
-        $discountValue = $subtotal * ($discount->value / 100);
+        $discountValue = $totalPrice * ($discount->value / 100);
         $totalPrice = $subtotal - $discountValue;
 
         // Almacena la información del descuento y el precio total en la sesión
