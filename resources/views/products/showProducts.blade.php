@@ -34,7 +34,11 @@
                     <span class="text-white">{{ $product->description }}</span>
                 </div>
                 <div class="price">
-                    $ <span>{{ $product->price }} </span>
+                    @if ($product->brand_id === 'Monster')
+                        <del>${{ $product->original_price }}</del> <span class="text-danger">${{ $product->discounted_price }}</span>
+                    @else
+                        $ <span>{{ $product->price }} </span>
+                    @endif
                 </div>
                 <div class="description">
                     <h3 class="text-warning">DESCRIPTION</h3>
