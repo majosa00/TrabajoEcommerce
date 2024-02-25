@@ -49,15 +49,16 @@
                                                 </h4>
                                             </li>
                                             <li>
+                                                <!-- Formulario para agregar al carrito -->
                                                 <form action="{{ route('cart.addToCart', $product->id) }}" method="POST"
                                                     class="d-flex justify-content-start">
                                                     @csrf
-                                                    <button class="btn btn-warning" type="submit"><i
-                                                            class="fas fa-shopping-cart"></i>
+                                                    <button class="btn btn-warning" type="submit"><i class="fas fa-shopping-cart"></i>
                                                     </button>
                                                 </form>
                                             </li>
                                             <li>
+                                                <!-- Formulario para agregar a la lista de deseos -->
                                                 <form action="{{ route('wishlist.add', $product->id) }}" method="POST"
                                                     class="d-flex justify-content-end">
                                                     @csrf
@@ -111,15 +112,16 @@
                                                 </h4>
                                             </li>
                                             <li>
+                                                <!-- Formulario para agregar al carrito -->
                                                 <form action="{{ route('cart.addToCart', $product->id) }}" method="POST"
                                                     class="d-flex justify-content-start">
                                                     @csrf
-                                                    <button class="btn btn-warning" type="submit"><i
-                                                            class="fas fa-shopping-cart"></i>
+                                                    <button class="btn btn-warning" type="submit"><i class="fas fa-shopping-cart"></i>
                                                     </button>
                                                 </form>
                                             </li>
                                             <li>
+                                                <!-- Formulario para agregar a la lista de deseos -->
                                                 <form action="{{ route('wishlist.add', $product->id) }}" method="POST"
                                                     class="d-flex justify-content-end">
                                                     @csrf
