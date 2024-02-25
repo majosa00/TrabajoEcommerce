@@ -58,7 +58,7 @@
                     @if ($product->brand->name === 'Monster')
                         <p>
                             <del>${{ $product->price }}</del>
-                            <span style="color: red;">${{ $product->price * 0.86 }}</span>
+                            <span style="color: red;">${{ $product->price *  0.86 }}</span>
                         </p>
                     @else
                         <p>${{ $product->price }}</p>
