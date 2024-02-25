@@ -45,7 +45,7 @@
                 <!-- Single Product -->
                 @foreach ($products as $product)
                     <div class="col-md-6 col-lg-4 col-xl-3 ">
-                        <div class="single-product bg-dark text-white p-4"
+                        <div class="single-product bg-negro text-white p-4"
                             style="background-image: url('{{ optional($product->images)->imagen_1 ? asset('storage/' . $product->images->imagen_1) : '' }}');">
                             <div class="part-1">
                                 {{-- PARA LOS DESCUENTOS <span class="discount">15% off</span> --}}
@@ -72,7 +72,7 @@
                 @foreach ($brands as $brand)
                     <div class="col-md-4">
                         <div class="card mb-4">
-                            <div class="card-body bg-dark text-white">
+                            <div class="card-body bg-negro text-white">
                                 <h5 class="card-title">{{ $brand->name }}</h5>
                             </div>
                         </div>

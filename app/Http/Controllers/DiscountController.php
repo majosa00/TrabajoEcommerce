@@ -12,60 +12,44 @@ use App\Models\Brand;
 
 class DiscountController extends Controller
 {
- 
+
     public function store(Request $request)
     {
         $cart = auth()->user()->cart;
-    
+
         // Busca el cupón de descuento en la base de datos basado en el código proporcionado en la solicitud
         $discount = Discount::where("code", $request->discount_code)->first();
-    
+
         if (!$discount) {
             return redirect()->route("cart.viewShipping")->withErrors("Invalid coupon code. Please try again.");
         }
-    
+
         $subtotal = $cart->subtotal();
         $totalPrice = $subtotal;
-    
-        // Verifica si el cupón es específico para la marca 'Monster'
-        if ($discount->code === 'CODE2') {
-            // Verifica si todos los productos en el carrito son de la marca 'Monster'
-            $monsterBrand = Brand::where('name', 'Monster')->first();
-            if ($monsterBrand && !$cart->products()->where('brand_id', $monsterBrand->id)->exists()) {
-                return redirect()->route("cart.viewShipping")->withErrors("Coupon is not applicable as there are no 'Monster' brand products in the cart.");
+
+        // Verifica si el cupón es de tipo 'category'
+        if ($discount->type === 'category') {
+            $brand = Brand::find($discount->brand_id);
+
+            // Verifica si hay productos de la marca correspondiente al cupón en el carrito
+            if ($brand && !$cart->products()->where('brand_id', $brand->id)->exists()) {
+                return redirect()->route("cart.viewShipping")->withErrors("Coupon is not applicable as there are no products from the relevant brand in the cart.");
             }
-    
-            // Calcula el descuento y el precio total solo para productos de la marca 'Monster'
-            $monsterProductsSubtotal = $cart->products()->where('brand_id', $monsterBrand->id)->sum('price');
-            $discountValue = $monsterProductsSubtotal * ($discount->value / 100);
-            $totalPrice -= $discountValue;
-    
-            // Almacena la información del descuento y el precio total en la sesión
-            session()->put("discount", [
-                "name" => $discount->code,
-                "discount_value" => $discountValue,
-            ]);
-            session()->put('totalPrice', $totalPrice);
-    
-            return redirect()->route("cart.viewShipping")->with("mensaje", "Coupon has been applied!");
-        } else {
-            // Para otros códigos de cupón, simplemente aplica el descuento sin verificar la marca
-            $discountValue = $totalPrice * ($discount->value / 100);
-            $totalPrice -= $discountValue;
-    
-            // Almacena la información del descuento y el precio total en la sesión
-            session()->put("discount", [
-                "name" => $discount->code,
-                "discount_value" => $discountValue,
-            ]);
-            session()->put('totalPrice', $totalPrice);
-    
-            return redirect()->route("cart.viewShipping")->with("mensaje", "Coupon has been applied!");
         }
+
+        // Calcula el descuento y el precio total
+        $discountValue = $totalPrice * ($discount->value / 100);
+        $totalPrice -= $discountValue;
+
+        // Almacena la información del descuento y el precio total en la sesión
+        session()->put("discount", [
+            "name" => $discount->code,
+            "discount_value" => $discountValue,
+        ]);
+        session()->put('totalPrice', $totalPrice);
+
+        return redirect()->route("cart.viewShipping")->with("mensaje", "Coupon has been applied!");
     }
-    
-
-
 
 
     public function destroy(Request $request)

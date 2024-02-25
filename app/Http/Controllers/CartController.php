@@ -81,7 +81,10 @@ class CartController extends Controller
             $products = collect();
         }
 
-        return view('products.cart', compact('products', 'cart'));
+        // Obtener todos los descuentos
+        $discounts = Discount::all();
+
+        return view('products.cart', compact('products', 'cart', 'discounts'));
     }
 
     public function pay(Request $request)

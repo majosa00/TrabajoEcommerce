@@ -16,36 +16,13 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    // public function create(array $input)
+
+    //Está lo mismo pero ampliado en el product controller index que creó joseka
+    // public function products()
     // {
-    //     // Inicia una transacción de base de datos
-    //     DB::beginTransaction();
-
-    //     try {
-    //         $user = new User();
-    //         $user->name = $input['name'];
-    //         $user->email = $input['email'];
-    //         $user->password = Hash::make($input['password']);
-    //         $user->rol_id = 1;
-    //         $user->save(); // Guarda el usuario en la base de datos
-
-    //         $cart = new Cart();
-    //         $cart->user_id = $user->id; // Asigna el ID del usuario recién creado
-    //         $cart->save(); // Guarda el carro en la base de datos
-
-    //         DB::commit(); // Confirma la transacción
-    //         return $user;
-    //     } catch (\Exception $e) {
-    //         DB::rollBack(); // Si algo sale mal, revierte todas las operaciones
-    //         throw $e; // Lanza la excepción para manejarla más arriba o mostrar el error
-    //     }
+    //     $products = Product::with(['images', 'wishlist'])->get();
+    //     return view('logged')->with('products', $products);
     // }
-
-    public function products()
-    {
-        $products = Product::with(['images', 'wishlist'])->get();
-        return view('logged')->with('products', $products);
-    }
 
     public function brands()
     {
