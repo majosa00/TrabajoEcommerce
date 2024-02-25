@@ -55,7 +55,14 @@
                     <p>{{ $product->description }}</p>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-2">
-                    <p>${{ $product->price }} </p>
+                    @if ($product->brand->name === 'Monster')
+                        <p>
+                            <del>${{ $product->price }}</del>
+                            <span style="color: red;">${{ $product->price * 0.86 }}</span>
+                        </p>
+                    @else
+                        <p>${{ $product->price }}</p>
+                    @endif
                 </div>
                 <div class="col-lg-2 col-md-10 col-sm-10 col-3">
                     <div class="d-flex align-items-center">
