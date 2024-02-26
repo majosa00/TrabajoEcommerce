@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Image;
+use App\Models\Discount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    //Productos administrador
     public function products()
     {
         // Ordena los productos por fecha de creación de manera descendente
@@ -286,10 +288,13 @@ class ProductController extends Controller
         // Consulta para obtener los 3 productos más vendidos
         $topSellingProducts = Product::withCount('orders as orders_count')
             ->orderByDesc('orders_count')
-            ->take(3) //Si no hay nada comprado muestra 3 igualmente, publicidad engañosa :), sino te los ordena.
+            ->take(3)
             ->get();
 
-        return view('logged', compact('products', 'topSellingProducts'));
+        // Obtener todos los descuentos
+        $discounts = Discount::all();
+
+        return view('logged', compact('products', 'topSellingProducts', 'discounts'));
     }
 
     public function showProduct($id)

@@ -12,7 +12,7 @@
         @if ($errors->any())
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 @foreach ($errors->all() as $error)
-                   {{ $error }}
+                    {{ $error }}
                 @endforeach
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -36,24 +36,17 @@
                                 <div class="single-product bg-negro text-white p-4"
                                     style="background-image: url('{{ optional($product->images)->imagen_1 ? asset('storage/' . $product->images->imagen_1) : '' }}');">
                                     <div class="part-1">
-                                        {{-- PARA LOS DESCUENTOS <span class="discount">15% off</span> --}}
+                                        @if ($product->brand->discount && $product->brand->discount->code === 'CODE2')
+                                            <span class="discount">{{ $product->brand->discount->code }}</span>
+                                        @endif
                                         <ul>
-                                            <li>
-                                                <h4 class="product-price">
-                                                    @if ($product->brand->name === 'Monster')
-                                                        <del>${{ $product->price }}</del>
-                                                        <span style="color: red;">${{ $product->price * 0.86 }}</span>
-                                                    @else
-                                                        ${{ $product->price }}
-                                                    @endif
-                                                </h4>
-                                            </li>
                                             <li>
                                                 <!-- Formulario para agregar al carrito -->
                                                 <form action="{{ route('cart.addToCart', $product->id) }}" method="POST"
                                                     class="d-flex justify-content-start">
                                                     @csrf
-                                                    <button class="btn btn-warning" type="submit"><i class="fas fa-shopping-cart"></i>
+                                                    <button class="btn btn-warning" type="submit"><i
+                                                            class="fas fa-shopping-cart"></i>
                                                     </button>
                                                 </form>
                                             </li>
@@ -72,6 +65,7 @@
                                     </div>
                                     <div class="part-2">
                                         <h3 class="product-title">{{ $product->name }}</h3>
+                                        <h4 class="product-price">${{ $product->price }}</h4>
                                     </div>
                                 </div>
                             </a>
@@ -99,24 +93,19 @@
                                 <div class="single-product bg-negro text-white p-4"
                                     style="background-image: url('{{ optional($product->images)->imagen_1 ? asset('storage/' . $product->images->imagen_1) : '' }}');">
                                     <div class="part-1">
-                                        {{-- PARA LOS DESCUENTOS <span class="discount">15% off</span> --}}
+                                        @foreach ($discounts as $discount)
+                                            @if ($discount->type === 'category' && $discount->brand_id === $product->brand_id)
+                                                <span class="discount">{{ $discount->code }}</span>
+                                            @endif
+                                        @endforeach
                                         <ul>
-                                            <li>
-                                                <h4 class="product-price">
-                                                    @if ($product->brand->name === 'Monster')
-                                                        <del>${{ $product->price }}</del>
-                                                        <span style="color: red;">${{ $product->price * 0.86 }}</span>
-                                                    @else
-                                                        ${{ $product->price }}
-                                                    @endif
-                                                </h4>
-                                            </li>
                                             <li>
                                                 <!-- Formulario para agregar al carrito -->
                                                 <form action="{{ route('cart.addToCart', $product->id) }}" method="POST"
                                                     class="d-flex justify-content-start">
                                                     @csrf
-                                                    <button class="btn btn-warning" type="submit"><i class="fas fa-shopping-cart"></i>
+                                                    <button class="btn btn-warning" type="submit"><i
+                                                            class="fas fa-shopping-cart"></i>
                                                     </button>
                                                 </form>
                                             </li>
@@ -135,6 +124,7 @@
                                     </div>
                                     <div class="part-2">
                                         <h3 class="product-title">{{ $product->name }}</h3>
+                                        <h4 class="product-price">${{ $product->price }}</h4>
                                     </div>
                                 </div>
                             </a>
@@ -146,3 +136,4 @@
     </div>
     <div id="main-container"></div>
 @endsection
+

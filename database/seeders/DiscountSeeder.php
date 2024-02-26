@@ -35,7 +35,7 @@ class DiscountSeeder extends Seeder
             'end_date' => now()->addDays(30),
             'user_id' => $users->random()->id,
             'max_users' => 10,
-            'brand_id' => 3, 
+            'brand_id' => 4, 
         ]);
     }
 }
