@@ -427,8 +427,8 @@ button:focus {
 
 .section-products .single-product .part-1 .discount {
     position: absolute;
-    top: 15px;
-    left: 20px;
+    top: 10px;
+    left: 10px;
     color: #ffffff;
     background-color: #fe302f;
     padding: 2px 8px;
@@ -502,6 +502,29 @@ button:focus {
 
 .single-product {
     background-repeat: no-repeat;
+}
+
+.section-products .single-product .part-3 {
+    position: relative;
+    height: 120px;
+    max-height: 290px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.section-products .single-product .part-3 .discount {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #ffffff;
+    background-color: #fe302f;
+    padding: 2px 8px;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.section-products .single-product .part-3 ul li a:hover {
+    color: #fe302f;
 }
 
 /*Cards producto específico*/
@@ -630,7 +653,7 @@ li:not(:first-child) {
 }
 
 .text-rojo {
-    color:red;
+    color: red;
 }
 
 .letrapequeña {

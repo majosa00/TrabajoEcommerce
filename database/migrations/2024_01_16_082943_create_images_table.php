@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,14 +13,19 @@ return new class extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
 
-            $table->string('imagen_1')->nullable(); 
-            
-            $table->unsignedBigInteger('product_id')->unique();
+            $table->string('imagen_1')->nullable();
+
+            $table->unsignedBigInteger('product_id')->unique()->nullable();
             $table->foreign('product_id')
-                    ->references('id')
-                    ->on('products')
-                    //Si se elimina el producto, se eliminan las fotos
-                    ->onUpdate('cascade'); //Si el producto cambia el id, se cambia el id de estas fotos
+                ->references('id')
+                ->on('products')
+                ->onUpdate('cascade');
+
+            $table->unsignedBigInteger('brand_id')->nullable();
+            $table->foreign('brand_id')
+                ->references('id')
+                ->on('brands')
+                ->onUpdate('cascade');
 
             $table->timestamps();
         });
