@@ -36,9 +36,11 @@
                                 <div class="single-product bg-negro text-white p-4"
                                     style="background-image: url('{{ optional($product->images)->imagen_1 ? asset('storage/' . $product->images->imagen_1) : '' }}');">
                                     <div class="part-1">
-                                        @if ($product->brand->discount && $product->brand->discount->code === 'CODE2')
-                                            <span class="discount">{{ $product->brand->discount->code }}</span>
-                                        @endif
+                                        @foreach ($discounts as $discount)
+                                            @if ($discount->type === 'category' && $discount->brand_id === $product->brand_id)
+                                                <span class="discount">{{ $discount->code }}</span>
+                                            @endif
+                                        @endforeach
                                         <ul>
                                             <li>
                                                 <!-- Formulario para agregar al carrito -->
@@ -136,4 +138,3 @@
     </div>
     <div id="main-container"></div>
 @endsection
-
