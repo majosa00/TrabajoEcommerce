@@ -235,13 +235,14 @@ class ProductController extends Controller
             $brand->delete();
 
             DB::commit();
-            return redirect()->route('ruta_lista_marcas')->with('mensaje', 'Brand deleted successfully and all associated products have been unlinked.');
+            return redirect()->route('')->with('mensaje', 'Brand deleted successfully and all associated products have been unlinked.');
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', 'Error removing the brand: ' . $e->getMessage());
         }
     }
 
+    // En ProductController.php
     public function showTopFavorites()
     {
         $topProducts = Product::withCount('wishlists')
@@ -249,7 +250,6 @@ class ProductController extends Controller
             ->take(5)
             ->get();
 
-        // Cambia 'admin.wishlist' por 'wishlistadmin' para que coincida con el nombre de tu archivo de vista
         return view('wishlistadmin', compact('topProducts'));
     }
 
@@ -269,7 +269,7 @@ class ProductController extends Controller
         $product->is_hidden = true;
         $product->save();
 
-        return back()->with('mensaje', 'Producto ocultado correctamente.');
+        return back()->with('mensaje', 'Product properly concealed.');
     }
 
     public function show($id)
@@ -278,7 +278,7 @@ class ProductController extends Controller
         $product->is_hidden = false;
         $product->save();
 
-        return back()->with('mensaje', 'Producto mostrado correctamente.');
+        return back()->with('mensaje', 'Product displayed correctly.');
     }
 
     public function index()
