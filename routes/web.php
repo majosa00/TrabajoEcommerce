@@ -113,4 +113,8 @@ Route::delete('admin/delete_brand/{id}', [ProductController::class, 'deleteBrand
 
 //nombre de la ruta - controller - nombre función dentro del controlador - nombre es para renombrar la ruta porque est´dentro de un formulario y queremos que tenga ese name
 
+Route::get('/products/{id}', 'ProductController@showProductWithBrand')->name('products.showWithBrand');
+
 Route::get('/order/{id}/invoice', [OrderController::class, 'generateInvoice'])->name('order.generateInvoice');
+
+Route::get('/products/new', 'ProductController@showCreateForm')->name('products.new');
