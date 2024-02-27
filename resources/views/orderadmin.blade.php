@@ -7,7 +7,7 @@
             <thead>
                 <tr>
                     <th>ID User</th>
-                    <th>Usuario</th>
+                    <th>User</th>
                     <th>Address</th>
                     <th>ID Order</th>
                     <th>Order Date</th>

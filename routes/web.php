@@ -64,6 +64,7 @@ Route::group([
     //Wishlist
     Route::get('admin/wishlist', [WishlistController::class, 'showTopWishlist'])->name('admin.wishlist');
     Route::get('admin/wishlist', [ProductController::class, 'showTopFavorites'])->name('admin.topFavorites');
+
 })->middleware(['auth', 'verified']);
 
 //Ruta carrito
@@ -111,3 +112,5 @@ Route::get('/products', [ProductController::class, 'index']);
 Route::delete('admin/delete_brand/{id}', [ProductController::class, 'deleteBrand'])->name('brands.deleteBrand');
 
 //nombre de la ruta - controller - nombre función dentro del controlador - nombre es para renombrar la ruta porque est´dentro de un formulario y queremos que tenga ese name
+
+Route::get('/order/{id}/invoice', [OrderController::class, 'generateInvoice'])->name('order.generateInvoice');

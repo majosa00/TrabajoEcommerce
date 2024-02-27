@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PDF;
 
 class OrderController extends Controller
 {
@@ -38,5 +39,12 @@ class OrderController extends Controller
     {
         return view('products.ticket', compact('order'));
     }
+    public function generateInvoice($id)
+    {
+        $order = Order::with(['products', 'user'])->findOrFail($id);
+        $pdf = PDF::loadView('invoices.invoice', compact('order'));
+        return $pdf->download("invoice-{$order->id}.pdf");
+    }
+
 
 }

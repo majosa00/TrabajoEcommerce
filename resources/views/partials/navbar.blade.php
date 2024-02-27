@@ -32,8 +32,7 @@
                 </li>
                 <a class="nav-link position-relative" href="/cart" style="min-width: 40px;">
                     <i class="fas fa-shopping-cart"></i>
-                    <span class="position-absolute badge rounded-circle bg-warning"
-                        style="color: black; top: 0px; right: 3px; width: 18px; height: 18px; font-size: 12px; display: flex; align-items: center; justify-content: center;">
+                    <span class="position-absolute badge rounded-circle bg-warning">
                         {{ $itemCount }}
                     </span>
                 </a>

@@ -15,17 +15,16 @@ return new class extends Migration
             $table->id();
 
             $table->integer('amount')->default(1);
+            $table->decimal('price', 8, 2); // Agrega esta línea para la columna 'price'
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('product_id');
 
             $table->foreign('order_id')
                     ->references('id')
-                    ->on('orders')
-                   ;
+                    ->on('orders');
             $table->foreign('product_id')
                     ->references('id')
-                    ->on('products')
-                   ;
+                    ->on('products');
 
             $table->timestamps();
         });
