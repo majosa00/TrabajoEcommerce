@@ -63,14 +63,21 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="brand_id">Brand ID:</label>
-                                        <input type="number" class="form-control" name="brand_id" id="brand_id" required>
-                                        <div class="invalid-feedback">
-                                            Please enter the brand ID.
-                                        </div>
-                                    </div>
-                                </div>
+    <div class="form-group">
+        <label for="brand_id">Brand:</label>
+        <select class="form-control" name="brand_id" id="brand_id" required>
+            @foreach (App\Models\Brand::all() as $brand)
+                <option value="{{ $brand->id }}">
+                    {{ $brand->name }}
+                </option>
+            @endforeach
+        </select>
+        <div class="invalid-feedback">
+            Please select a brand.
+        </div>
+    </div>
+</div>
+
                             </div>
 
                             <div class="row">
@@ -148,26 +155,25 @@
                 </div>
             </div>
         </div>
-
         <table class="table table-responsive">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Brand ID</th>
-                    <th>Price</th>
-                    <th>Details</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($products as $product)
-                    <tr>
-                        <td>{{ $product->name }}</td>
-                        <td>{{ $product->description }}</td>
-                        <td>{{ $product->brand_id }}</td>
-                        <td>{{ $product->price }}</td>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Brand</th> <!-- Cambiado de 'Brand ID' a 'Brand' -->
+            <th>Price</th>
+            <th>Details</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($products as $product)
+            <tr>
+                <td>{{ $product->name }}</td>
+                <td>{{ $product->description }}</td>
+                <td>{{ $product->brand->name ?? 'Brand not assigned' }}</td> <!-- Aquí se muestra el nombre de la marca -->
+                <td>{{ $product->price }}</td>
                         <td>
                             <a href="#" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#detailProductModal{{ $product->id }}">
@@ -185,13 +191,13 @@
                                 <form action="{{ route('products.hide', $product->id) }}" method="POST"
                                     style="display:inline;">
                                     @csrf
-                                    <button type="submit" class="btn btn-secondary btn-sm">Hide</button>
+                                    <button type="submit" class="btn btn-secondary btn-sm">Ocultar</button>
                                 </form>
                             @else
                                 <form action="{{ route('products.show', $product->id) }}" method="POST"
                                     style="display:inline;">
                                     @csrf
-                                    <button type="submit" class="btn btn-success btn-sm">Show</button>
+                                    <button type="submit" class="btn btn-success btn-sm">Mostrar</button>
                                 </form>
                             @endif
                         </td>
@@ -245,15 +251,20 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for="brand_id">Brand ID:</label>
-                                            <input type="number" class="form-control" value="{{ $product->brand_id }}"
-                                                name="brand_id" id="brand_id" required>
-                                            <div class="invalid-feedback">
-                                                Please enter the brand ID.
-                                            </div>
-                                        </div>
-                                    </div>
+    <div class="form-group">
+        <label for="brand_id">Brand:</label>
+        <select class="form-control" name="brand_id" id="brand_id" required>
+            @foreach (App\Models\Brand::all() as $brand)
+                <option value="{{ $brand->id }}" {{ $product->brand_id == $brand->id ? 'selected' : '' }}>
+                    {{ $brand->name }}
+                </option>
+            @endforeach
+        </select>
+        <div class="invalid-feedback">
+            Please select a brand.
+        </div>
+    </div>
+</div>
                                 </div>
 
                                 <div class="row">
@@ -337,73 +348,71 @@
             </div>
         @endforeach
 
-        <!-- Modal detalles producto -->
-        @foreach ($products as $product)
-            <div class="modal fade" id="detailProductModal{{ $product->id }}" tabindex="-1"
-                aria-labelledby="detailProductModalLabel{{ $product->id }}" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2 class="modal-title">{{ $product->name }}</h2>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <table class="table table-responsive-sm table-bordered table-hover">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th scope="col" colspan="2">Product Details</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">Name</th>
-                                        <td>{{ $product->name }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Description</th>
-                                        <td>{{ $product->description }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Flavor</th>
-                                        <td>{{ $product->flavor }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Price</th>
-                                        <td>{{ $product->price }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Dimension</th>
-                                        <td>{{ $product->dimension }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Units per package</th>
-                                        <td>{{ $product->udpack }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Weight</th>
-                                        <td>{{ $product->weight }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Stock</th>
-                                        <td>{{ $product->stock }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Brand ID</th>
-                                        <td>{{ $product->brand_id }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">IVA</th>
-                                        <td>{{ $product->iva }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-
-                        </div>
-                    </div>
+    <!-- Modal detalles producto -->
+@foreach ($products as $product)
+    <div class="modal fade" id="detailProductModal{{ $product->id }}" tabindex="-1" aria-labelledby="detailProductModalLabel{{ $product->id }}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">{{ $product->name }}</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-        @endforeach
+                <div class="modal-body">
+                    <table class="table table-responsive-sm table-bordered table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col" colspan="2">Product Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Name</th>
+                                <td>{{ $product->name }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Description</th>
+                                <td>{{ $product->description }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Flavor</th>
+                                <td>{{ $product->flavor }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Price</th>
+                                <td>{{ $product->price }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Dimension</th>
+                                <td>{{ $product->dimension }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Units per package</th>
+                                <td>{{ $product->udpack }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Weight</th>
+                                <td>{{ $product->weight }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Stock</th>
+                                <td>{{ $product->stock }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Brand</th>
+                                <td>{{ $product->brand->name ?? 'Brand not assigned' }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">IVA</th>
+                                <td>{{ $product->iva }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+@endforeach
+
 
     </div>
     <div id="main-container"></div>

@@ -28,6 +28,7 @@ class ProductController extends Controller
         return view('products.detail', @compact('product'));
     }
 
+
     public function create(Request $request)
     {
         $request->validate([
@@ -72,12 +73,14 @@ class ProductController extends Controller
     {
         return view('products.create');
     }
-
     public function edit($id)
     {
         $product = Product::findOrFail($id);
-        return view('products.edit', compact('product'));
+        $brands = Brand::all(); // Assuming Brand is your brand model
+
+        return view('product.edit', compact('product', 'brands'));
     }
+
 
     public function update(Request $request, $id)
     {
@@ -281,6 +284,31 @@ class ProductController extends Controller
         return back()->with('mensaje', 'Product displayed correctly.');
     }
 
+    public function showProductWithBrand($id)
+    {
+        $product = Product::with('brand')->findOrFail($id);
+        return view('products.show', compact('product'));
+    }
+
+    public function showBrands()
+    {
+        $brands = Brand::all();
+
+        // Pasa 'brands' a la vista.
+        return view('products.brands', compact('brands'));
+    }
+
+    public function showCreateForm()
+    {
+        // Cargar productos y marcas
+        $products = Product::all();
+        $brands = Brand::all(); // Obtén todas las marcas de la base de datos
+    
+        // Pasar productos y marcas a la vista
+        return view('product', compact('products', 'brands'));
+    }
+    
+
     public function index()
     {
         $products = Product::where('is_hidden', false)->get();
@@ -306,3 +334,12 @@ class ProductController extends Controller
     }
 
 }
+
+
+
+
+
+
+
+
+
