@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->integer('amount')->default(1);
-            $table->decimal('price', 8, 2); // Agrega esta línea para la columna 'price'
+            $table->decimal('price', 8, 2)->nullable(); // Agrega esta línea para la columna 'price'
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('product_id');
 
