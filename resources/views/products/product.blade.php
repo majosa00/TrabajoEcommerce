@@ -199,13 +199,13 @@
                                 <form action="{{ route('products.hide', $product->id) }}" method="POST"
                                     style="display:inline;">
                                     @csrf
-                                    <button type="submit" class="btn btn-secondary btn-sm">Ocultar</button>
+                                    <button type="submit" class="btn btn-secondary btn-sm">Hide</button>
                                 </form>
                             @else
                                 <form action="{{ route('products.show', $product->id) }}" method="POST"
                                     style="display:inline;">
                                     @csrf
-                                    <button type="submit" class="btn btn-success btn-sm">Mostrar</button>
+                                    <button type="submit" class="btn btn-success btn-sm">Show</button>
                                 </form>
                             @endif
                         </td>
