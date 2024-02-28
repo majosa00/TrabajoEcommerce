@@ -58,17 +58,14 @@ class WishlistController extends Controller
 
     public function showTopWishlist()
     {
-        // Recuperar todos los productos que han sido añadidos a la lista de deseos, luego filtrar manualmente
-        $allProducts = Product::withCount('wishlists')
-            ->orderBy('wishlists_count', 'desc')
+        // Contar cuántas listas de deseos contiene cada producto.
+        $topProducts = Product::withCount('wishlist as wishlists_count')
+            ->orderBy('wishlists_count', 'desc') // Ordena los productos por el conteo de wishlists
+            ->take(5) // Seleccionar los 5 productos más deseados
             ->get();
 
-        // Filtrar productos con wishlists_count mayor a 0
-        $topProducts = $allProducts->filter(function ($product) {
-            return $product->wishlists_count > 0;
-        })->take(5);
-
-        return view('admin.wishlist', compact('topProducts'));
+        // Pasar los productos a la vista.
+        return view('wishlistadmin', compact('topProducts'));
     }
 
 }
