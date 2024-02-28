@@ -5,22 +5,22 @@
         <h1 class="mb-3">PRODUCTS</h1>
 
         @if (session('mensaje'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('mensaje') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-    
-    @if ($errors->any())
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('mensaje') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
         <a href="#" class="btn btn-warning mb-4" data-bs-toggle="modal" data-bs-target="#newProductModal">
             <i class="fas fa-plus"></i> New Product
@@ -32,7 +32,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title">Add New Product</h1>
+                        <h3 class="modal-title">Add New Product</h3>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -54,6 +54,14 @@
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label for="ingredient">Ingredient:</label>
+                                <textarea class="form-control" name="ingredient" id="ingredient" rows="3" required></textarea>
+                                <div class="invalid-feedback">
+                                    Please enter a product ingredient.
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-lg-6">
                                     <label for="flavor">Flavor:</label>
@@ -63,24 +71,24 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                <div class="form-group">
-    <label for="brand_id">Brand:</label>
-    <select class="form-control" name="brand_id" id="brand_id" required>
-        <!-- Opción vacía añadida al principio -->
-        <option value="">Seleccione una marca</option>
+                                    <div class="form-group">
+                                        <label for="brand_id">Brand:</label>
+                                        <select class="form-control" name="brand_id" id="brand_id" required>
+                                            <!-- Opción vacía añadida al principio -->
+                                            <option value="">Seleccione una marca</option>
 
-        @foreach (App\Models\Brand::all() as $brand)
-            <option value="{{ $brand->id }}">
-                {{ $brand->name }}
-            </option>
-        @endforeach
-    </select>
-    <div class="invalid-feedback">
-        Please select a brand.
-    </div>
-</div>
-</div>
- </div>
+                                            @foreach (App\Models\Brand::all() as $brand)
+                                                <option value="{{ $brand->id }}">
+                                                    {{ $brand->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Please select a brand.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="row">
                                 <div class="col-lg-6">
@@ -132,7 +140,8 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="stock">Stock:</label>
-                                        <input type="number" class="form-control" name="stock" id="stock" required>
+                                        <input type="number" class="form-control" name="stock" id="stock"
+                                            required>
                                         <div class="invalid-feedback">
                                             Please enter the product stock.
                                         </div>
@@ -158,24 +167,30 @@
             </div>
         </div>
         <table class="table table-responsive">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Brand</th> <!-- Cambiado de 'Brand ID' a 'Brand' -->
-            <th>Price</th>
-            <th>Details</th>
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($products as $product)
-            <tr>
-                <td>{{ $product->name }}</td>
-                <td>{{ $product->description }}</td>
-                <td>{{ $product->brand->name ?? 'Brand not assigned' }}</td> <!-- Aquí se muestra el nombre de la marca -->
-                <td>{{ $product->price }}</td>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Ingredients</th>
+                    <th>Brand</th> <!-- Cambiado de 'Brand ID' a 'Brand' -->
+                    <th>Price</th>
+                    <th>Details</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($products as $product)
+                    <tr>
+                        <td><img src="{{ optional($product->images)->imagen_1 ? asset('storage/' . $product->images->imagen_1) : '' }}"
+                                class="w-100" alt="{{ $product->name }}"></td>
+                        <td>{{ $product->name }}</td>
+                        <td>{{ $product->description }}</td>
+                        <td>{{ $product->ingredient }}</td>
+                        <td>{{ $product->brand->name ?? 'Brand not assigned' }}</td>
+                        <!-- Aquí se muestra el nombre de la marca -->
+                        <td>{{ $product->price }}</td>
                         <td>
                             <a href="#" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#detailProductModal{{ $product->id }}">
@@ -216,7 +231,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h2 class="modal-title">Edit Product: {{ $product->name }}</h2>
+                            <h3 class="modal-title">Edit Product: {{ $product->name }}</h3>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
@@ -225,6 +240,11 @@
                                 action="{{ route('products.update', $product->id) }}">
                                 @method('PUT')
                                 @csrf
+
+                                <div class="d-flex justify-content-center">
+                                    <img src="{{ optional($product->images)->imagen_1 ? asset('storage/' . $product->images->imagen_1) : '' }}"
+                                        class="w-50 " alt="{{ $product->name }}">
+                                </div>
 
                                 <div class="form-group">
                                     <label for="name">Name:</label>
@@ -243,6 +263,14 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="ingredient">Ingredient:</label>
+                                    <textarea class="form-control" name="ingredient" id="ingredient" rows="3" required></textarea>
+                                    <div class="invalid-feedback">
+                                        Please enter a product ingredient.
+                                    </div>
+                                </div>
+
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <label for="flavor">Flavor:</label>
@@ -253,20 +281,21 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-    <div class="form-group">
-        <label for="brand_id">Brand:</label>
-        <select class="form-control" name="brand_id" id="brand_id" required>
-            @foreach (App\Models\Brand::all() as $brand)
-                <option value="{{ $brand->id }}" {{ $product->brand_id == $brand->id ? 'selected' : '' }}>
-                    {{ $brand->name }}
-                </option>
-            @endforeach
-        </select>
-        <div class="invalid-feedback">
-            Please select a brand.
-        </div>
-    </div>
-</div>
+                                        <div class="form-group">
+                                            <label for="brand_id">Brand:</label>
+                                            <select class="form-control" name="brand_id" id="brand_id" required>
+                                                @foreach (App\Models\Brand::all() as $brand)
+                                                    <option value="{{ $brand->id }}"
+                                                        {{ $product->brand_id == $brand->id ? 'selected' : '' }}>
+                                                        {{ $brand->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Please select a brand.
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="row">
@@ -350,71 +379,84 @@
             </div>
         @endforeach
 
-    <!-- Modal detalles producto -->
-@foreach ($products as $product)
-    <div class="modal fade" id="detailProductModal{{ $product->id }}" tabindex="-1" aria-labelledby="detailProductModalLabel{{ $product->id }}" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title">{{ $product->name }}</h2>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-responsive-sm table-bordered table-hover">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col" colspan="2">Product Details</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">Name</th>
-                                <td>{{ $product->name }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Description</th>
-                                <td>{{ $product->description }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Flavor</th>
-                                <td>{{ $product->flavor }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Price</th>
-                                <td>{{ $product->price }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Dimension</th>
-                                <td>{{ $product->dimension }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Units per package</th>
-                                <td>{{ $product->udpack }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Weight</th>
-                                <td>{{ $product->weight }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Stock</th>
-                                <td>{{ $product->stock }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Brand</th>
-                                <td>{{ $product->brand->name ?? 'Brand not assigned' }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">IVA</th>
-                                <td>{{ $product->iva }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <!-- Modal detalles producto -->
+        @foreach ($products as $product)
+            <div class="modal fade" id="detailProductModal{{ $product->id }}" tabindex="-1"
+                aria-labelledby="detailProductModalLabel{{ $product->id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">{{ $product->name }}</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-responsive-sm table-bordered table-hover">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col" colspan="2">Product Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <div class="d-flex justify-content-center">
+                                            <img src="{{ optional($product->images)->imagen_1 ? asset('storage/' . $product->images->imagen_1) : '' }}"
+                                                class="w-50 " alt="{{ $product->name }}">
+                                        </div>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Name</th>
+                                        <td>{{ $product->name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Description</th>
+                                        <td>{{ $product->description }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Ingredient</th>
+                                        <td>{{ $product->ingredient }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Flavor</th>
+                                        <td>{{ $product->flavor }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Price</th>
+                                        <td>{{ $product->price }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Dimension</th>
+                                        <td>{{ $product->dimension }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Units per package</th>
+                                        <td>{{ $product->udpack }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Weight</th>
+                                        <td>{{ $product->weight }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Stock</th>
+                                        <td>{{ $product->stock }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Brand ID</th>
+                                        <td>{{ $product->brand_id }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">IVA</th>
+                                        <td>{{ $product->iva }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-@endforeach
-
+        @endforeach
 
     </div>
     <div id="main-container"></div>
