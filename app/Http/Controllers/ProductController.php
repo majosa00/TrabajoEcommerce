@@ -303,11 +303,11 @@ class ProductController extends Controller
         // Cargar productos y marcas
         $products = Product::all();
         $brands = Brand::all(); // Obtén todas las marcas de la base de datos
-    
+
         // Pasar productos y marcas a la vista
         return view('product', compact('products', 'brands'));
     }
-    
+
 
     public function index()
     {

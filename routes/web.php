@@ -62,9 +62,8 @@ Route::group([
     Route::put('admin/edit_brand/{id}', [ProductController::class, 'updateBrand'])->name('brands.updateBrand');
     Route::delete('admin/delete_brand/{id}', [ProductController::class, 'deleteBrand'])->name('brands.deleteBrand');
     //Wishlist
-    Route::get('admin/wishlist', [WishlistController::class, 'showTopWishlist'])->name('admin.wishlist');
     Route::get('admin/wishlist', [ProductController::class, 'showTopFavorites'])->name('admin.topFavorites');
-
+    Route::get('/admin/wishlist', [WishlistController::class, 'showTopWishlist'])->name('admin.wishlist');
 })->middleware(['auth', 'verified']);
 
 //Ruta carrito
