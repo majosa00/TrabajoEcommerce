@@ -63,22 +63,24 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-    <div class="form-group">
-        <label for="brand_id">Brand:</label>
-        <select class="form-control" name="brand_id" id="brand_id" required>
-            @foreach (App\Models\Brand::all() as $brand)
-                <option value="{{ $brand->id }}">
-                    {{ $brand->name }}
-                </option>
-            @endforeach
-        </select>
-        <div class="invalid-feedback">
-            Please select a brand.
-        </div>
+                                <div class="form-group">
+    <label for="brand_id">Brand:</label>
+    <select class="form-control" name="brand_id" id="brand_id" required>
+        <!-- Opción vacía añadida al principio -->
+        <option value="">Seleccione una marca</option>
+
+        @foreach (App\Models\Brand::all() as $brand)
+            <option value="{{ $brand->id }}">
+                {{ $brand->name }}
+            </option>
+        @endforeach
+    </select>
+    <div class="invalid-feedback">
+        Please select a brand.
     </div>
 </div>
-
-                            </div>
+</div>
+ </div>
 
                             <div class="row">
                                 <div class="col-lg-6">
@@ -191,13 +193,13 @@
                                 <form action="{{ route('products.hide', $product->id) }}" method="POST"
                                     style="display:inline;">
                                     @csrf
-                                    <button type="submit" class="btn btn-secondary btn-sm">Ocultar</button>
+                                    <button type="submit" class="btn btn-secondary btn-sm">Hide</button>
                                 </form>
                             @else
                                 <form action="{{ route('products.show', $product->id) }}" method="POST"
                                     style="display:inline;">
                                     @csrf
-                                    <button type="submit" class="btn btn-success btn-sm">Mostrar</button>
+                                    <button type="submit" class="btn btn-success btn-sm">Show</button>
                                 </form>
                             @endif
                         </td>
