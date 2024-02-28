@@ -21,16 +21,12 @@
             </ul>
             <div class="order-summary">
                 <p class="address">Address: {{ $order->address }}</p>
-                <p class="total-price">Total Price: <span style="text-decoration: line-through; color:black">
-                        ${{ $order->totalPrice + session('discount.discount_value') }}
-                    </span>
-                    <span class="text-rojo">${{ $order->totalPrice }}</span>
-                </p>
+                <p>Total Price: ${{ $order->totalPrice }}</p>
                 <p class="order-state">State: {{ $order->state }}</p>
             </div>
         </div>
     </div>
-    
+
     <div id="main-container">
     </div>
 @endsection
