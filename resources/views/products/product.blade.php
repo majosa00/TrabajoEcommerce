@@ -5,22 +5,22 @@
         <h1 class="mb-3">PRODUCTS</h1>
 
         @if (session('mensaje'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('mensaje') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-    
-    @if ($errors->any())
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('mensaje') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
         <a href="#" class="btn btn-warning mb-4" data-bs-toggle="modal" data-bs-target="#newProductModal">
             <i class="fas fa-plus"></i> New Product
@@ -32,7 +32,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title">Add New Product</h1>
+                        <h3 class="modal-title">Add New Product</h3>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -51,6 +51,14 @@
                                 <textarea class="form-control" name="description" id="description" rows="3" required></textarea>
                                 <div class="invalid-feedback">
                                     Please enter a product description.
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ingredient">Ingredient:</label>
+                                <textarea class="form-control" name="ingredient" id="ingredient" rows="3" required></textarea>
+                                <div class="invalid-feedback">
+                                    Please enter a product ingredient.
                                 </div>
                             </div>
 
@@ -123,7 +131,8 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="stock">Stock:</label>
-                                        <input type="number" class="form-control" name="stock" id="stock" required>
+                                        <input type="number" class="form-control" name="stock" id="stock"
+                                            required>
                                         <div class="invalid-feedback">
                                             Please enter the product stock.
                                         </div>
@@ -152,8 +161,10 @@
         <table class="table table-responsive">
             <thead>
                 <tr>
+                    <th></th>
                     <th>Name</th>
                     <th>Description</th>
+                    <th>Ingredients</th>
                     <th>Brand ID</th>
                     <th>Price</th>
                     <th>Details</th>
@@ -164,8 +175,11 @@
             <tbody>
                 @foreach ($products as $product)
                     <tr>
+                        <td><img src="{{ optional($product->images)->imagen_1 ? asset('storage/' . $product->images->imagen_1) : '' }}"
+                                class="w-100" alt="{{ $product->name }}"></td>
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->description }}</td>
+                        <td>{{ $product->ingredient }}</td>
                         <td>{{ $product->brand_id }}</td>
                         <td>{{ $product->price }}</td>
                         <td>
@@ -208,7 +222,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h2 class="modal-title">Edit Product: {{ $product->name }}</h2>
+                            <h3 class="modal-title">Edit Product: {{ $product->name }}</h3>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
@@ -217,6 +231,11 @@
                                 action="{{ route('products.update', $product->id) }}">
                                 @method('PUT')
                                 @csrf
+
+                                <div class="d-flex justify-content-center">
+                                    <img src="{{ optional($product->images)->imagen_1 ? asset('storage/' . $product->images->imagen_1) : '' }}"
+                                        class="w-50 " alt="{{ $product->name }}">
+                                </div>
 
                                 <div class="form-group">
                                     <label for="name">Name:</label>
@@ -232,6 +251,14 @@
                                     <textarea class="form-control" name="description" id="description" rows="3" required></textarea>
                                     <div class="invalid-feedback">
                                         Please enter a product description.
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="ingredient">Ingredient:</label>
+                                    <textarea class="form-control" name="ingredient" id="ingredient" rows="3" required></textarea>
+                                    <div class="invalid-feedback">
+                                        Please enter a product ingredient.
                                     </div>
                                 </div>
 
@@ -344,7 +371,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h2 class="modal-title">{{ $product->name }}</h2>
+                            <h3 class="modal-title">{{ $product->name }}</h3>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
@@ -357,12 +384,22 @@
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <div class="d-flex justify-content-center">
+                                            <img src="{{ optional($product->images)->imagen_1 ? asset('storage/' . $product->images->imagen_1) : '' }}"
+                                                class="w-50 " alt="{{ $product->name }}">
+                                        </div>
+                                    </tr>
+                                    <tr>
                                         <th scope="row">Name</th>
                                         <td>{{ $product->name }}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Description</th>
                                         <td>{{ $product->description }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Ingredient</th>
+                                        <td>{{ $product->ingredient }}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Flavor</th>
@@ -403,6 +440,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
         @endforeach
 
     </div>

@@ -33,6 +33,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
             'description' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
+            'ingredient' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
             'flavor' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
             'price' => 'required|numeric|min:0.1',
             'dimension' => 'required|numeric|min:0.1',
@@ -49,6 +50,7 @@ class ProductController extends Controller
             $newProduct = new Product;
             $newProduct->name = $request->name;
             $newProduct->description = $request->description;
+            $newProduct->ingredient = $request->ingredient;
             $newProduct->flavor = $request->flavor;
             $newProduct->price = $request->price;
             $newProduct->dimension = $request->dimension;
@@ -84,6 +86,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
             'description' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
+            'ingredient' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
             'flavor' => ['required', 'regex:/^[a-zA-Z\s]*$/'],
             'price' => 'required|numeric|min:0.1',
             'dimension' => 'required|numeric|min:0.1',
@@ -100,6 +103,7 @@ class ProductController extends Controller
             $productUpdate = Product::findOrFail($id);
             $productUpdate->name = $request->name;
             $productUpdate->description = $request->description;
+            $productUpdate->ingredient = $request->ingredient;
             $productUpdate->flavor = $request->flavor;
             $productUpdate->price = $request->price;
             $productUpdate->dimension = $request->dimension;
