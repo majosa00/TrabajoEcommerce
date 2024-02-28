@@ -56,7 +56,7 @@
 
                             <div class="form-group">
                                 <label for="ingredient">Ingredient:</label>
-                                <textarea class="form-control" name="ingredient" id="ingredient" rows="3" required></textarea>
+                                <textarea class="form-control" name="ingredient" id="ingredient" rows="6" required></textarea>
                                 <div class="invalid-feedback">
                                     Please enter a product ingredient.
                                 </div>
@@ -257,7 +257,7 @@
 
                                 <div class="form-group">
                                     <label for="description">Description:</label>
-                                    <textarea class="form-control" name="description" id="description" rows="3" required></textarea>
+                                    <textarea class="form-control" name="description" id="description" rows="3" required>{{ $product->description }}</textarea>
                                     <div class="invalid-feedback">
                                         Please enter a product description.
                                     </div>
@@ -265,7 +265,7 @@
 
                                 <div class="form-group">
                                     <label for="ingredient">Ingredient:</label>
-                                    <textarea class="form-control" name="ingredient" id="ingredient" rows="3" required></textarea>
+                                    <textarea class="form-control" name="ingredient" id="ingredient" rows="6" required>{{ $product->ingredient }}</textarea>
                                     <div class="invalid-feedback">
                                         Please enter a product ingredient.
                                     </div>
@@ -422,7 +422,7 @@
                                     </tr>
                                     <tr>
                                         <th scope="row">Price</th>
-                                        <td>{{ $product->price }}</td>
+                                        <td>${{ $product->price }}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Dimension</th>
@@ -441,8 +441,8 @@
                                         <td>{{ $product->stock }}</td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">Brand ID</th>
-                                        <td>{{ $product->brand_id }}</td>
+                                        <th scope="row">Brand</th>
+                                        <td>{{ $brand->name }}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">IVA</th>
@@ -450,8 +450,6 @@
                                     </tr>
                                 </tbody>
                             </table>
-
-
                         </div>
                     </div>
                 </div>
