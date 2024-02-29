@@ -14,8 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('code')->unique();
             $table->string('type'); // "simple", "category", "product"
-            $table->integer('value')->nullable(); // Para descuentos fijos
-            $table->integer('percent_of')->nullable(); // Para descuentos porcentuales
+            $table->integer('value')->nullable(); 
             $table->unsignedBigInteger('user_id')->nullable(); // Para cupones de usuario específico
             $table->dateTime('start_date');
             $table->dateTime('end_date');

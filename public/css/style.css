@@ -783,9 +783,11 @@ li:not(:first-child) {
         width: 50%;
     }
 
-    #productadmin, #brandadmin, #orderadmin, #wishlistadmin {
+    #productadmin,
+    #brandadmin,
+    #orderadmin,
+    #wishlistadmin,
+    #discounts {
         padding: 7%;
     }
-
 }
-

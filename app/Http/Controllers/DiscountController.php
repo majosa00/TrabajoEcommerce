@@ -7,8 +7,7 @@ use App\Models\Discount;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Brand;
-
-
+use Illuminate\Support\Facades\DB;
 
 class DiscountController extends Controller
 {
@@ -84,7 +83,16 @@ class DiscountController extends Controller
         $products = Product::all(); // Obtiene todos los productos
         $discounts = Discount::all(); // Obtiene todos los descuentos
 
-        return view('discount', compact('brands', 'products', 'discounts'));
+        return view('discounts.discount', compact('brands', 'products', 'discounts'));
+    }
+
+    public function show()
+    {
+        $brands = Brand::all(); // Obtiene todas las marcas
+        $products = Product::all(); // Obtiene todos los productos
+        $discounts = Discount::all(); // Obtiene todos los descuentos
+
+        return view('discounts.creatediscount', compact('brands', 'products', 'discounts'));
     }
 
     public function storeSimple(Request $request)
@@ -165,5 +173,6 @@ class DiscountController extends Controller
 
         return back()->with('success', 'Discount coupon for specific product created successfully.');
     }
+
 
 }

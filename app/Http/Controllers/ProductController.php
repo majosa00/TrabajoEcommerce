@@ -83,7 +83,6 @@ class ProductController extends Controller
         return view('product.edit', compact('product', 'brands'));
     }
 
-
     public function update(Request $request, $id)
     {
         $request->validate([
