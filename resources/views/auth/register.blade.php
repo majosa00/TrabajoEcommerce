@@ -1,10 +1,7 @@
-
+@extends('layouts.app3')
 
 @section('content')
-    <div class="container p-5">
-        @extends('layouts.app3')
-
-    @section('content')
+    <div id="main-container">
         <section id="loggin">
             <div class="container px-4 py-5 mx-auto">
                 <h1 class="text-center p-3">REGISTER</h1>
@@ -75,6 +72,5 @@
                 </div>
             </div>
         </section>
-    @endsection
-</div>
+    </div>
 @endsection
