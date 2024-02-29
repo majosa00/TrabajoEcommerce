@@ -7,16 +7,20 @@
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="{{ asset('images/monster.jpeg') }}" class="d-block w-50 mx-auto img-fluid"
-                                alt="">
+                            <img src="{{ asset('images/bluechamaleon.png') }}" class="d-block w-50 mx-auto img-fluid"
+                                alt="Blue Chamaleon">
                         </div>
                         <div class="carousel-item">
-                            <img src="{{ asset('images/redbull.jpg') }}" class="d-block w-50 mx-auto img-fluid"
-                                alt="">
+                            <img src="{{ asset('images/redbull.png') }}" class="d-block w-50 mx-auto img-fluid"
+                                alt="Red Bull">
                         </div>
                         <div class="carousel-item">
-                            <img src="{{ asset('images/redbull.jpg') }}" class="d-block w-50 mx-auto img-fluid"
-                                alt="">
+                            <img src="{{ asset('images/monster.png') }}" class="d-block w-50 mx-auto img-fluid"
+                                alt="Monster">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{ asset('images/burnenergydrink.png') }}" class="d-block w-50 mx-auto img-fluid"
+                                alt="Burn Energy Drink">
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
