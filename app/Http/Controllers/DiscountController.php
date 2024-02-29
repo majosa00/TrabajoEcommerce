@@ -90,11 +90,14 @@ class DiscountController extends Controller
     public function storeSimple(Request $request)
     {
         $request->validate([
-            'code' => 'required|string|max:255',
-            'value' => 'required|numeric',
+            'code' => 'required|unique:discounts,code',
+            'value' => 'required|numeric|min:0',
             'start_date' => 'required|date',
-            'end_date' => 'required|date|after:start_date',
-            'max_users' => 'required|integer'
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'max_users' => 'required|numeric|min:1',
+        ], [
+            'value.min' => 'The discount value must be a positive number.',
+            'max_users.min' => 'The maximum number of users must be a positive number.',
         ]);
 
         Discount::create([
@@ -105,56 +108,62 @@ class DiscountController extends Controller
             'end_date' => $request->end_date,
             'max_users' => $request->max_users,
         ]);
-        return back()->with('success', 'Coupon successfully created.');
+
+        return back()->with('success', 'Simple discount coupon created successfully.');
     }
 
     public function storeCategory(Request $request)
     {
         $request->validate([
-            'code' => 'required|string|max:255|unique:discounts,code',
-            'value' => 'required|numeric',
-            'brand_id' => 'required|integer|exists:brands,id',
+            'code' => 'required|unique:discounts,code',
+            'brand_id' => 'required|exists:brands,id',
+            'value' => 'required|numeric|min:0',
             'start_date' => 'required|date',
-            'end_date' => 'required|date|after:start_date',
-            'max_users' => 'required|integer',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'max_users' => 'required|numeric|min:1',
+        ], [
+            'value.min' => 'The discount value must be a positive number.',
+            'max_users.min' => 'The maximum number of users must be a positive number.',
         ]);
 
-        $discount = Discount::create([
+        Discount::create([
             'code' => $request->code,
             'type' => 'category',
-            'value' => $request->value,
             'brand_id' => $request->brand_id,
+            'value' => $request->value,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'max_users' => $request->max_users,
         ]);
 
-        return back()->with('success', 'Successfully created category coupon.');
+        return back()->with('success', 'Discount coupon by category created successfully.');
     }
 
     public function storeProduct(Request $request)
     {
         $request->validate([
-            'code' => 'required|string|max:255|unique:discounts,code',
-            'value' => 'required|numeric',
-            'product_id' => 'required|integer|exists:products,id',
+            'code' => 'required|unique:discounts,code',
+            'product_id' => 'required|exists:products,id',
+            'value' => 'required|numeric|min:0',
             'start_date' => 'required|date',
-            'end_date' => 'required|date|after:start_date',
-            'max_users' => 'required|integer',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'max_users' => 'required|numeric|min:1',
+        ], [
+            'value.min' => 'The discount value must be a positive number.',
+            'max_users.min' => 'The maximum number of users must be a positive number.',
         ]);
 
-        $discount = Discount::create([
+        Discount::create([
             'code' => $request->code,
             'type' => 'product',
-            'value' => $request->value,
             'product_id' => $request->product_id,
+            'value' => $request->value,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'max_users' => $request->max_users,
         ]);
 
-        return back()->with('success', 'Coupon for specific product successfully created.');
+        return back()->with('success', 'Discount coupon for specific product created successfully.');
     }
-
 
 }
