@@ -65,12 +65,14 @@ Route::group([
     Route::get('admin/wishlist', [ProductController::class, 'showTopFavorites'])->name('admin.topFavorites');
     Route::get('/admin/wishlist', [WishlistController::class, 'showTopWishlist'])->name('admin.wishlist');
 
+    // Rutas existentes para manejo de cupones
     Route::get('/admin/discount', [DiscountController::class, 'index'])->name('admin.discount');
     Route::post('/admin/discount', [DiscountController::class, 'storeSimple'])->name('admin.store_simple');
     Route::post('/admin/discount/store_category', [DiscountController::class, 'storeCategory'])->name('admin.store_category');
     Route::post('/admin/discount/store_product', [DiscountController::class, 'storeProduct'])->name('admin.store_product');
+    Route::get('/discounts', [DiscountController::class, 'index'])->name('discounts.index');
 
-// web.php
+    // web.php
 })->middleware(['auth', 'verified']);
 
 //Ruta carrito
