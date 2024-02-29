@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="container p-5">
-        <h4 class="mb-3">Billing address</h4>
         @if (session('mensaje'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('mensaje') }}
@@ -21,7 +20,9 @@
             </div>
         @endif
 
-        <div class="row g-5">
+        <div class="row g-5 shipping">
+            <h4 class="mb-3">Billing address</h4>
+            <!-- Carrito resumen -->
             <div class="col-md-5 col-lg-4 order-md-last">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-warning">Your cart</span>
@@ -81,6 +82,7 @@
             </div>
 
             <div class="col-md-7 col-lg-8">
+                <!-- Datos personales -->
                 <form class="needs-validation" novalidate method="POST" action="{{ route('cart.updatedatas') }}">
                     @csrf
                     <div class="row g-3">
@@ -124,8 +126,6 @@
                 </form>
 
                 <hr class="my-4">
-
-
 
                 <section id="payment">
                     <h4 class="mb-3">Payment</h4>
@@ -183,19 +183,20 @@
 
                 <hr class="my-4">
 
+                <!-- Pagar y addresses -->
                 <form action="{{ route('cart.pay') }}" method="POST" class="mt-3">
                     @csrf
                     <!-- Direcciones -->
                     <h3 class="p-2">Choose your address</h3>
                     <div class="row justify-content-center align-items-center gap-3">
-                        <div class="col-md-3">
+                        <div class="col-12">
                             <a href="addressModal" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#addressModal">
                                 <i class="fas fa-plus"></i> New Address
                             </a>
                         </div>
                         @foreach ($addresses as $address)
-                            <div class="col-12 col-xl-2 border p-3 rounded">
+                            <div class="col-12 border p-3 rounded">
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="selected_address"
                                         id="selected_address" value="{{ $address->id }}" />

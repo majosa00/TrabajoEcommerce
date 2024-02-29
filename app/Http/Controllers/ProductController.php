@@ -220,7 +220,39 @@ class ProductController extends Controller
 
         try {
             $brandUpdate = Brand::findOrFail($id);
-            $brandUpdate->update($request->all());
+            $brandUpdate->name = $request->name;
+
+            $imagePaths = []; // Para almacenar las rutas de las imágenes
+
+            // Guardar las imágenes
+            if ($request->hasFile("image_1")) {
+                // Obtener el archivo
+                $image = $request->file("image_1");
+
+                // Generar un nombre único para el archivo
+                $imageName = uniqid('image_') . '.' . $image->getClientOriginalExtension();
+
+                // Crear una nueva instancia de Image
+                $newImage = new Image();
+                $newImage->{"imagen_1"} = 'images/' . $imageName;
+
+
+                // Guardar la imagen en el almacenamiento (storage)
+                $image->storeAs('public/images', $imageName);
+
+                // Almacenar la ruta de la imagen
+                $imagePaths[] = $newImage->{"imagen_1"};  // Actualizamos $imagePaths aquí
+
+                // Vincular la imagen a la marca utilizando la relación
+                $brandUpdate->images()->save($newImage);
+            }
+
+            // Almacenar las rutas de las imágenes en la base de datos
+            $brandUpdate->images()->update([
+                'imagen_1' => $imagePaths[0] ?? null,
+            ]);
+
+            $brandUpdate->save();
 
             DB::commit();
             return back()->with('mensaje', 'Brand updated');
