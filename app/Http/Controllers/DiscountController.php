@@ -28,20 +28,16 @@ class DiscountController extends Controller
         // Verifica si el cupón es de tipo 'category'
         if ($discountcode->type === 'category') {
             $categoryDiscountApplicable = false;
+            $discountValue = 0;
 
             foreach ($products as $product) {
-                // Verifica si el descuento está asociado a un id_marca que coincida con el id_marca del producto
                 if ($discountcode->brand_id === $product->brand_id) {
-                    // El producto es de la marca correspondiente al cupón
                     $categoryDiscountApplicable = true;
-
-                    // Calcula el descuento para el producto
                     $discountValue = $product->price * ($discountcode->value / 100);
                     $totalPrice -= $discountValue;
                 }
             }
 
-            // Almacena la información del descuento y el precio total en la sesión
             if ($categoryDiscountApplicable) {
                 session()->put("discount", [
                     "name" => $discountcode->code,
@@ -51,12 +47,34 @@ class DiscountController extends Controller
 
                 return redirect()->route("cart.viewShipping")->with("mensaje", "Category Coupon has been applied!");
             }
+        } elseif ($discountcode->type === 'product') {
+            // Maneja cupones de tipo 'product'
+            $productDiscountApplicable = false;
+            $discountValue = 0;
+
+            foreach ($products as $product) {
+                if ($discountcode->product_id === $product->id) {
+                    $productDiscountApplicable = true;
+                    $discountValue = $product->price * ($discountcode->value / 100);
+                    $totalPrice -= $discountValue;
+                    break; // Solo se aplica a un producto, así que se puede romper el ciclo una vez aplicado
+                }
+            }
+
+            if ($productDiscountApplicable) {
+                session()->put("discount", [
+                    "name" => $discountcode->code,
+                    "discount_value" => $discountValue,
+                ]);
+                session()->put('totalPrice', $totalPrice);
+
+                return redirect()->route("cart.viewShipping")->with("mensaje", "Product-specific Coupon has been applied!");
+            }
         } else {
-            // Es un cupón simple que se aplica a todo el carrito
+            // Maneja cupones de tipo 'simple'
             $discountValue = $totalPrice * ($discountcode->value / 100);
             $totalPrice -= $discountValue;
 
-            // Almacena la información del descuento y el precio total en la sesión
             session()->put("discount", [
                 "name" => $discountcode->code,
                 "discount_value" => $discountValue,
@@ -69,6 +87,7 @@ class DiscountController extends Controller
         // Si no se aplicó ningún descuento, redirige sin cambios
         return redirect()->route("cart.viewShipping");
     }
+
 
     public function destroy(Request $request)
     {
