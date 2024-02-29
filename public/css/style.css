@@ -83,9 +83,18 @@ body .navbar {
     .shipping {
         padding: 7%;
     }
-}
 
-@media screen and (min-width: 992px) and (max-width: 1200px) {}
+    #perfil {
+        padding: 7%;
+    }
+
+    body .navbar .navbar-nav .nav-link::before,
+    body footer a::before {
+        bottom: 2px;
+        height: 1px;
+    }
+
+}
 
 .card-img-top {
     width: 25% !important;
@@ -752,3 +761,28 @@ li:not(:first-child) {
 .modal-dialog textarea {
     border: 1px solid #ced4da !important;
 }
+
+/*Imagen tabla productos administrador*/
+.fotoproductoadmin {
+    width: 100%;
+}
+
+.fotobrandadmin {
+    width: 15%;
+}
+
+@media screen and (max-width: 768px) {
+    .fotoproductoadmin {
+        width: 100%;
+    }
+
+    .fotobrandadmin {
+        width: 50%;
+    }
+
+    #productadmin, #brandadmin, #orderadmin, #wishlistadmin {
+        padding: 7%;
+    }
+
+}
+
