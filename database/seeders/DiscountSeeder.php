@@ -27,6 +27,7 @@ class DiscountSeeder extends Seeder
             'max_users' => 10,
 
         ]);
+
         Discount::create([
             'code' => 'CODE2',
             'type' => 'category',
@@ -36,6 +37,15 @@ class DiscountSeeder extends Seeder
             'user_id' => $users->random()->id,
             'max_users' => 10,
             'brand_id' => 4,
+        ]);
+
+        Discount::create([
+            'code' => 'CODE3',
+            'type' => 'product',
+            'value' => 20,
+            'start_date' => now(),
+            'end_date' => now()->addDays(30),
+            'product_id' => 3,
         ]);
     }
 }
