@@ -70,6 +70,7 @@ Route::group([
     Route::post('/admin/discount/store_category', [DiscountController::class, 'storeCategory'])->name('admin.store_category');
     Route::post('/admin/discount/store_product', [DiscountController::class, 'storeProduct'])->name('admin.store_product');
 
+// web.php
 })->middleware(['auth', 'verified']);
 
 //Ruta carrito

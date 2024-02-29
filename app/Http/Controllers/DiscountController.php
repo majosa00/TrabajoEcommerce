@@ -79,11 +79,8 @@ class DiscountController extends Controller
         return redirect()->route("cart.viewShipping")->with("mensaje", "Coupon has been removed.");
     }
 
-
-
     public function index()
     {
-        // Puedes pasar listas de productos o marcas si los necesitas para los formularios
         $brands = Brand::all();
         $products = Product::all();
 
@@ -92,7 +89,6 @@ class DiscountController extends Controller
 
     public function storeSimple(Request $request)
     {
-        // Validación de los datos del formulario
         $request->validate([
             'code' => 'required|string|max:255',
             'value' => 'required|numeric',
@@ -101,37 +97,33 @@ class DiscountController extends Controller
             'max_users' => 'required|integer'
         ]);
 
-        // Creación del nuevo descuento
         Discount::create([
             'code' => $request->code,
-            'type' => 'simple', // Asumiendo que tienes un campo 'type' en tu modelo Discount
+            'type' => 'simple',
             'value' => $request->value,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'max_users' => $request->max_users,
-            // Asegúrate de agregar cualquier otro campo necesario según tu modelo Discount
         ]);
-
-        // Redirección con mensaje de éxito
         return back()->with('success', 'Cupón creado con éxito.');
     }
 
     public function storeCategory(Request $request)
     {
         $request->validate([
-            'code' => 'required|string|max:255',
+            'code' => 'required|string|max:255|unique:discounts,code',
             'value' => 'required|numeric',
-            'category_id' => 'required|integer|exists:categories,id', // Asegúrate de que la categoría exista
+            'brand_id' => 'required|integer|exists:brands,id',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
             'max_users' => 'required|integer',
         ]);
 
-        Discount::create([
+        $discount = Discount::create([
             'code' => $request->code,
-            'type' => 'category', // Asegúrate de manejar este tipo en tu lógica de aplicación
+            'type' => 'category',
             'value' => $request->value,
-            'category_id' => $request->category_id,
+            'brand_id' => $request->brand_id,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'max_users' => $request->max_users,
@@ -143,9 +135,9 @@ class DiscountController extends Controller
     public function storeProduct(Request $request)
     {
         $request->validate([
-            'code' => 'required|string|max:255',
+            'code' => 'required|string|max:255|unique:discounts,code',
             'value' => 'required|numeric',
-            'product_id' => 'required|integer|exists:products,id', // Verifica que el producto exista
+            'product_id' => 'required|integer|exists:products,id',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
             'max_users' => 'required|integer',
@@ -153,15 +145,13 @@ class DiscountController extends Controller
 
         $discount = Discount::create([
             'code' => $request->code,
-            'type' => 'product', // Asegúrate de manejar este tipo en tu lógica
+            'type' => 'product',
             'value' => $request->value,
+            'product_id' => $request->product_id,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'max_users' => $request->max_users,
         ]);
-
-        // Asocia el descuento con el producto específico
-        $discount->products()->attach($request->product_id);
 
         return back()->with('success', 'Cupón para producto específico creado con éxito.');
     }
