@@ -24,7 +24,10 @@
                     <a class="nav-link" href="{{ asset('admin/wishlist') }}">Wishlist</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.discount') }}">Discount</a>
+                    <a class="nav-link" href="{{ asset('admin/discount') }}">Discount</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ asset('admin/create-discount') }}">Create Discount</a>
                 </li>
             </ul>
 

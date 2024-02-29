@@ -7,8 +7,7 @@ use App\Models\Discount;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Brand;
-
-
+use Illuminate\Support\Facades\DB;
 
 class DiscountController extends Controller
 {
@@ -84,7 +83,16 @@ class DiscountController extends Controller
         $products = Product::all(); // Obtiene todos los productos
         $discounts = Discount::all(); // Obtiene todos los descuentos
 
-        return view('discount', compact('brands', 'products', 'discounts'));
+        return view('discounts.discount', compact('brands', 'products', 'discounts'));
+    }
+
+    public function show()
+    {
+        $brands = Brand::all(); // Obtiene todas las marcas
+        $products = Product::all(); // Obtiene todos los productos
+        $discounts = Discount::all(); // Obtiene todos los descuentos
+
+        return view('discounts.creatediscount', compact('brands', 'products', 'discounts'));
     }
 
     public function storeSimple(Request $request)
@@ -156,5 +164,50 @@ class DiscountController extends Controller
         return back()->with('success', 'Coupon for specific product successfully created.');
     }
 
+    public function update(Request $request, $id)
+    {
+        $discountUpdate = Discount::findOrFail($id);
+
+        // Define las reglas de validación para los campos específicos que se pueden actualizar
+        $rules = [
+            'code' => 'string|max:255|unique:discounts,code,' . $id,
+            'value' => 'numeric',
+            'type' => 'in:simple,category,product',
+            'percent_of' => 'nullable|numeric',
+            'user_id' => 'nullable|exists:users,id',
+            'start_date' => 'date',
+            'end_date' => 'date|after:start_date',
+            'max_users' => 'nullable|integer',
+            'brand_id' => 'nullable|exists:brands,id',
+            'product_id' => 'nullable|exists:products,id',
+            'max_products' => 'nullable|integer',
+        ];
+
+        // Filtra solo los campos que están presentes en la solicitud
+        $dataToUpdate = array_filter($request->only(array_keys($rules)));
+
+        // Realiza la validación con las reglas específicas
+        $request->validate($rules);
+
+        DB::beginTransaction();
+
+        try {
+            // Actualiza solo los campos presentes en la solicitud
+            $discountUpdate->update($dataToUpdate);
+
+            DB::commit();
+            return back()->with('mensaje', 'Discount updated successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Error updating the discount.');
+        }
+    }
+
+    public function delete($id)
+    {
+        $discountDelete = Discount::findOrFail($id);
+        $discountDelete->delete();
+        return back()->with('mensaje', 'Discount removed');
+    }
 
 }
