@@ -17,7 +17,6 @@ class DiscountController extends Controller
         $cart = auth()->user()->cart;
         $products = $cart->products;
 
-        // Busca el cupón de descuento en la base de datos basado en el código proporcionado en la solicitud
         $discountcode = Discount::where("code", $request->discount_code)->first();
 
         if (!$discountcode) {
@@ -81,10 +80,11 @@ class DiscountController extends Controller
 
     public function index()
     {
-        $brands = Brand::all();
-        $products = Product::all();
+        $brands = Brand::all(); // Obtiene todas las marcas
+        $products = Product::all(); // Obtiene todos los productos
+        $discounts = Discount::all(); // Obtiene todos los descuentos
 
-        return view('discount', compact('brands', 'products'));
+        return view('discount', compact('brands', 'products', 'discounts'));
     }
 
     public function storeSimple(Request $request)
@@ -105,7 +105,7 @@ class DiscountController extends Controller
             'end_date' => $request->end_date,
             'max_users' => $request->max_users,
         ]);
-        return back()->with('success', 'Cupón creado con éxito.');
+        return back()->with('success', 'Coupon successfully created.');
     }
 
     public function storeCategory(Request $request)
@@ -129,7 +129,7 @@ class DiscountController extends Controller
             'max_users' => $request->max_users,
         ]);
 
-        return back()->with('success', 'Cupón de categoría creado con éxito.');
+        return back()->with('success', 'Successfully created category coupon.');
     }
 
     public function storeProduct(Request $request)
@@ -153,6 +153,8 @@ class DiscountController extends Controller
             'max_users' => $request->max_users,
         ]);
 
-        return back()->with('success', 'Cupón para producto específico creado con éxito.');
+        return back()->with('success', 'Coupon for specific product successfully created.');
     }
+
+
 }

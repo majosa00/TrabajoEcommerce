@@ -154,10 +154,102 @@
                 </div>
             </div>
         </div>
-
-        
-
     </div>
+    
+<div class="container p-5">
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Coupon Code</th>
+                <th>Type</th>
+                <th>Value</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Max Users</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($discounts as $discount)
+            <tr>
+                <td>{{ $discount->id }}</td>
+                <td>{{ $discount->code }}</td>
+                <td>{{ $discount->type }}</td>
+                <td>{{ $discount->value }}%</td>
+                <td>{{ $discount->start_date }}</td>
+                <td>{{ $discount->end_date }}</td>
+                <td>{{ $discount->max_users }}</td>
+                <td>
+                    <!-- Botón para abrir el modal de editar -->
+                    <button type="button" class="btn btn-secondary btn-sm edit-button" data-toggle="modal" data-target="#editDiscountModal" data-id="{{ $discount->id }}">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    
+                    <!-- Botón para abrir el modal de borrar -->
+                    <button type="button" class="btn btn-danger btn-sm delete-button" data-toggle="modal" data-target="#deleteDiscountModal" data-id="{{ $discount->id }}">
+    <i class="fas fa-trash-alt"></i>
+</button>
+
+
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal para Editar -->
+<div class="modal fade" id="editDiscountModal" tabindex="-1" role="dialog" aria-labelledby="editDiscountModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <form id="editDiscountForm" method="POST">
+    @csrf
+    @method('PUT')
+    <div class="modal-body">
+        <input type="hidden" name="id" id="edit_id">
+        <div class="form-group">
+            <label for="edit_code">Coupon Code</label>
+            <input type="text" class="form-control" id="edit_code" name="code" required>
+        </div>
+        <div class="form-group">
+            <label for="edit_value">Discount Value (%)</label>
+            <input type="number" class="form-control" id="edit_value" name="value" required>
+        </div>
+        <!-- Añade aquí más campos según sea necesario -->
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+    </div>
+</form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Confirmar Borrado -->
+<div class="modal fade" id="deleteDiscountModal" tabindex="-1" role="dialog" aria-labelledby="deleteDiscountModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <form id="deleteDiscountForm" method="POST">
+    @csrf
+    <input type="hidden" name="_method" value="DELETE">
+    <div class="modal-body">
+        Are you sure you want to delete this discount?
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </div>
+</form>
+
+        </div>
+    </div>
+</div>
+</div>
+
+
     <!-- Incluye jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <!-- Incluye Popper.js -->
