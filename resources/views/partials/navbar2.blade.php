@@ -23,6 +23,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ asset('admin/wishlist') }}">Wishlist</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.discount') }}">Discount</a>
+                </li>
             </ul>
 
             <ul class="navbar-nav ml-auto">
@@ -47,7 +50,7 @@
                             <li>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">
+                                                            document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"

@@ -754,12 +754,15 @@ li:not(:first-child) {
         top: 0;
         left: 10px;
         font-weight: bold;
-
     }
 }
 
 .modal-dialog textarea {
     border: 1px solid #ced4da !important;
+}
+
+.text-black {
+    color: #000000 !important;
 }
 
 /*Imagen tabla productos administrador*/

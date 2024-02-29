@@ -64,6 +64,13 @@ Route::group([
     //Wishlist
     Route::get('admin/wishlist', [ProductController::class, 'showTopFavorites'])->name('admin.topFavorites');
     Route::get('/admin/wishlist', [WishlistController::class, 'showTopWishlist'])->name('admin.wishlist');
+
+    Route::get('/admin/discount', [DiscountController::class, 'index'])->name('admin.discount');
+    Route::post('/admin/discount', [DiscountController::class, 'storeSimple'])->name('admin.store_simple');
+    Route::post('/admin/discount/store_category', [DiscountController::class, 'storeCategory'])->name('admin.store_category');
+    Route::post('/admin/discount/store_product', [DiscountController::class, 'storeProduct'])->name('admin.store_product');
+
+// web.php
 })->middleware(['auth', 'verified']);
 
 //Ruta carrito
