@@ -71,6 +71,22 @@ body .navbar {
     border-bottom: 2px solid #dee2e6;
 }
 
+@media screen and (max-width: 768px) {
+    #orders {
+        padding: 7%;
+    }
+
+    #carrito {
+        padding: 7%;
+    }
+
+    .shipping {
+        padding: 7%;
+    }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1200px) {}
+
 .card-img-top {
     width: 25% !important;
 }
@@ -706,7 +722,6 @@ li:not(:first-child) {
 .letrapequeña {
     font-size: 0.8em;
 }
-
 
 /* Estilos base para el badge */
 .nav-link .badge {
