@@ -63,14 +63,18 @@ Route::group([
     Route::delete('admin/delete_brand/{id}', [ProductController::class, 'deleteBrand'])->name('brands.deleteBrand');
     //Wishlist
     Route::get('admin/wishlist', [ProductController::class, 'showTopFavorites'])->name('admin.topFavorites');
-    Route::get('/admin/wishlist', [WishlistController::class, 'showTopWishlist'])->name('admin.wishlist');
+    Route::get('admin/wishlist', [WishlistController::class, 'showTopWishlist'])->name('admin.wishlist');
 
     // Rutas existentes para manejo de cupones
-    Route::get('/admin/discount', [DiscountController::class, 'index'])->name('admin.discount');
-    Route::post('/admin/discount', [DiscountController::class, 'storeSimple'])->name('admin.store_simple');
-    Route::post('/admin/discount/store_category', [DiscountController::class, 'storeCategory'])->name('admin.store_category');
-    Route::post('/admin/discount/store_product', [DiscountController::class, 'storeProduct'])->name('admin.store_product');
+    Route::get('admin/discount', [DiscountController::class, 'index'])->name('admin.discount');
+    Route::get('admin/create-discount', [DiscountController::class, 'show'])->name('admin.creatediscount');
+    Route::post('admin/discount', [DiscountController::class, 'storeSimple'])->name('admin.store_simple');
+    Route::post('admin/discount/store_category', [DiscountController::class, 'storeCategory'])->name('admin.store_category');
+    Route::post('admin/discount/store_product', [DiscountController::class, 'storeProduct'])->name('admin.store_product');
     Route::get('/discounts', [DiscountController::class, 'index'])->name('discounts.index');
+    Route::get('admin/edit_discount/{id}', [ProductController::class, 'edit'])->name('discounts.edit');
+    Route::put('admin/edit_discount/{id}', [DiscountController::class, 'update'])->name('discounts.update');
+    Route::delete('admin/delete_discount/{id}', [DiscountController::class, 'delete'])->name('discounts.delete');
 
     // web.php
 })->middleware(['auth', 'verified']);
