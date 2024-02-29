@@ -122,14 +122,6 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="edit_percent_of">Percent of</label>
-                                                <input type="number" value="{{ $discount->percent_of }}"
-                                                    class="form-control" id="edit_percent_of" name="percent_of">
-                                                <div class="invalid-feedback">
-                                                    Please enter the percent of.
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
                                                 <label for="edit_user_id">User ID</label>
                                                 <input type="number" value="{{ $discount->user_id }}" class="form-control"
                                                     id="edit_user_id" name="user_id">

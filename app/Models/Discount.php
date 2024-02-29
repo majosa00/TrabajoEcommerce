@@ -13,7 +13,6 @@ class Discount extends Model
         'code',
         'type',
         'value',
-        'percent_of',
         'user_id',
         'start_date',
         'end_date',

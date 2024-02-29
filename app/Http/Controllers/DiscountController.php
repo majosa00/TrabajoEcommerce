@@ -173,7 +173,6 @@ class DiscountController extends Controller
             'code' => 'string|max:255|unique:discounts,code,' . $id,
             'value' => 'numeric',
             'type' => 'in:simple,category,product',
-            'percent_of' => 'nullable|numeric',
             'user_id' => 'nullable|exists:users,id',
             'start_date' => 'date',
             'end_date' => 'date|after:start_date',
