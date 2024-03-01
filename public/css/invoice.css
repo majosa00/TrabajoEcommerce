@@ -1,0 +1,136 @@
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.invoice-container {
+    background-color: #fff;
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    width: 200px;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+.invoice-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.invoice-details,
+.invoice-total {
+    margin-bottom: 20px;
+}
+
+.invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.invoice-table th,
+.invoice-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.invoice-table th {
+    background-color: #f2f2f2;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.footer {
+    text-align: center;
+    color: #6c757d;
+    margin-top: 20px;
+}
+
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #000;
+}
+
+.invoice-title {
+    font-size: 28px;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.company-details,
+.client-details {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.company-details p,
+.client-details p {
+    margin: 0;
+}
+
+.total-section {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: right;
+}
+
+.info-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.info-section div {
+    width: 48%;
+}
+
+.info-section .text-right {
+    text-align: right;
+}
+
+.info-section .text-strong {
+    font-weight: bold;
+}
+
+.title-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.address-spacing {
+    margin-bottom: 20px;
+}
+
+.signature-column {
+    width: 48%;
+    padding-top: 50px;
+}
+
+.signature-column img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.signature-title {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+}
