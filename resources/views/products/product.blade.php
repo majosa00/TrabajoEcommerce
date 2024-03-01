@@ -415,10 +415,12 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <div class="d-flex justify-content-center">
-                                                    <img src="{{ optional($product->images)->imagen_1 ? asset('storage/' . $product->images->imagen_1) : '' }}"
-                                                        class="w-50 " alt="{{ $product->name }}">
-                                                </div>
+                                                <td colspan="2">
+                                                    <div class="d-flex justify-content-center">
+                                                        <img src="{{ optional($product->images)->imagen_1 ? asset('storage/' . $product->images->imagen_1) : '' }}"
+                                                            class="img-fluid" alt="{{ $product->name }}">
+                                                    </div>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Name</th>
@@ -458,7 +460,7 @@
                                             </tr>
                                             <tr>
                                                 <th scope="row">Brand</th>
-                                                <td>{{ $brand->name }}</td>
+                                                <td>{{ optional($product->brand)->name }}</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">IVA</th>
