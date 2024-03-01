@@ -71,10 +71,10 @@
                                 </div>
                             </div>
                         </div>
+                        <button class="btn btn-warning btn-block mt-2 mb-4" type="submit">Save</button>
                     </form>
                 @endauth
 
-                <button class="btn btn-warning btn-block mt-2 mb-4" type="submit">Save</button>
 
                 <hr>
 

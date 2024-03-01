@@ -201,7 +201,7 @@
                     </tr>
                     <tr>
                         <td colspan="3" class="text-right text-strong"><strong>TOTAL:</strong></td>
-                        <td><strong>${{ number_format($subtotal * 1.21, 2) }}</strong></td>
+                        <td><strong>${{ $order->totalPrice }}</strong></td>
                     </tr>
                 </tfoot>
             </table>
