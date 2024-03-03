@@ -142,7 +142,7 @@ class CartController extends Controller
             }
 
             // Enviar correo electrónico (comentado mientras practicamos para no tener 21701293 correos)
-            Mail::to($user->email)->send(new OrderConfirmation($order));
+            // Mail::to($user->email)->send(new OrderConfirmation($order));
 
             // Puedes limpiar el carrito después de realizar el pedido si es necesario
             $cart->products()->detach();
